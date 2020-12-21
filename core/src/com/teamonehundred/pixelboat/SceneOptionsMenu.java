@@ -62,15 +62,15 @@ public class SceneOptionsMenu implements Scene {
         fill_camera.position.set(fill_camera.viewportWidth / 2, fill_camera.viewportHeight / 2, 0);
         fill_viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        bg = new Texture("start_screen.png");
+        bg = new Texture("TitleScreen/background_screen.png");
         bg_sprite = new Sprite(bg);
         bg_sprite.setPosition(0, 0);
         bg_sprite.setSize(1280, 720);
 
-        full = new Texture("options_menu_fullscreen.png");
-        full_check_yes = new Texture("options_menu_checkbox_yes.png");
-        full_check_no = new Texture("options_menu_checkbox_no.png");
-        full = new Texture("options_menu_fullscreen.png");
+        full = new Texture("TitleScreen/options_menu_fullscreen.png");
+        full_check_yes = new Texture("TitleScreen/options_menu_checkbox_yes.png");
+        full_check_no = new Texture("TitleScreen/options_menu_checkbox_no.png");
+        full = new Texture("TitleScreen/options_menu_fullscreen.png");
         full_sprite = new Sprite(full);
         full_check_sprite = new Sprite(full_check_no);
         full_sprite.setSize(512 / 2, 128 / 2);
@@ -78,23 +78,23 @@ public class SceneOptionsMenu implements Scene {
         full_check_sprite.setSize(128 / 2, 128 / 2);
         full_check_sprite.setPosition((fill_camera.viewportWidth / 2) + (full_sprite.getWidth() / 2), (Gdx.graphics.getHeight() / 2) + (full_sprite.getHeight() * 1.5f));
 
-        accel = new Texture("options_menu_fullscreen.png");
+        accel = new Texture("TitleScreen/options_menu_fullscreen.png");
         accel_sprite = new Sprite(accel);
         accel_sprite.setSize(512 / 2, 128 / 2);
         accel_sprite.setPosition((fill_camera.viewportWidth / 2) - (full_sprite.getWidth()), (Gdx.graphics.getHeight() / 2) + (full_sprite.getHeight() * .5f));
 
-        left = new Texture("options_menu_fullscreen.png");
+        left = new Texture("TitleScreen/options_menu_fullscreen.png");
         left_sprite = new Sprite(left);
         left_sprite.setSize(512 / 2, 128 / 2);
         left_sprite.setPosition((fill_camera.viewportWidth / 2) - (full_sprite.getWidth()), (Gdx.graphics.getHeight() / 2) - (full_sprite.getHeight() * .5f));
 
-        right = new Texture("options_menu_fullscreen.png");
+        right = new Texture("TitleScreen/options_menu_fullscreen.png");
         right_sprite = new Sprite(right);
         right_sprite.setSize(512 / 2, 128 / 2);
         right_sprite.setPosition((fill_camera.viewportWidth / 2) - (full_sprite.getWidth()), (Gdx.graphics.getHeight() / 2) - (full_sprite.getHeight() * 1.5f));
 
-        back = new Texture("options_menu_back.png");
-        back_hovered = new Texture("options_menu_back_hovered.png");
+        back = new Texture("TitleScreen/back.png");
+        back_hovered = new Texture("TitleScreen/back_hovered.png");
         back_sprite = new Sprite(back);
         back_sprite.setSize(512 / 2, 128 / 2);
         back_sprite.setPosition((fill_camera.viewportWidth / 2) - (full_sprite.getWidth()), 70);

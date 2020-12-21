@@ -30,6 +30,10 @@ class SceneStartScreen implements Scene {
     protected Texture options;
     protected Texture options_hovered;
     protected Sprite options_sprite;
+    
+    protected Texture exit;
+    protected Texture exit_hovered;
+    protected Sprite exit_sprite;
 
     protected Viewport fill_viewport;
     protected OrthographicCamera fill_camera;
@@ -48,22 +52,28 @@ class SceneStartScreen implements Scene {
         fill_viewport.apply();
         fill_camera.position.set(fill_camera.viewportWidth / 2, fill_camera.viewportHeight / 2, 0);
 
-        bg = new Texture("start_screen.png");
+        bg = new Texture("TitleScreen/new_start_screen.png");
         bg_sprite = new Sprite(bg);
         bg_sprite.setPosition(0, 0);
         bg_sprite.setSize(1280, 720);
 
-        play = new Texture("start_menu_play.png");
-        play_hovered = new Texture("start_menu_play_hovered.png");
+        play = new Texture("TitleScreen/new_start_menu_play.png");
+        play_hovered = new Texture("TitleScreen/new_start_menu_play_hovered.png");
         play_sprite = new Sprite(play);
-        play_sprite.setSize(512 / 2, 128 / 2);
-        play_sprite.setPosition((fill_camera.viewportWidth / 2) - (play_sprite.getWidth() / 2), (fill_camera.viewportHeight / 2) + (play_sprite.getHeight() / 2));
+        play_sprite.setSize(512, 128);
+        play_sprite.setPosition((fill_camera.viewportWidth / 2) - (play_sprite.getWidth() / 2), (float) ((fill_camera.viewportHeight / 2.25) - (play_sprite.getHeight() / 2)));
 
-        options = new Texture("start_menu_options.png");
-        options_hovered = new Texture("start_menu_options_hovered.png");
+        options = new Texture("TitleScreen/new_start_menu_options.png");
+        options_hovered = new Texture("TitleScreen/new_start_menu_options_hovered.png");
         options_sprite = new Sprite(options);
-        options_sprite.setSize(512 / 2, 128 / 2);
-        options_sprite.setPosition((fill_camera.viewportWidth / 2) - (options_sprite.getWidth() / 2), (fill_camera.viewportHeight / 2) - (options_sprite.getHeight() / 2));
+        options_sprite.setSize(512/2, 128/2);
+        options_sprite.setPosition((float) ((fill_camera.viewportWidth / 2.5) - (options_sprite.getWidth() / 2)), (float) ((fill_camera.viewportHeight / 3.75) - (options_sprite.getHeight() / 2)));
+        
+        exit = new Texture("TitleScreen/exit.png");
+        exit_hovered = new Texture("TitleScreen/exit_hovered.png");
+        exit_sprite = new Sprite(exit);
+        exit_sprite.setSize(512/2, 128/2);
+        exit_sprite.setPosition((float) ((fill_camera.viewportWidth / 2.5) + (exit_sprite.getWidth() / 2)), (float) ((fill_camera.viewportHeight / 3.75) - (exit_sprite.getHeight() / 2)));
     }
 
     /**
@@ -90,6 +100,7 @@ class SceneStartScreen implements Scene {
         bg_sprite.draw(batch);
         play_sprite.draw(batch);
         options_sprite.draw(batch);
+        exit_sprite.draw(batch);
         batch.end();
     }
 
@@ -116,10 +127,18 @@ class SceneStartScreen implements Scene {
             options_sprite.setTexture(options_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 // todo enable options when implemented
-                //return 2;
+                return 2;
             }
         } else
             options_sprite.setTexture(options);
+        
+        if (exit_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
+            exit_sprite.setTexture(exit_hovered);
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                Gdx.app.exit();;
+            }
+        } else
+            exit_sprite.setTexture(exit);
 
         // Stay in SceneStartScreen
         return scene_id;
