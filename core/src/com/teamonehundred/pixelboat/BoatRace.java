@@ -1,5 +1,7 @@
 package com.teamonehundred.pixelboat;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -154,6 +156,7 @@ class BoatRace {
         }
 
         boolean not_finished = false;
+
 
         for (int i = 0; i < boats.size(); i++) {
             // all boats
