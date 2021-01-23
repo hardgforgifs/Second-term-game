@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,7 +64,8 @@ class SceneMainGame implements Scene {
         main_menu_button_hovered = new Texture("start_menu_play_hovered.png");
         main_menu_sprite = new Sprite(main_menu_button);
         main_menu_sprite.setSize(512 / 2, 128 / 2);
-        main_menu_sprite.setPosition(((float)Gdx.graphics.getWidth()/ 2), 0); // The y position is set on pause
+        main_menu_sprite.setPosition(((float)Gdx.graphics.getWidth()/ 2 - (main_menu_sprite.getWidth() / 2)),
+                                     ((float)Gdx.graphics.getHeight()/ 2) + (main_menu_sprite.getHeight() / 2));
         // /Added
 
         all_boats.add(player);
@@ -106,7 +108,14 @@ class SceneMainGame implements Scene {
 
         batch.draw(bg, -10000, -2000, 0, 0, 1000000, 10000000);
         race.draw(batch);
-
+        if (isPaused)
+        {
+            // Create a local bach and display the main menu button
+            SpriteBatch pause_batch =  new SpriteBatch();
+            pause_batch.begin();
+            main_menu_sprite.draw(pause_batch);
+            pause_batch.end();
+        }
         batch.end();
     }
 
@@ -119,14 +128,15 @@ class SceneMainGame implements Scene {
      * @author William Walton
      */
     public int update() {
+        // stay in results after all legs done
+        if (race.isFinished() && leg_number > 3) return 4;
+
         // Added
         // Check if the pause button is pressed
         if (Gdx.input.isKeyJustPressed(Input.Keys.P))
         {
-            System.out.println("in");
             isPaused = !isPaused;
         }
-
 
         if (!isPaused) {
             if (player.hasFinishedLeg()) {
@@ -164,11 +174,23 @@ class SceneMainGame implements Scene {
 
                 return 4;
             }
+        }
+        else
+        {
+            Vector3 mouse_pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+//            System.out.println(mouse_pos);
+            if(main_menu_sprite.getBoundingRectangle().contains(mouse_pos.x, Gdx.graphics.getHeight() - mouse_pos.y)){
+                System.out.println("in");
+                main_menu_sprite.setTexture(main_menu_button_hovered);
+                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                    return 0;
+                }
+            }
+            else
+                main_menu_sprite.setTexture(main_menu_button);
 
         }
-        // stay in results after all legs done
-        if (race.isFinished() && leg_number > 3) return 4;
-            return scene_id;
+        return scene_id;
     }
 
     /**
