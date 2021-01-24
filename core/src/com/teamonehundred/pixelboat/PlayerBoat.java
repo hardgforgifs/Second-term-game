@@ -5,6 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.KryoSerializable;
+import com.esotericsoftware.kryo.io.Output;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +19,7 @@ import java.util.List;
  * @author William Walton
  * JavaDoc by Umer Fakher
  */
-class PlayerBoat extends Boat {
+class PlayerBoat extends Boat implements KryoSerializable  {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */
@@ -30,6 +33,16 @@ class PlayerBoat extends Boat {
     protected Sprite durability_bar;
 
     protected int ui_bar_width = 500;
+
+    @Override
+    public void write(Kryo kryo, Output output) {
+
+    }
+
+    @Override
+    public void read(Kryo kryo, com.esotericsoftware.kryo.io.Input input) {
+
+    }
 
     /* ################################### //
                   CONSTRUCTORS
@@ -239,5 +252,4 @@ class PlayerBoat extends Boat {
         stamina_bar.setSize((int) (ui_bar_width * stamina), 10);
         durability_bar.setSize((int) (ui_bar_width * durability), 10);
     }
-
 }

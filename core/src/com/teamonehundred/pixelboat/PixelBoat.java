@@ -3,6 +3,10 @@ package com.teamonehundred.pixelboat;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.esotericsoftware.kryo.Kryo;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 /**
  * Main class for the PixelBoat game.
@@ -24,8 +28,19 @@ public class PixelBoat extends ApplicationAdapter {
     // 2 = options
     // 3 = tutorial
     // 4 = results
-    // 5 =boat selection
+    // 5 = boat selection
+    // 6 = loaded game
     protected int scene_id = 0;
+
+    Kryo kryo = new Kryo();
+
+    private SceneMainGame loadGame() throws FileNotFoundException {
+        kryo.register(com.teamonehundred.pixelboat.SceneMainGame.class);
+        com.esotericsoftware.kryo.io.Input input = new com.esotericsoftware.kryo.io.Input(new FileInputStream("file.dat"));
+        SceneMainGame game_state = kryo.readObject(input, SceneMainGame.class);
+        input.close();
+        return game_state;
+    }
 
     /**
      * Create method runs when the game starts.
@@ -56,17 +71,25 @@ public class PixelBoat extends ApplicationAdapter {
         int new_scene_id = all_scenes[scene_id].update();
         all_scenes[scene_id].draw(batch);
 
+
         if (scene_id != new_scene_id) {
             // special case updates
             if (new_scene_id == 4)
                 ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
             else if (new_scene_id == 3 && scene_id == 5)
                 ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
-
-
+            else if (new_scene_id == 6){
+                try {
+                    all_scenes[5] = loadGame();
+                    new_scene_id = 5;
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
             // check if we need to change scene
             scene_id = new_scene_id;
         }
+
     }
 
     /**

@@ -10,6 +10,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.esotericsoftware.kryo.Kryo;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 /**
  * Represents the Main Game Scene for when the boat race starts.
@@ -30,10 +35,14 @@ class SceneStartScreen implements Scene {
     protected Texture options;
     protected Texture options_hovered;
     protected Sprite options_sprite;
-    
+
     protected Texture exit;
     protected Texture exit_hovered;
     protected Sprite exit_sprite;
+
+    protected Texture load;
+    protected Texture load_hovered;
+    protected Sprite load_sprite;
 
     protected Viewport fill_viewport;
     protected OrthographicCamera fill_camera;
@@ -63,12 +72,19 @@ class SceneStartScreen implements Scene {
         play_sprite.setSize(512, 128);
         play_sprite.setPosition((fill_camera.viewportWidth / 2) - (play_sprite.getWidth() / 2), (float) ((fill_camera.viewportHeight / 2.25) - (play_sprite.getHeight() / 2)));
 
+        load = new Texture("start_menu_play.png");
+        load_hovered = new Texture("start_menu_play_hovered.png");
+        load_sprite = new Sprite(load);
+        load_sprite.setSize(512 / 2, 128 / 2);
+        load_sprite.setPosition((fill_camera.viewportWidth / 2) - (load_sprite.getWidth() / 2), (fill_camera.viewportHeight / 2) + (load_sprite.getHeight() / 2) * 3);
+
+
         options = new Texture("TitleScreen/new_start_menu_options.png");
         options_hovered = new Texture("TitleScreen/new_start_menu_options_hovered.png");
         options_sprite = new Sprite(options);
         options_sprite.setSize(512/2, 128/2);
         options_sprite.setPosition((float) ((fill_camera.viewportWidth / 2.5) - (options_sprite.getWidth() / 2)), (float) ((fill_camera.viewportHeight / 3.75) - (options_sprite.getHeight() / 2)));
-        
+
         exit = new Texture("TitleScreen/exit.png");
         exit_hovered = new Texture("TitleScreen/exit_hovered.png");
         exit_sprite = new Sprite(exit);
@@ -98,6 +114,7 @@ class SceneStartScreen implements Scene {
         batch.setProjectionMatrix(fill_camera.combined);
         batch.begin();
         bg_sprite.draw(batch);
+        load_sprite.draw(batch);
         play_sprite.draw(batch);
         options_sprite.draw(batch);
         exit_sprite.draw(batch);
@@ -131,7 +148,7 @@ class SceneStartScreen implements Scene {
             }
         } else
             options_sprite.setTexture(options);
-        
+
         if (exit_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             exit_sprite.setTexture(exit_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
@@ -139,6 +156,14 @@ class SceneStartScreen implements Scene {
             }
         } else
             exit_sprite.setTexture(exit);
+
+        if (load_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
+            load_sprite.setTexture(load_hovered);
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                return 6;
+            }
+        } else
+            load_sprite.setTexture(load);
 
         // Stay in SceneStartScreen
         return scene_id;
