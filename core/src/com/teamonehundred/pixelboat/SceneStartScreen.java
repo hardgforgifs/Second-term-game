@@ -10,6 +10,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.esotericsoftware.kryo.Kryo;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 /**
  * Represents the Main Game Scene for when the boat race starts.
@@ -30,6 +35,10 @@ class SceneStartScreen implements Scene {
     protected Texture options;
     protected Texture options_hovered;
     protected Sprite options_sprite;
+
+    protected Texture load;
+    protected Texture load_hovered;
+    protected Sprite load_sprite;
 
     protected Viewport fill_viewport;
     protected OrthographicCamera fill_camera;
@@ -52,6 +61,12 @@ class SceneStartScreen implements Scene {
         bg_sprite = new Sprite(bg);
         bg_sprite.setPosition(0, 0);
         bg_sprite.setSize(1280, 720);
+
+        load = new Texture("start_menu_play.png");
+        load_hovered = new Texture("start_menu_play_hovered.png");
+        load_sprite = new Sprite(load);
+        load_sprite.setSize(512 / 2, 128 / 2);
+        load_sprite.setPosition((fill_camera.viewportWidth / 2) - (load_sprite.getWidth() / 2), (fill_camera.viewportHeight / 2) + (load_sprite.getHeight() / 2) * 3);
 
         play = new Texture("start_menu_play.png");
         play_hovered = new Texture("start_menu_play_hovered.png");
@@ -88,6 +103,7 @@ class SceneStartScreen implements Scene {
         batch.setProjectionMatrix(fill_camera.combined);
         batch.begin();
         bg_sprite.draw(batch);
+        load_sprite.draw(batch);
         play_sprite.draw(batch);
         options_sprite.draw(batch);
         batch.end();
@@ -120,6 +136,14 @@ class SceneStartScreen implements Scene {
             }
         } else
             options_sprite.setTexture(options);
+
+        if (load_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
+            load_sprite.setTexture(load_hovered);
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                return 6;
+            }
+        } else
+            load_sprite.setTexture(load);
 
         // Stay in SceneStartScreen
         return scene_id;

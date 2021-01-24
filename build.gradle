@@ -70,6 +70,10 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
-        
+//        api "com.esotericsoftware.kryo:kryo:2.24.02"
+        // https://mvnrepository.com/artifact/com.esotericsoftware/kryo
+        compile group: 'com.esotericsoftware', name: 'kryo', version: '5.0.3'
+
+
     }
 }
