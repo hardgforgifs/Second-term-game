@@ -13,6 +13,7 @@ import java.util.List;
  *
  * @author William Walton
  * @author Umer Fakher
+ * @modifiedBy Samuel Plane
  */
 abstract class Boat extends MovableObject implements CollisionObject {
     /* ################################### //
@@ -24,7 +25,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
     protected float durability = 1.f;  // from 0 to 1
     protected float durability_per_hit = .1f;
     protected float stamina = 1.f;  // from 0 to 1, percentage of stamina max
-    protected float stamina_usage = 0.005f;  //todo change this after testing
+    protected float stamina_usage = 0.002f;  //todo change this after testing
     protected float stamina_regen = .002f;
 
     protected List<Long> leg_times = new ArrayList<>();  // times for every previous leg
@@ -36,9 +37,11 @@ abstract class Boat extends MovableObject implements CollisionObject {
     protected int frames_to_animate = 0;
     protected int current_animation_frame = 0;
     protected int frames_elapsed = 0;
+    protected int stamina_delay = 0;
 
     protected boolean has_finished_leg = false;
     protected boolean has_started_leg = false;
+    protected boolean recovering = false;
 
     /* ################################### //
                   CONSTRUCTORS
@@ -106,23 +109,45 @@ abstract class Boat extends MovableObject implements CollisionObject {
      * Function called when this boat collides with another object
      *
      * @author William Walton
+     * @modifiedBy Samuel Plane
      */
     public void hasCollided() {
-        durability -= durability - durability_per_hit <= 0 ? 0 : durability_per_hit;
+        durability -= durability - durability_per_hit <= 0 ? durability : durability_per_hit;
         max_speed -= max_speed - 1 <= 5 ? 0 : 1;
+
+        //Implements the functionality for boats losing all their durability
+        if (durability <= 0) {
+            this.setStartTime(0);
+            this.setEndTime(500000);
+            this.setHasFinishedLeg(true);
+            this.setLegTime();
+        }
     }
 
+
     /**
-     * Function called when the boat accelerates
+     * Function called when the boat accelerates. Prevents acceleration when recovering
+     * and resets stamina delay each time the function is called
      *
      * @author William Walton
+     * @modifiedBy Samuel Plane
+     *
      */
     @Override
     public void accelerate() {
-        stamina = stamina - stamina_usage <= 0 ? 0 : stamina - stamina_usage;
-        if (stamina > 0) {
+        //Ensures the player has enough stamina to continue to row
+        if (stamina > stamina_usage & recovering == false) {
+            //Reduces the boat's stamina as they row
+            stamina = stamina - stamina_usage <= 0 ? 0 : stamina - stamina_usage;
             super.accelerate();
             frames_to_animate += 1;
+
+            //Stamina being regained is delayed to stop players spamming w key to exploit stamina
+            stamina_delay = 0;
+        } else {
+            //Sets recovering variable to true if the boat has run out of stamina,
+            //temporarily stopping the boat from recovering
+            recovering = true;
         }
 
         if (frames_to_animate > 0) {
@@ -144,11 +169,22 @@ abstract class Boat extends MovableObject implements CollisionObject {
      * Function called every frame when the game updates all objects positions
      *
      * @author William Walton
+     * @modifiedBy Samuel Plane
      */
     @Override
     public void updatePosition() {
         super.updatePosition();
-        stamina = stamina + stamina_regen >= 1 ? 1.f : stamina + stamina_regen;
+        if (stamina_delay == 60) {
+            //Boat recovers stamina with each frame if enough time has passed since it has used stamina
+            stamina = stamina + stamina_regen >= 1 ? 1.f : stamina + stamina_regen;
+            //Boat leaves the recovering phase once they have enough stamina, allowing them to row again
+            if (stamina > 0.4) {
+                recovering = false;
+            }
+        } else {
+            //Decreases the time left until a boat can regain stamina
+            stamina_delay += 1;
+        }
     }
 
     // Getter and Setter methods for attributes

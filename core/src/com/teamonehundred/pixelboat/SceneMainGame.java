@@ -30,6 +30,7 @@ class SceneMainGame implements Scene {
     protected List<Boat> all_boats;
 
     protected Texture bg;
+    protected Texture waiting;
 
     protected BoatRace race;
     protected SceneResultsScreen results;
@@ -61,6 +62,8 @@ class SceneMainGame implements Scene {
 
         race = new BoatRace(all_boats.subList(0, boats_per_race));
         leg_number++;
+
+        waiting = new Texture("WaitingGraphic.png");
     }
 
 
@@ -112,7 +115,6 @@ class SceneMainGame implements Scene {
 
             leg_number++;
 
-
             // generate some "realistic" times for all boats not shown
             for (int i = boats_per_race; i < all_boats.size(); i++) {
                 all_boats.get(i).setStartTime(0);
@@ -141,7 +143,6 @@ class SceneMainGame implements Scene {
         // stay in results after all legs done
         if (race.isFinished() && leg_number > 3) return 4;
 
-
         return scene_id;
     }
 
@@ -157,6 +158,7 @@ class SceneMainGame implements Scene {
         player.getCamera().viewportWidth = width;
     }
 
+
     /**
      * Getter method for returning list of boats which contain all boats in scene.
      *
@@ -167,6 +169,7 @@ class SceneMainGame implements Scene {
         return all_boats;
     }
 
+
     /**
      * Setter method for player boat spec in the scene.
      *
@@ -176,6 +179,7 @@ class SceneMainGame implements Scene {
     public void setPlayerSpec(int spec) {
         player.setSpec(spec);
     }
+
 
     /**
      * RaceThread class for Multi-threading.
