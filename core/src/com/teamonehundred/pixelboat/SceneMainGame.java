@@ -7,15 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.KryoSerializable;
-import com.esotericsoftware.kryo.Serializer;
-import com.esotericsoftware.kryo.io.Output;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -28,7 +19,7 @@ import java.util.List;
  * @author Umer Fakher
  * JavaDoc by Umer Fakher
  */
-class SceneMainGame implements Scene, KryoSerializable {
+class SceneMainGame implements Scene {
 
     protected int scene_id = 1;
 
@@ -54,46 +45,6 @@ class SceneMainGame implements Scene, KryoSerializable {
     // /Added
 
     protected boolean last_run = false;
-
-
-    Kryo kryo = new Kryo();
-
-    @Override
-    public void write(Kryo kryo, Output output) {
-        output.write(leg_number);
-        for (Boat b : all_boats){
-            output.writeFloat(b.sprite.getX());
-            output.writeFloat(b.sprite.getY());
-            output.writeFloat(b.sprite.getRotation());
-        }
-    }
-
-    @Override
-    public void read(Kryo kryo, com.esotericsoftware.kryo.io.Input input) {
-        SceneMainGame game_state = new SceneMainGame();
-        game_state.leg_number = input.readInt();
-        for (int i = 0; i < game_state.boats_per_race; i++) {
-            float x = input.readFloat();
-            float y = input.readFloat();
-            float rotation = input.readFloat();
-            game_state.all_boats.get(i).sprite.setPosition(x, y);
-            game_state.all_boats.get(i).sprite.setRotation(rotation);
-        }
-    }
-
-
-    public void saveGame() throws FileNotFoundException {
-        kryo.register(com.teamonehundred.pixelboat.SceneMainGame.class);
-//        kryo.register(com.teamonehundred.pixelboat.AIBoat.class);
-//        kryo.register(com.teamonehundred.pixelboat.BoatRace.class);
-//        kryo.register(com.badlogic.gdx.graphics.g2d.TextureRegion[].class);
-//        kryo.register(com.badlogic.gdx.graphics.g2d.TextureRegion.class);
-//        kryo.register(com.badlogic.gdx.graphics.Texture.class);
-//        kryo.register(ArrayList.class);
-        Output output = new Output(new FileOutputStream("file.dat"));
-        kryo.writeObject(output, this);
-        output.close();
-    }
 
 
     /**
@@ -231,12 +182,7 @@ class SceneMainGame implements Scene, KryoSerializable {
             if(main_menu_sprite.getBoundingRectangle().contains(mouse_pos.x, Gdx.graphics.getHeight() - mouse_pos.y)){
                 main_menu_sprite.setTexture(main_menu_button_hovered);
                 if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-                    try {
-                        saveGame();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    return 0;
+                    return 7;
                 }
             }
             else
