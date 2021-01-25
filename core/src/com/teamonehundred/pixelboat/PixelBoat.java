@@ -2,11 +2,9 @@ package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.esotericsoftware.kryo.Kryo;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 /**
  * Main class for the PixelBoat game.
@@ -32,13 +30,43 @@ public class PixelBoat extends ApplicationAdapter {
     // 6 = loaded game
     protected int scene_id = 0;
 
-    Kryo kryo = new Kryo();
+    Preferences pref;
 
-    private SceneMainGame loadGame() throws FileNotFoundException {
-        kryo.register(com.teamonehundred.pixelboat.SceneMainGame.class);
-        com.esotericsoftware.kryo.io.Input input = new com.esotericsoftware.kryo.io.Input(new FileInputStream("file.dat"));
-        SceneMainGame game_state = kryo.readObject(input, SceneMainGame.class);
-        input.close();
+    public void saveGame(SceneMainGame game_state) {
+        pref.putInteger("leg_number", game_state.leg_number);
+        pref.putInteger("spec_id", ((SceneBoatSelection)all_scenes[5]).getSpecID());
+        pref.putFloat("camera_x", game_state.player.getCamera().position.x);
+        pref.putFloat("camera_y", game_state.player.getCamera().position.y);
+
+        for (int i = 0; i < game_state.boats_per_race; i++) {
+            pref.putFloat("boat" + i + " x", game_state.all_boats.get(i).sprite.getX());
+            pref.putFloat("boat" + i + " y", game_state.all_boats.get(i).sprite.getY());
+            pref.putFloat("boat" + i + " rotation", game_state.all_boats.get(i).sprite.getRotation());
+            pref.putFloat("boat" + i + " speed", game_state.all_boats.get(i).speed);
+            pref.putFloat("boat" + i + " stamina", game_state.all_boats.get(i).stamina);
+            pref.putLong("boat" + i + " start_time", game_state.all_boats.get(i).start_time);
+        }
+    }
+
+    public SceneMainGame loadGame() {
+        SceneMainGame game_state = new SceneMainGame();
+        game_state.isPaused = true;
+        game_state.leg_number = pref.getInteger("leg_number");
+        game_state.setPlayerSpec(pref.getInteger("spec_id"));
+
+        float camera_x = pref.getFloat("camera_x");
+        float camera_y = pref.getFloat("camera_y");
+        game_state.player.camera.position.set(camera_x, camera_y, 0);
+        for (int i = 0; i < game_state.boats_per_race; i++) {
+            float x = pref.getFloat("boat" + i + " x");
+            float y = pref.getFloat("boat" + i + " y");
+            float rotation = pref.getFloat("boat" + i + " rotation");
+            game_state.all_boats.get(i).sprite.setPosition(x, y);
+            game_state.all_boats.get(i).sprite.setRotation(rotation);
+            game_state.all_boats.get(i).speed = pref.getFloat("boat" + i + " speed");
+            game_state.all_boats.get(i).stamina = pref.getFloat("boat" + i + " stamina");
+            game_state.all_boats.get(i).start_time = pref.getLong("boat" + i + " start_time");
+        }
         return game_state;
     }
 
@@ -49,13 +77,17 @@ public class PixelBoat extends ApplicationAdapter {
      */
     @Override
     public void create() {
-        all_scenes = new Scene[6];
+         pref = Gdx.app.getPreferences("save");
+//        kryo.register(SceneMainGame.class, new MainGameSerializer());
+
+        all_scenes = new Scene[7];
         all_scenes[0] = new SceneStartScreen();
         all_scenes[1] = new SceneMainGame();
         all_scenes[2] = new SceneOptionsMenu();
         all_scenes[3] = new SceneTutorial();
         all_scenes[4] = new SceneResultsScreen();
         all_scenes[5] = new SceneBoatSelection();
+        all_scenes[6] = null;
 
         batch = new SpriteBatch();
     }
@@ -76,15 +108,18 @@ public class PixelBoat extends ApplicationAdapter {
             // special case updates
             if (new_scene_id == 4)
                 ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
-            else if (new_scene_id == 3 && scene_id == 5)
+            else if (new_scene_id == 3 && scene_id == 5){
+                all_scenes[1] = new SceneMainGame();
                 ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
+            }
+
             else if (new_scene_id == 6){
-                try {
-                    all_scenes[5] = loadGame();
-                    new_scene_id = 5;
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                all_scenes[1] = loadGame();
+                new_scene_id = 1;
+            }
+            else if (new_scene_id == 7) {
+                saveGame((SceneMainGame) all_scenes[1]);
+                new_scene_id = 0;
             }
             // check if we need to change scene
             scene_id = new_scene_id;
@@ -100,7 +135,7 @@ public class PixelBoat extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
-
+        pref.flush();
         Gdx.app.exit();
         System.exit(0);
     }
