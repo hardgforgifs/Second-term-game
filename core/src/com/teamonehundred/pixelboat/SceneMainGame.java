@@ -29,6 +29,7 @@ public class SceneMainGame implements Scene {
     protected List<Boat> all_boats;
 
     protected Texture bg;
+    protected Texture waiting;
 
     protected BoatRace race;
 
@@ -107,6 +108,8 @@ public class SceneMainGame implements Scene {
 
         race = new BoatRace(all_boats.subList(0, boats_per_race));
         leg_number++;
+
+        waiting = new Texture("WaitingGraphic.png");
     }
 
 

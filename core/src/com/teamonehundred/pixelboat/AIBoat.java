@@ -65,6 +65,7 @@ class AIBoat extends Boat {
      *
      * @param collidables List of Collision Objects
      * @author James Frost
+     * @modifiedBy Samuel Plane
      */
     public void updatePosition(List<CollisionObject> collidables) {
         // TODO: Make this a method, and neaten it up
@@ -72,7 +73,7 @@ class AIBoat extends Boat {
         // TODO: Visible stamina for AI (maybe as debug option)
         if (!regen) {
             this.accelerate();
-            if (stamina <= 0.1) {
+            if (stamina <= stamina_usage * 3) {
                 regen = true;
             }
         } else {

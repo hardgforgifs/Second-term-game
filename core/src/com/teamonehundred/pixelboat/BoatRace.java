@@ -15,6 +15,7 @@ import java.util.List;
  *
  * @author William Walton
  * @author Umer Fakher
+ * @modifiedBy Samuel Plane
  * JavaDoc by Umer Fakher
  */
 public class BoatRace {
@@ -25,6 +26,7 @@ public class BoatRace {
     protected Texture start_banner;
     protected Texture bleachers_l;
     protected Texture bleachers_r;
+    protected Texture waiting;
 
     protected List<CollisionObject> obstacles;
 
@@ -63,6 +65,7 @@ public class BoatRace {
      * @param race_boats List of Boat A list of ai boats and the player boat.
      * @author William Walton
      * @author Umer Fakher
+     * @modifiedBy Samuel Plane
      * JavaDoc by Umer Fakher
      */
     public BoatRace(List<Boat> race_boats) {
@@ -70,6 +73,7 @@ public class BoatRace {
         start_banner = new Texture("start_banner.png");
         bleachers_l = new Texture("bleachers_l.png");
         bleachers_r = new Texture("bleachers_r.png");
+        waiting = new Texture("WaitingGraphic.png");
 
         boats = new ArrayList<>();
         boats.addAll(race_boats);
@@ -274,9 +278,9 @@ public class BoatRace {
      *
      * @param batch
      * @author Umer Fakher
+     * @modifiedBy Samuel Plane
      */
     public void draw(SpriteBatch batch) {
-
         // Retrieves sprites and calls function recursively.
         for (Sprite sp : getSprites())
             sp.draw(batch);
@@ -297,6 +301,11 @@ public class BoatRace {
 
                     //Draws a leg time display on the screen when the given boat has completed a leg of the race.
                     drawLegTimeDisplay(batch, b);
+                }
+
+                //Draws the waiting graphic if the player's boat has finished
+                if (b.hasFinishedLeg()) {
+                    batch.draw(waiting, b.getSprite().getX() - 250, b.getSprite().getY() + 200, 500, 100);
                 }
             }
         }
