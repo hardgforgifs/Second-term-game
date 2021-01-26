@@ -224,6 +224,10 @@ class SceneMainGame implements Scene {
         player.setSpec(spec);
     }
 
+    public void set_start_time(){
+        race.startTime = System.currentTimeMillis();
+    }
+
 
 
     /**

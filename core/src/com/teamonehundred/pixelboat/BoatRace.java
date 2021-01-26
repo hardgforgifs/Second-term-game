@@ -52,7 +52,6 @@ class BoatRace {
      * JavaDoc by Umer Fakher
      */
     BoatRace(List<Boat> race_boats) {
-        startTime = System.currentTimeMillis();
         lane_sep = new Texture("lane_buoy.png");
         start_banner = new Texture("start_banner.png");
         bleachers_l = new Texture("bleachers_l.png");

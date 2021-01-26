@@ -119,6 +119,10 @@ public class PixelBoat extends ApplicationAdapter {
                 ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
             }
 
+            if (new_scene_id == 1){
+                ((SceneMainGame) all_scenes[1]).set_start_time();
+            }
+
             else if (new_scene_id == 6){
                 all_scenes[1] = loadGame();
                 new_scene_id = 1;
