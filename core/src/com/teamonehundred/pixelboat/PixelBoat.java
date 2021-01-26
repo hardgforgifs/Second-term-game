@@ -47,8 +47,14 @@ public class PixelBoat extends ApplicationAdapter {
             pref.putFloat("boat" + i + " speed", game_state.all_boats.get(i).speed);
             pref.putFloat("boat" + i + " stamina", game_state.all_boats.get(i).stamina);
             pref.putLong("boat" + i + " start_time", game_state.all_boats.get(i).start_time);
+            pref.putLong("boat" + i + " end_time", game_state.all_boats.get(i).end_time);
             pref.putBoolean("boat" + i + " has_started_leg", game_state.all_boats.get(i).has_started_leg);
+            pref.putBoolean("boat" + i + " has_finished_leg", game_state.all_boats.get(i).has_finished_leg);
+            for (int j = 0; j < game_state.all_boats.get(i).leg_times.size(); j++) {
+                pref.putLong("leg_time" + i + j, game_state.all_boats.get(i).leg_times.get(j));
+            }
         }
+//        System.out.println(game_state.all_boats.get(0).leg_times.get(0));
     }
 
     public SceneMainGame loadGame() {
@@ -71,8 +77,19 @@ public class PixelBoat extends ApplicationAdapter {
             game_state.all_boats.get(i).speed = pref.getFloat("boat" + i + " speed");
             game_state.all_boats.get(i).stamina = pref.getFloat("boat" + i + " stamina");
             game_state.all_boats.get(i).start_time = pref.getLong("boat" + i + " start_time");
+            game_state.all_boats.get(i).end_time = pref.getLong("boat" + i + " end_time");
             game_state.all_boats.get(i).has_started_leg = pref.getBoolean("boat" + i + " has_started_leg");
+            game_state.all_boats.get(i).has_finished_leg = pref.getBoolean("boat" + i + " has_finished_leg");
+            int j = 0;
+            while (pref.getLong("leg_time" + i + j, -1) != -1) {
+                game_state.all_boats.get(i).leg_times.add(pref.getLong("leg_time" + i + j));
+                j++;
+            }
+
+
         }
+//        System.out.println(pref.getLong("leg_time" + 0 + 0));
+//        System.out.println(game_state.all_boats.get(0).leg_times.get(0));
         return game_state;
     }
 
