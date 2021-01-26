@@ -38,9 +38,9 @@ class SceneMainGame implements Scene {
     protected SceneBoatSelection boat_selection;
 
     // Added
-    protected Texture main_menu_button;
-    protected Texture main_menu_button_hovered;
-    protected Sprite main_menu_sprite;
+    protected Texture save_quit_button;
+    protected Texture save_quit_hovered;
+    protected Sprite save_quit_sprite;
     protected boolean isPaused = false;
     // /Added
 
@@ -60,12 +60,12 @@ class SceneMainGame implements Scene {
         all_boats = new ArrayList<>();
 
         // Added
-        main_menu_button = new Texture("start_menu_play.png");
-        main_menu_button_hovered = new Texture("start_menu_play_hovered.png");
-        main_menu_sprite = new Sprite(main_menu_button);
-        main_menu_sprite.setSize(512 / 2, 128 / 2);
-        main_menu_sprite.setPosition(((float)Gdx.graphics.getWidth()/ 2 - (main_menu_sprite.getWidth() / 2)),
-                                     ((float)Gdx.graphics.getHeight()/ 2) + (main_menu_sprite.getHeight() / 2));
+        save_quit_button = new Texture("SaveQuitUnselected.png");
+        save_quit_hovered = new Texture("SaveQuitSelected.png");
+        save_quit_sprite = new Sprite(save_quit_button);
+        save_quit_sprite.setSize(512 / 2, 128 / 2);
+        save_quit_sprite.setPosition(((float)Gdx.graphics.getWidth()/ 2 - (save_quit_sprite.getWidth() / 2)),
+                                     ((float)Gdx.graphics.getHeight()/ 2) + (save_quit_sprite.getHeight() / 2));
         // /Added
 
         all_boats.add(player);
@@ -113,7 +113,7 @@ class SceneMainGame implements Scene {
             // Create a local bach and display the main menu button
             SpriteBatch pause_batch =  new SpriteBatch();
             pause_batch.begin();
-            main_menu_sprite.draw(pause_batch);
+            save_quit_sprite.draw(pause_batch);
             pause_batch.end();
         }
         batch.end();
@@ -179,14 +179,14 @@ class SceneMainGame implements Scene {
         {
             Vector3 mouse_pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 //            System.out.println(mouse_pos);
-            if(main_menu_sprite.getBoundingRectangle().contains(mouse_pos.x, Gdx.graphics.getHeight() - mouse_pos.y)){
-                main_menu_sprite.setTexture(main_menu_button_hovered);
+            if(save_quit_sprite.getBoundingRectangle().contains(mouse_pos.x, Gdx.graphics.getHeight() - mouse_pos.y)){
+                save_quit_sprite.setTexture(save_quit_hovered);
                 if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                     return 7;
                 }
             }
             else
-                main_menu_sprite.setTexture(main_menu_button);
+                save_quit_sprite.setTexture(save_quit_button);
 
         }
         return scene_id;

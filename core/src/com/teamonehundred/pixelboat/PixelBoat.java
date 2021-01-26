@@ -33,6 +33,7 @@ public class PixelBoat extends ApplicationAdapter {
     Preferences pref;
 
     public void saveGame(SceneMainGame game_state) {
+        pref.clear();
         pref.putInteger("leg_number", game_state.leg_number);
         pref.putInteger("spec_id", ((SceneBoatSelection)all_scenes[5]).getSpecID());
         pref.putFloat("camera_x", game_state.player.getCamera().position.x);
@@ -48,6 +49,8 @@ public class PixelBoat extends ApplicationAdapter {
             pref.putFloat("boat" + i + " stamina", game_state.all_boats.get(i).stamina);
             pref.putLong("boat" + i + " start_time", game_state.all_boats.get(i).start_time);
             pref.putLong("boat" + i + " end_time", game_state.all_boats.get(i).end_time);
+            pref.putLong("boat" + i + " time_to_add", game_state.all_boats.get(i).time_to_add);
+            pref.putLong("boat" + i + " frames_raced", game_state.all_boats.get(i).frames_raced);
             pref.putBoolean("boat" + i + " has_started_leg", game_state.all_boats.get(i).has_started_leg);
             pref.putBoolean("boat" + i + " has_finished_leg", game_state.all_boats.get(i).has_finished_leg);
             for (int j = 0; j < game_state.all_boats.get(i).leg_times.size(); j++) {
@@ -78,6 +81,8 @@ public class PixelBoat extends ApplicationAdapter {
             game_state.all_boats.get(i).stamina = pref.getFloat("boat" + i + " stamina");
             game_state.all_boats.get(i).start_time = pref.getLong("boat" + i + " start_time");
             game_state.all_boats.get(i).end_time = pref.getLong("boat" + i + " end_time");
+            game_state.all_boats.get(i).time_to_add = pref.getLong("boat" + i + " time_to_add");
+            game_state.all_boats.get(i).frames_raced = pref.getLong("boat" + i + " frames_raced");
             game_state.all_boats.get(i).has_started_leg = pref.getBoolean("boat" + i + " has_started_leg");
             game_state.all_boats.get(i).has_finished_leg = pref.getBoolean("boat" + i + " has_finished_leg");
             int j = 0;
