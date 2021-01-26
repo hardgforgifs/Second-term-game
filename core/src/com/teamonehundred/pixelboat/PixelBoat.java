@@ -37,6 +37,8 @@ public class PixelBoat extends ApplicationAdapter {
         pref.putInteger("spec_id", ((SceneBoatSelection)all_scenes[5]).getSpecID());
         pref.putFloat("camera_x", game_state.player.getCamera().position.x);
         pref.putFloat("camera_y", game_state.player.getCamera().position.y);
+        pref.putLong("race_start_time", game_state.race.startTime);
+        pref.putLong("race_duration", game_state.race.time);
 
         for (int i = 0; i < game_state.boats_per_race; i++) {
             pref.putFloat("boat" + i + " x", game_state.all_boats.get(i).sprite.getX());
@@ -45,6 +47,7 @@ public class PixelBoat extends ApplicationAdapter {
             pref.putFloat("boat" + i + " speed", game_state.all_boats.get(i).speed);
             pref.putFloat("boat" + i + " stamina", game_state.all_boats.get(i).stamina);
             pref.putLong("boat" + i + " start_time", game_state.all_boats.get(i).start_time);
+            pref.putBoolean("boat" + i + " has_started_leg", game_state.all_boats.get(i).has_started_leg);
         }
     }
 
@@ -53,6 +56,8 @@ public class PixelBoat extends ApplicationAdapter {
         game_state.isPaused = true;
         game_state.leg_number = pref.getInteger("leg_number");
         game_state.setPlayerSpec(pref.getInteger("spec_id"));
+        game_state.race.startTime = pref.getLong("race_start_time");
+        game_state.race.time = pref.getLong("race_duration");
 
         float camera_x = pref.getFloat("camera_x");
         float camera_y = pref.getFloat("camera_y");
@@ -66,6 +71,7 @@ public class PixelBoat extends ApplicationAdapter {
             game_state.all_boats.get(i).speed = pref.getFloat("boat" + i + " speed");
             game_state.all_boats.get(i).stamina = pref.getFloat("boat" + i + " stamina");
             game_state.all_boats.get(i).start_time = pref.getLong("boat" + i + " start_time");
+            game_state.all_boats.get(i).has_started_leg = pref.getBoolean("boat" + i + " has_started_leg");
         }
         return game_state;
     }

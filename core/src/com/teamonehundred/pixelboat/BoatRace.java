@@ -30,13 +30,16 @@ class BoatRace {
     protected List<CollisionObject> obstacles;
 
     protected int start_y = 200;
-    protected int end_y = 40000;
+    protected int end_y = 10000;
 
     protected int lane_width = 400;
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane
 
     protected boolean is_finished = false;
     protected long total_frames = 0;
+
+    protected long time = 0;
+    protected long startTime;
 
     /**
      * Main constructor for a BoatRace.
@@ -49,6 +52,7 @@ class BoatRace {
      * JavaDoc by Umer Fakher
      */
     BoatRace(List<Boat> race_boats) {
+        startTime = System.currentTimeMillis();
         lane_sep = new Texture("lane_buoy.png");
         start_banner = new Texture("start_banner.png");
         bleachers_l = new Texture("bleachers_l.png");
@@ -114,6 +118,7 @@ class BoatRace {
      * @author Umer Fakher
      */
     public void runStep() {
+        time += Gdx.graphics.getDeltaTime() * 1000;
         // dnf after 5 mins
         if (total_frames++ > 60 * 60 * 5) {
             is_finished = true;
@@ -232,7 +237,7 @@ class BoatRace {
             if (b instanceof PlayerBoat) {
                 if (((PlayerBoat) b).hasStartedLeg()) {
                     //Calculate time elapsed from the start in milliseconds
-                    long i = (System.currentTimeMillis() - ((PlayerBoat) b).getStartTime(false));
+                    long i = (startTime + time - ((PlayerBoat) b).getStartTime(false));
 
                     //Displays and updates the time elapsed overlay and keeps position consistent with player's boat
                     drawTimeDisplay(batch, b, "", i, -((PlayerBoat) b).ui_bar_width / 2,
