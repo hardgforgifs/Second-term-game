@@ -116,7 +116,7 @@ class SceneStartScreen implements Scene {
             options_sprite.setTexture(options_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 // todo enable options when implemented
-                //return 2;
+                return 2;
             }
         } else
             options_sprite.setTexture(options);
