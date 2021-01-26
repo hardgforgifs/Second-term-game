@@ -200,7 +200,7 @@ public class PixelBoat extends ApplicationAdapter {
         all_scenes = new Scene[6];
         all_scenes[0] = new SceneStartScreen();
         all_scenes[1] = new SceneMainGame();
-        all_scenes[2] = new SceneOptionsMenu();
+        all_scenes[2] = new SceneSettings();
         all_scenes[3] = new SceneTutorial();
         all_scenes[4] = new SceneResultsScreen();
         all_scenes[5] = new SceneBoatSelection();
