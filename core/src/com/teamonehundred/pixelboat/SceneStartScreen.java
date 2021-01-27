@@ -68,14 +68,15 @@ class SceneStartScreen implements Scene {
         bg_sprite.setPosition(0, 0);
         bg_sprite.setSize(1280, 720);
 
-        load = new Texture("LoadGameUnselected.png");
-        load_hovered = new Texture("LoadGameSelected.png");
+
         play = new Texture("TitleScreen/new_start_menu_play.png");
         play_hovered = new Texture("TitleScreen/new_start_menu_play_hovered.png");
         play_sprite = new Sprite(play);
         play_sprite.setSize(512, 128);
         play_sprite.setPosition((fill_camera.viewportWidth / 2) - (play_sprite.getWidth() / 2), (float) ((fill_camera.viewportHeight / 2.25) - (play_sprite.getHeight() / 2)));
 
+        load = new Texture("LoadGameUnselected.png");
+        load_hovered = new Texture("LoadGameSelected.png");
         load_sprite = new Sprite(load);
         load_sprite.setSize(512 / 2, 128 / 2);
         load_sprite.setPosition((fill_camera.viewportWidth / 2) - (load_sprite.getWidth() / 2), (fill_camera.viewportHeight / 2) + (load_sprite.getHeight() / 2) * 3);
