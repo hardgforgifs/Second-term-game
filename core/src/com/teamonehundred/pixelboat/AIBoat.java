@@ -2,6 +2,7 @@ package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
+import java.lang.Math;
 
 import java.util.List;
 
@@ -71,13 +72,20 @@ class AIBoat extends Boat {
         // TODO: Make this a method, and neaten it up
         // TODO: Link Acc w/ turning for better AI (that one may take a bit of time though)
         // TODO: Visible stamina for AI (maybe as debug option)
+
+        double start = 0;
         if (!regen) {
             this.accelerate();
-            if (stamina <= stamina_usage * 3) {
+            if (stamina <= 0.2) {
                 regen = true;
             }
         } else {
-            if (stamina >= 0.5) {
+            //We calculate a random number here so that we can add some variety
+            //to the AI boat's behaviour
+            while (start <= 0.3 ) {
+                start = Math.random();
+            }
+            if (stamina >= start ) {
                 regen = false;
             }
         }
