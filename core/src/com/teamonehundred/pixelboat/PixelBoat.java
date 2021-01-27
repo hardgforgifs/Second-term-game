@@ -34,12 +34,24 @@ public class PixelBoat extends ApplicationAdapter {
 
     public void saveGame(SceneMainGame game_state) {
         pref.clear();
+        // Mark that a save exists in preferences
+        pref.putString("save", "save exists");
         pref.putInteger("leg_number", game_state.leg_number);
         pref.putInteger("spec_id", ((SceneBoatSelection)all_scenes[5]).getSpecID());
         pref.putFloat("camera_x", game_state.player.getCamera().position.x);
         pref.putFloat("camera_y", game_state.player.getCamera().position.y);
         pref.putLong("race_start_time", game_state.race.startTime);
         pref.putLong("race_duration", game_state.race.time);
+        for (int k = 0; k < game_state.race.obstacles.size(); k++) {
+            // Don't save the lane walls
+            if (!((Obstacle) game_state.race.obstacles.get(k)).getClass().getName().equals("com.teamonehundred.pixelboat.ObstacleLaneWall")) {
+                pref.putFloat("obstacle" + k + " x", ((Obstacle)game_state.race.obstacles.get(k)).getSprite().getX());
+                pref.putFloat("obstacle" + k + " y", ((Obstacle)game_state.race.obstacles.get(k)).getSprite().getY());
+                pref.putString("obstacle" + k + " class", ((Obstacle)game_state.race.obstacles.get(k)).getClass().getName());
+            }
+
+        }
+
 
         for (int i = 0; i < game_state.boats_per_race; i++) {
             pref.putFloat("boat" + i + " x", game_state.all_boats.get(i).sprite.getX());
@@ -67,6 +79,21 @@ public class PixelBoat extends ApplicationAdapter {
         game_state.setPlayerSpec(pref.getInteger("spec_id"));
         game_state.race.startTime = pref.getLong("race_start_time");
         game_state.race.time = pref.getLong("race_duration");
+
+        int k = 0;
+        float x_obstacle = pref.getFloat("obstacle" + k + " x", -1);
+        while(x_obstacle != -1) {
+            float y_obstacle = pref.getFloat("obstacle" + k + " y");
+            String className = pref.getString("obstacle" + k + " class");
+            if (className == "com.teamonehundred.pixelboat.ObstacleBranch")
+                game_state.race.obstacles.set(k, new ObstacleBranch((int) x_obstacle, (int) y_obstacle));
+            else if (className == "com.teamonehundred.pixelboat.ObstacleDuck")
+                game_state.race.obstacles.set(k, new ObstacleDuck((int) x_obstacle, (int) y_obstacle));
+            else if (className == "com.teamonehundred.pixelboat.ObstacleFloatingBranch")
+                game_state.race.obstacles.set(k, new ObstacleFloatingBranch((int) x_obstacle, (int) y_obstacle));
+            k++;
+            x_obstacle = pref.getFloat("obstacle" + k + " x", -1);
+        }
 
         float camera_x = pref.getFloat("camera_x");
         float camera_y = pref.getFloat("camera_y");
@@ -106,6 +133,7 @@ public class PixelBoat extends ApplicationAdapter {
     @Override
     public void create() {
          pref = Gdx.app.getPreferences("save");
+
 //        kryo.register(SceneMainGame.class, new MainGameSerializer());
 
         all_scenes = new Scene[7];
@@ -117,6 +145,9 @@ public class PixelBoat extends ApplicationAdapter {
         all_scenes[5] = new SceneBoatSelection();
         all_scenes[6] = null;
 
+        // Mark if a save already exists from a previous session
+        if (!pref.getString("save", "no save exists").equals("no save exists"))
+            ((SceneStartScreen)all_scenes[0]).is_saved_game = true;
         batch = new SpriteBatch();
     }
 
@@ -151,6 +182,8 @@ public class PixelBoat extends ApplicationAdapter {
             }
             else if (new_scene_id == 7) {
                 saveGame((SceneMainGame) all_scenes[1]);
+                // Mark that a save file now exists so we can load it from the main menu
+                ((SceneStartScreen)all_scenes[0]).is_saved_game = true;
                 new_scene_id = 0;
             }
             // check if we need to change scene
