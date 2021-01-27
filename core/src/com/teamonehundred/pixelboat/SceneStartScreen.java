@@ -43,6 +43,8 @@ class SceneStartScreen implements Scene {
     protected Viewport fill_viewport;
     protected OrthographicCamera fill_camera;
 
+    public boolean is_saved_game = false;
+
     /**
      * Main constructor for a SceneStartGame.
      * <p>
@@ -138,10 +140,15 @@ class SceneStartScreen implements Scene {
             options_sprite.setTexture(options);
 
         if (load_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
-            load_sprite.setTexture(load_hovered);
-            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-                return 6;
+            if (is_saved_game) {
+                load_sprite.setTexture(load_hovered);
+                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                    return 6;
+                }
             }
+            else
+                load_sprite.setTexture(load);
+
         } else
             load_sprite.setTexture(load);
 

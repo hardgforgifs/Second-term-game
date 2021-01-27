@@ -75,7 +75,7 @@ class BoatRace {
 
         obstacles = new ArrayList<>();
 
-        // add some random obstacles
+        // add some random obstacles, if this is a new game
         for (int i = 0; i < 100; i++)
             obstacles.add(new ObstacleBranch(
                     (int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
@@ -88,6 +88,7 @@ class BoatRace {
         for (int i = 0; i < 100; i++)
             obstacles.add(new ObstacleDuck((int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
                     (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
+
 
         // add the lane separators
         for (int lane = 0; lane <= boats.size(); lane++) {
