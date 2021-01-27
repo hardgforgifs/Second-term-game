@@ -173,7 +173,7 @@ class PlayerBoat extends Boat {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            this.turn(1);
+            this.turn( 1 );
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             this.turn(-1);
         }

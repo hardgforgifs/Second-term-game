@@ -26,7 +26,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
     protected float durability_per_hit = .1f;
     protected float stamina = 1.f;  // from 0 to 1, percentage of stamina max
     protected float stamina_usage = 0.002f;  //todo change this after testing
-    protected float stamina_regen = .002f;
+    protected float stamina_regen = .003f;
 
     protected List<Long> leg_times = new ArrayList<>();  // times for every previous leg
     protected long start_time = -1;
@@ -113,7 +113,6 @@ abstract class Boat extends MovableObject implements CollisionObject {
      */
     public void hasCollided() {
         durability -= durability - durability_per_hit <= 0 ? durability : durability_per_hit;
-        max_speed -= max_speed - 1 <= 5 ? 0 : 1;
 
         //Implements the functionality for boats losing all their durability
         if (durability <= 0) {
@@ -173,7 +172,14 @@ abstract class Boat extends MovableObject implements CollisionObject {
      */
     @Override
     public void updatePosition() {
-        super.updatePosition();
+        double dy = Math.cos((Math.toRadians(sprite.getRotation()))) * speed;
+        double dx = Math.sin((Math.toRadians(sprite.getRotation()))) * speed;
+
+        sprite.translate((float) (-dx), (float) dy);
+        speed -= speed - drag < 4 ? 0 : drag;
+
+        //super.updatePosition();
+
         if (stamina_delay == 60) {
             //Boat recovers stamina with each frame if enough time has passed since it has used stamina
             stamina = stamina + stamina_regen >= 1 ? 1.f : stamina + stamina_regen;
