@@ -36,13 +36,13 @@ class SceneStartScreen implements Scene {
     protected Texture options_hovered;
     protected Sprite options_sprite;
 
-    protected Texture exit;
-    protected Texture exit_hovered;
-    protected Sprite exit_sprite;
-
     protected Texture load;
     protected Texture load_hovered;
     protected Sprite load_sprite;
+
+    protected Texture exit;
+    protected Texture exit_hovered;
+    protected Sprite exit_sprite;
 
     protected Viewport fill_viewport;
     protected OrthographicCamera fill_camera;
