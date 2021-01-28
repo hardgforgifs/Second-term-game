@@ -1,0 +1,33 @@
+boat5.png
+size: 1500, 509
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Frame1
+  rotate: false
+  xy: 0, 0
+  size: 375, 509
+  orig: 375, 509
+  offset: 0, 0
+  index: -1
+Frame2
+  rotate: false
+  xy: 375, 0
+  size: 375, 509
+  orig: 375, 509
+  offset: 0, 0
+  index: -1
+Frame3
+  rotate: false
+  xy: 750, 0
+  size: 375, 509
+  orig: 375, 509
+  offset: 0, 0
+  index: -1
+Frame4
+  rotate: false
+  xy: 1125, 0
+  size: 375, 509
+  orig: 375, 509
+  offset: 0, 0
+  index: -1
