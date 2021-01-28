@@ -148,8 +148,7 @@ class SceneBoatSelection implements Scene {
         for (int i = 0; i < num_specs; i++)
             if (boat_option_sprites[i].getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             	boat_option_sprites[i].setTexture(boat_options_hovered[i]);
-            	stats_bg_sprite[i].setTexture(stats_boats[i]);          	
-            	System.out.print(i);
+            	stats_bg_sprite[i].setTexture(stats_boats[i]);
                 if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && is_new_click) {
                     spec_id = i;
                     return 3;  // return 3 to exit
