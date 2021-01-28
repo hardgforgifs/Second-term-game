@@ -72,26 +72,26 @@ class SceneStartScreen implements Scene {
         play = new Texture("TitleScreen/new_start_menu_play.png");
         play_hovered = new Texture("TitleScreen/new_start_menu_play_hovered.png");
         play_sprite = new Sprite(play);
-        play_sprite.setSize(512, 128);
-        play_sprite.setPosition((fill_camera.viewportWidth / 2) - (play_sprite.getWidth() / 2), (float) ((fill_camera.viewportHeight / 2.25) - (play_sprite.getHeight() / 2)));
+        play_sprite.setSize(512, 100);
+        play_sprite.setPosition((fill_camera.viewportWidth / 2) - (play_sprite.getWidth() / 2), (float) ((fill_camera.viewportHeight / 2) - (play_sprite.getHeight() / 2)));
 
         load = new Texture("LoadGameUnselected.png");
         load_hovered = new Texture("LoadGameSelected.png");
         load_sprite = new Sprite(load);
-        load_sprite.setSize(512 / 2, 128 / 2);
-        load_sprite.setPosition((fill_camera.viewportWidth / 2) - (load_sprite.getWidth() / 2), (fill_camera.viewportHeight / 2) + (load_sprite.getHeight() / 2) * 3);
+        load_sprite.setSize(512, 100);
+        load_sprite.setPosition((fill_camera.viewportWidth / 2) - (load_sprite.getWidth() / 2), (float) ((fill_camera.viewportHeight / 2.1) - (load_sprite.getHeight() / 2) * 3));
 
         options = new Texture("TitleScreen/new_start_menu_options.png");
         options_hovered = new Texture("TitleScreen/new_start_menu_options_hovered.png");
         options_sprite = new Sprite(options);
         options_sprite.setSize(512/2, 128/2);
-        options_sprite.setPosition((float) ((fill_camera.viewportWidth / 2.5) - (options_sprite.getWidth() / 2)), (float) ((fill_camera.viewportHeight / 3.75) - (options_sprite.getHeight() / 2)));
+        options_sprite.setPosition((float) ((fill_camera.viewportWidth / 2.5) - (options_sprite.getWidth() / 2)), (float) ((fill_camera.viewportHeight / 5) - (options_sprite.getHeight() / 2)));
 
         exit = new Texture("TitleScreen/exit.png");
         exit_hovered = new Texture("TitleScreen/exit_hovered.png");
         exit_sprite = new Sprite(exit);
         exit_sprite.setSize(512/2, 128/2);
-        exit_sprite.setPosition((float) ((fill_camera.viewportWidth / 2.5) + (exit_sprite.getWidth() / 2)), (float) ((fill_camera.viewportHeight / 3.75) - (exit_sprite.getHeight() / 2)));
+        exit_sprite.setPosition((float) ((fill_camera.viewportWidth / 2.5) + (exit_sprite.getWidth() / 2)), (float) ((fill_camera.viewportHeight / 5) - (exit_sprite.getHeight() / 2)));
     }
 
     /**
