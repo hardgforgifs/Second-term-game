@@ -1,0 +1,27 @@
+
+output.png
+size: 568,42
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+background
+  rotate: false
+  xy: 2, 23
+  size: 554, 19
+  orig: 554, 19
+  offset: 0, 0
+  index: -1
+before
+  rotate: false
+  xy: 2, 2
+  size: 554, 19
+  orig: 554, 19
+  offset: 0, 0
+  index: -1
+button
+  rotate: false
+  xy: 558, 13
+  size: 10, 29
+  orig: 10, 29
+  offset: 0, 0
+  index: -1
