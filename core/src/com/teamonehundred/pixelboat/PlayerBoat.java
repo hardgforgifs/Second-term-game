@@ -2,6 +2,7 @@ package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -31,6 +32,8 @@ class PlayerBoat extends Boat {
 
     protected int ui_bar_width = 500;
 
+	private Sound collisionsound;
+
     /* ################################### //
                   CONSTRUCTORS
     // ################################### */
@@ -41,10 +44,11 @@ class PlayerBoat extends Boat {
      * @param x int coordinate for the bottom left point of the boat
      * @param y int coordinate for the bottom left point of the boat
      * @author William Walton
+     * @param collisionsound 
      */
-    PlayerBoat(int x, int y) {
+    PlayerBoat(int x, int y, Sound collisionsound) {
         super(x, y);
-
+        this.collisionsound = collisionsound;
         initialise();
     }
 
@@ -239,5 +243,22 @@ class PlayerBoat extends Boat {
         stamina_bar.setSize((int) (ui_bar_width * stamina), 10);
         durability_bar.setSize((int) (ui_bar_width * durability), 10);
     }
+
+	@Override
+	public void checkCollisions(CollisionObject object) {
+		if (object instanceof Obstacle && !(
+                ((Obstacle) object).getSprite().getY() > sprite.getY() - 200 &&
+                        ((Obstacle) object).getSprite().getY() < sprite.getY() + 200 &&
+                        ((Obstacle) object).getSprite().getX() > sprite.getX() - 200 &&
+                        ((Obstacle) object).getSprite().getX() < sprite.getX() + 200))
+            return;
+        if (this.getBounds().isColliding(object.getBounds())) {
+        	collisionsound.play();
+            if (!(object instanceof ObstacleLaneWall))
+                hasCollided();
+            object.hasCollided();
+        }
+		
+	}
 
 }

@@ -3,6 +3,8 @@ package com.teamonehundred.pixelboat;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 
 /**
  * Main class for the PixelBoat game.
@@ -17,6 +19,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class PixelBoat extends ApplicationAdapter {
     protected Scene[] all_scenes;  // stores all game scenes and their data
     protected SpriteBatch batch;  // thing that draws the sprites
+    private Music startmusic;
+    private Music mainmusic;
+    private Music resultmusic;
+    private Sound collisionsound;
 
     // id of current game state
     // 0 = start menu
@@ -26,6 +32,9 @@ public class PixelBoat extends ApplicationAdapter {
     // 4 = results
     // 5 =boat selection
     protected int scene_id = 0;
+    
+    protected boolean init = true;
+	private Music[] musics;
 
     /**
      * Create method runs when the game starts.
@@ -34,17 +43,35 @@ public class PixelBoat extends ApplicationAdapter {
      */
     @Override
     public void create() {
+    	 startmusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/Funky_Full.mp3"));
+         mainmusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/Beyond The Win.mp3"));
+         resultmusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/victory_fireworks.mp3"));
+         collisionsound = Gdx.audio.newSound(Gdx.files.internal("sounds/wood_hit.mp3"));
+         startmusic.setLooping(true);
+         mainmusic.setLooping(true);
+         resultmusic.setLooping(true);
+         
+         
+        musics = new Music[]{startmusic,mainmusic,resultmusic};
+         
         all_scenes = new Scene[6];
         all_scenes[0] = new SceneStartScreen();
-        all_scenes[1] = new SceneMainGame();
-        all_scenes[2] = new SceneSettings();
+        all_scenes[1] = new SceneMainGame(collisionsound);
+        all_scenes[2] = new SceneSettings(musics);
         all_scenes[3] = new SceneTutorial();
         all_scenes[4] = new SceneResultsScreen();
         all_scenes[5] = new SceneBoatSelection();
 
         batch = new SpriteBatch();
+        
+       
     }
 
+    private void stopMusic() {
+    	for(Music music:musics) {
+			music.stop();
+		};
+    }
     /**
      * Render function runs every frame.
      * <p>
@@ -52,14 +79,30 @@ public class PixelBoat extends ApplicationAdapter {
      */
     @Override
     public void render() {
+    	if (init) {
+        	startmusic.play();
+        	init=false;
+        }
         // run the current scene
         int new_scene_id = all_scenes[scene_id].update();
         all_scenes[scene_id].draw(batch);
 
         if (scene_id != new_scene_id) {
             // special case updates
-            if (new_scene_id == 4)
-                ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
+            if (new_scene_id == 4) {
+            	stopMusic();
+            	resultmusic.play();
+            	((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
+            }
+//                ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
+            else if (new_scene_id == 0) {
+            	stopMusic();
+            	startmusic.play();
+            }
+            else if (new_scene_id == 1) {
+            	stopMusic();
+            	mainmusic.play();
+            }
             else if (new_scene_id == 3 && scene_id == 5)
                 ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
 
@@ -77,7 +120,15 @@ public class PixelBoat extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
-
+        if (startmusic != null) {
+        	startmusic.dispose();
+        }
+        if (mainmusic != null) {
+        	mainmusic.dispose();
+        }
+        if (collisionsound != null) {
+        	collisionsound.dispose();
+        }
         Gdx.app.exit();
         System.exit(0);
     }

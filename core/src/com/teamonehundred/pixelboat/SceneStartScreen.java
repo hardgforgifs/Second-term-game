@@ -33,6 +33,7 @@ class SceneStartScreen implements Scene {
 
     protected Viewport fill_viewport;
     protected OrthographicCamera fill_camera;
+    
 
     /**
      * Main constructor for a SceneStartGame.
