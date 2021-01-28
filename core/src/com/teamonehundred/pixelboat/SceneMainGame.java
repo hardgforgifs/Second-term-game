@@ -1,10 +1,12 @@
 package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import com.badlogic.gdx.math.Vector3;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -35,7 +37,15 @@ class SceneMainGame implements Scene {
     protected SceneResultsScreen results;
     protected SceneBoatSelection boat_selection;
 
+    // Added
+    protected Texture save_quit_button;
+    protected Texture save_quit_hovered;
+    protected Sprite save_quit_sprite;
+    protected boolean isPaused = false;
+    // /Added
+
     protected boolean last_run = false;
+
 
     /**
      * Main constructor for a SceneMainGame.
@@ -48,6 +58,15 @@ class SceneMainGame implements Scene {
         player = new PlayerBoat(-15, 0);
         player.setName("Player");
         all_boats = new ArrayList<>();
+
+        // Added
+        save_quit_button = new Texture("SaveQuitUnselected.png");
+        save_quit_hovered = new Texture("SaveQuitSelected.png");
+        save_quit_sprite = new Sprite(save_quit_button);
+        save_quit_sprite.setSize(512 / 2, 128 / 2);
+        save_quit_sprite.setPosition(((float)Gdx.graphics.getWidth()/ 2 - (save_quit_sprite.getWidth() / 2)),
+                                     ((float)Gdx.graphics.getHeight()/ 2) + (save_quit_sprite.getHeight() / 2));
+        // /Added
 
         all_boats.add(player);
         for (int i = 0; i < (boats_per_race * groups_per_game) - 1; i++) {
@@ -89,7 +108,14 @@ class SceneMainGame implements Scene {
 
         batch.draw(bg, -10000, -2000, 0, 0, 1000000, 10000000);
         race.draw(batch);
-
+        if (isPaused)
+        {
+            // Create a local bach and display the main menu button
+            SpriteBatch pause_batch =  new SpriteBatch();
+            pause_batch.begin();
+            save_quit_sprite.draw(pause_batch);
+            pause_batch.end();
+        }
         batch.end();
     }
 
@@ -102,46 +128,67 @@ class SceneMainGame implements Scene {
      * @author William Walton
      */
     public int update() {
-        if (player.hasFinishedLeg()) {
-            while (!race.isFinished()) race.runStep();
-        }
-        if (!race.isFinished()) race.runStep();
-            // only run 3 guaranteed legs
-        else if (leg_number < 3) {
-            race = new BoatRace(all_boats.subList(0, boats_per_race));
-
-            leg_number++;
-
-
-            // generate some "realistic" times for all boats not shown
-            for (int i = boats_per_race; i < all_boats.size(); i++) {
-                all_boats.get(i).setStartTime(0);
-                all_boats.get(i).setEndTime((long) (65000 + 10000 * Math.random()));
-                all_boats.get(i).setLegTime();
-            }
-
-            return 4;
-
-        } else if (leg_number == 3) {
-            // sort boats based on best time
-            Collections.sort(all_boats, new Comparator<Boat>() {
-                @Override
-                public int compare(Boat b1, Boat b2) {
-                    return (int) (b1.getBestTime() - b2.getBestTime());
-                }
-            });
-
-            race = new BoatRace(all_boats.subList(0, boats_per_race));
-            last_run = true;
-            leg_number++;
-
-            return 4;
-        }
-
         // stay in results after all legs done
         if (race.isFinished() && leg_number > 3) return 4;
 
+        // Added
+        // Check if the pause button is pressed
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P))
+        {
+            isPaused = !isPaused;
+        }
 
+        if (!isPaused) {
+            if (player.hasFinishedLeg()) {
+                while (!race.isFinished()) race.runStep();
+            }
+            if (!race.isFinished()) race.runStep();
+                // only run 3 guaranteed legs
+            else if (leg_number < 3) {
+                race = new BoatRace(all_boats.subList(0, boats_per_race));
+
+                leg_number++;
+
+
+                // generate some "realistic" times for all boats not shown
+                for (int i = boats_per_race; i < all_boats.size(); i++) {
+                    all_boats.get(i).setStartTime(0);
+                    all_boats.get(i).setEndTime((long) (65000 + 10000 * Math.random()));
+                    all_boats.get(i).setLegTime();
+                }
+
+                return 4;
+
+            } else if (leg_number == 3) {
+                // sort boats based on best time
+                Collections.sort(all_boats, new Comparator<Boat>() {
+                    @Override
+                    public int compare(Boat b1, Boat b2) {
+                        return (int) (b1.getBestTime() - b2.getBestTime());
+                    }
+                });
+
+                race = new BoatRace(all_boats.subList(0, boats_per_race));
+                last_run = true;
+                leg_number++;
+
+                return 4;
+            }
+        }
+        else
+        {
+            Vector3 mouse_pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+//            System.out.println(mouse_pos);
+            if(save_quit_sprite.getBoundingRectangle().contains(mouse_pos.x, Gdx.graphics.getHeight() - mouse_pos.y)){
+                save_quit_sprite.setTexture(save_quit_hovered);
+                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                    return 7;
+                }
+            }
+            else
+                save_quit_sprite.setTexture(save_quit_button);
+
+        }
         return scene_id;
     }
 
@@ -176,6 +223,12 @@ class SceneMainGame implements Scene {
     public void setPlayerSpec(int spec) {
         player.setSpec(spec);
     }
+
+    public void set_start_time(){
+        race.startTime = System.currentTimeMillis();
+    }
+
+
 
     /**
      * RaceThread class for Multi-threading.
