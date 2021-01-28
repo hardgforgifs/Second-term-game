@@ -2,6 +2,7 @@ package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -69,10 +70,10 @@ public class SceneMainGame implements Scene {
      * Initialises a BoatRace, player's boat, AI boats and scene textures.
      *
      * @author William Walton
+     * @param collisionsound
      */
-    public SceneMainGame() {
-//        static_batch = new SpriteBatch();
-        player = new PlayerBoat(-15, 0);
+    SceneMainGame(Sound collisionsound) {
+        player = new PlayerBoat(-15, 0,collisionsound );
         player.setName("Player");
         all_boats = new ArrayList<>();
 

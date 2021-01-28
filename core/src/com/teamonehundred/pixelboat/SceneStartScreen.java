@@ -33,6 +33,7 @@ public class SceneStartScreen implements Scene {
 
     protected Viewport fill_viewport;
     protected OrthographicCamera fill_camera;
+    
 
     // Added block of code for assessment 2
     protected Texture load;

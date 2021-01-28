@@ -4,6 +4,8 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 
 
 /**
@@ -19,6 +21,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class PixelBoat extends ApplicationAdapter {
     protected Scene[] all_scenes;  // stores all game scenes and their data
     protected SpriteBatch batch;  // thing that draws the sprites
+    private Music startmusic;
+    private Music mainmusic;
+    private Music resultmusic;
+    private Sound collisionsound;
 
     // id of current game state
     // 0 = start menu
@@ -28,6 +34,9 @@ public class PixelBoat extends ApplicationAdapter {
     // 4 = results
     // 5 = boat selection
     protected int scene_id = 0;
+    
+    protected boolean init = true;
+	private Music[] musics;
 
     // Added block of code for assessment 2
     protected Preferences pref;
@@ -197,10 +206,21 @@ public class PixelBoat extends ApplicationAdapter {
         pref = Gdx.app.getPreferences("save");
         // End of added block of code for assessment 2
 
+    	 startmusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/Funky_Full.mp3"));
+         mainmusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/Beyond The Win.mp3"));
+         resultmusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/victory_fireworks.mp3"));
+         collisionsound = Gdx.audio.newSound(Gdx.files.internal("sounds/wood_hit.mp3"));
+         startmusic.setLooping(true);
+         mainmusic.setLooping(true);
+         resultmusic.setLooping(true);
+         
+         
+        musics = new Music[]{startmusic,mainmusic,resultmusic};
+         
         all_scenes = new Scene[6];
         all_scenes[0] = new SceneStartScreen();
-        all_scenes[1] = new SceneMainGame();
-        all_scenes[2] = new SceneSettings();
+        all_scenes[1] = new SceneMainGame(collisionsound);
+        all_scenes[2] = new SceneSettings(musics);
         all_scenes[3] = new SceneTutorial();
         all_scenes[4] = new SceneResultsScreen();
         all_scenes[5] = new SceneBoatSelection();
@@ -215,6 +235,11 @@ public class PixelBoat extends ApplicationAdapter {
         // End of added block of code for assessment 2
     }
 
+    private void stopMusic() {
+    	for(Music music:musics) {
+			music.stop();
+		};
+    }
     /**
      * Render function runs every frame.
      * <p>
@@ -222,6 +247,10 @@ public class PixelBoat extends ApplicationAdapter {
      */
     @Override
     public void render() {
+    	if (init) {
+        	startmusic.play();
+        	init=false;
+        }
         // run the current scene
         int new_scene_id = all_scenes[scene_id].update();
         all_scenes[scene_id].draw(batch);
@@ -236,8 +265,15 @@ public class PixelBoat extends ApplicationAdapter {
             if (new_scene_id == 4) {
                 ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
                 // Added block of code for assessment 2
+                stopMusic();
+                resultmusic.play();
                 ((SceneResultsScreen) all_scenes[4]).leg_no = ((SceneMainGame) all_scenes[1]).getLeg_number();
                 // End of added block of code for assessment 2
+            }
+
+            else if (new_scene_id == 0) {
+                stopMusic();
+                startmusic.play();
             }
 
             else if (new_scene_id == 3 && scene_id == 5){
@@ -250,6 +286,8 @@ public class PixelBoat extends ApplicationAdapter {
 
             // Added block of code for assessment 2
             else if (new_scene_id == 1){
+                stopMusic();
+                mainmusic.play();
                 ((SceneMainGame) all_scenes[1]).resetBoats();
             }
 
@@ -268,7 +306,6 @@ public class PixelBoat extends ApplicationAdapter {
             // check if we need to change scene
             scene_id = new_scene_id;
         }
-
     }
 
     /**
@@ -280,11 +317,15 @@ public class PixelBoat extends ApplicationAdapter {
     public void dispose() {
         disposeScenes();
         batch.dispose();
-        static_batch.dispose();
-        // Added block of code for assessment 2
-        // Using the flush method assures the persistence of the save file
-        pref.flush();
-        // End of added block of code for assessment 2
+        if (startmusic != null) {
+        	startmusic.dispose();
+        }
+        if (mainmusic != null) {
+        	mainmusic.dispose();
+        }
+        if (collisionsound != null) {
+        	collisionsound.dispose();
+        }
         Gdx.app.exit();
         System.exit(0);
     }

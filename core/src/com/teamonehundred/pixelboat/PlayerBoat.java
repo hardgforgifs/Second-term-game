@@ -2,6 +2,7 @@ package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -35,7 +36,10 @@ public class PlayerBoat extends Boat {
 
     // Added block of code for assessment 2
     protected Texture[] effect_textures;
+    private Sound collisionsound;
     // End of added block of code for assessment 2
+
+
 
     /* ################################### //
                   CONSTRUCTORS
@@ -48,9 +52,9 @@ public class PlayerBoat extends Boat {
      * @param y int coordinate for the bottom left point of the boat
      * @author William Walton
      */
-    public PlayerBoat(int x, int y) {
+    public PlayerBoat(int x, int y, Sound collisionsound) {
         super(x, y);
-
+        this.collisionsound = collisionsound;
         initialise();
     }
 
@@ -202,4 +206,5 @@ public class PlayerBoat extends Boat {
         stamina_bar.setSize((int) (ui_bar_width * stamina), 10);
         durability_bar.setSize((int) (ui_bar_width * durability), 10);
     }
+
 }
