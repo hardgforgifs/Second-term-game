@@ -18,7 +18,7 @@ import java.util.List;
  * @author Umer Fakher
  * JavaDoc by Umer Fakher
  */
-class BoatRace {
+public class BoatRace {
     protected List<Boat> boats;
 
     protected BitmapFont font; //TimingTest
@@ -27,16 +27,37 @@ class BoatRace {
     protected Texture bleachers_l;
     protected Texture bleachers_r;
 
+    public List<CollisionObject> getObstacles() {
+        return obstacles;
+    }
+
     protected List<CollisionObject> obstacles;
 
     protected int start_y = 200;
+
+    public int getEnd_y() {
+        return end_y;
+    }
+
     protected int end_y = 40000;
+
+    public int getLane_width() {
+        return lane_width;
+    }
 
     protected int lane_width = 400;
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane
 
     protected boolean is_finished = false;
     protected long total_frames = 0;
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
 
     protected long time = 0;
     protected long startTime;
@@ -51,7 +72,7 @@ class BoatRace {
      * @author Umer Fakher
      * JavaDoc by Umer Fakher
      */
-    BoatRace(List<Boat> race_boats) {
+    public BoatRace(List<Boat> race_boats) {
         lane_sep = new Texture("lane_buoy.png");
         start_banner = new Texture("start_banner.png");
         bleachers_l = new Texture("bleachers_l.png");

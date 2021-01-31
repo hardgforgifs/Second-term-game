@@ -14,7 +14,7 @@ import java.util.List;
  * @author William Walton
  * @author Umer Fakher
  */
-abstract class Boat extends MovableObject implements CollisionObject {
+public abstract class Boat extends MovableObject implements CollisionObject {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */
@@ -23,6 +23,11 @@ abstract class Boat extends MovableObject implements CollisionObject {
 
     protected float durability = 1.f;  // from 0 to 1
     protected float durability_per_hit = .1f;
+
+    public float getStamina() {
+        return stamina;
+    }
+
     protected float stamina = 1.f;  // from 0 to 1, percentage of stamina max
     protected float stamina_usage = 0.005f;  //todo change this after testing
     protected float stamina_regen = .002f;
@@ -39,6 +44,12 @@ abstract class Boat extends MovableObject implements CollisionObject {
 
     protected boolean has_finished_leg = false;
     protected boolean has_started_leg = false;
+
+    public int getSpecID() {
+        return specID;
+    }
+
+    protected int specID;
 
     /* ################################### //
                   CONSTRUCTORS

@@ -19,19 +19,39 @@ import java.util.List;
  * @author Umer Fakher
  * JavaDoc by Umer Fakher
  */
-class SceneMainGame implements Scene {
+public class SceneMainGame implements Scene {
 
     protected int scene_id = 1;
+
+    public int getLeg_number() {
+        return leg_number;
+    }
+
+    public void setLeg_number(int leg_number) {
+        this.leg_number = leg_number;
+    }
 
     protected int leg_number = 0;
 
     protected int boats_per_race = 7;
     protected int groups_per_game = 3;
 
+    public PlayerBoat getPlayer() {
+        return player;
+    }
+
     protected PlayerBoat player;
     protected List<Boat> all_boats;
 
     protected Texture bg;
+
+    public BoatRace getRace() {
+        return race;
+    }
+
+    public void setRace(BoatRace race) {
+        this.race = race;
+    }
 
     protected BoatRace race;
     protected SceneResultsScreen results;
@@ -54,7 +74,7 @@ class SceneMainGame implements Scene {
      *
      * @author William Walton
      */
-    SceneMainGame() {
+    public SceneMainGame() {
         player = new PlayerBoat(-15, 0);
         player.setName("Player");
         all_boats = new ArrayList<>();
@@ -224,8 +244,12 @@ class SceneMainGame implements Scene {
         player.setSpec(spec);
     }
 
-    public void set_start_time(){
+    public void set_start_time() {
         race.startTime = System.currentTimeMillis();
+    }
+
+    public long get_start_time() {
+        return race.startTime;
     }
 
 

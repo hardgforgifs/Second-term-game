@@ -17,6 +17,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * JavaDoc by Umer Fakher
  */
 public class PixelBoat extends ApplicationAdapter {
+    public Scene[] getAll_scenes() {
+        return all_scenes;
+    }
+
+    public void setAll_scenes(Scene[] all_scenes) {
+        this.all_scenes = all_scenes;
+    }
+
     protected Scene[] all_scenes;  // stores all game scenes and their data
     protected SpriteBatch batch;  // thing that draws the sprites
 
@@ -30,14 +38,18 @@ public class PixelBoat extends ApplicationAdapter {
     // 6 = loaded game
     protected int scene_id = 0;
 
-    Preferences pref;
+    public void setPref(Preferences pref) {
+        this.pref = pref;
+    }
+
+    protected Preferences pref;
 
     public void saveGame(SceneMainGame game_state) {
         pref.clear();
         // Mark that a save exists in preferences
         pref.putString("save", "save exists");
         pref.putInteger("leg_number", game_state.leg_number);
-        pref.putInteger("spec_id", ((SceneBoatSelection)all_scenes[5]).getSpecID());
+        pref.putInteger("player_spec_id", ((SceneMainGame)all_scenes[1]).player.getSpecID());
         pref.putFloat("camera_x", game_state.player.getCamera().position.x);
         pref.putFloat("camera_y", game_state.player.getCamera().position.y);
         pref.putLong("race_start_time", game_state.race.startTime);
@@ -69,14 +81,13 @@ public class PixelBoat extends ApplicationAdapter {
                 pref.putLong("leg_time" + i + j, game_state.all_boats.get(i).leg_times.get(j));
             }
         }
-//        System.out.println(game_state.all_boats.get(0).leg_times.get(0));
     }
 
     public SceneMainGame loadGame() {
         SceneMainGame game_state = new SceneMainGame();
         game_state.isPaused = true;
         game_state.leg_number = pref.getInteger("leg_number");
-        game_state.setPlayerSpec(pref.getInteger("spec_id"));
+        game_state.setPlayerSpec(pref.getInteger("player_spec_id"));
         game_state.race.startTime = pref.getLong("race_start_time");
         game_state.race.time = pref.getLong("race_duration");
 
@@ -85,11 +96,11 @@ public class PixelBoat extends ApplicationAdapter {
         while(x_obstacle != -1) {
             float y_obstacle = pref.getFloat("obstacle" + k + " y");
             String className = pref.getString("obstacle" + k + " class");
-            if (className == "com.teamonehundred.pixelboat.ObstacleBranch")
+            if (className.equals("com.teamonehundred.pixelboat.ObstacleBranch"))
                 game_state.race.obstacles.set(k, new ObstacleBranch((int) x_obstacle, (int) y_obstacle));
-            else if (className == "com.teamonehundred.pixelboat.ObstacleDuck")
+            else if (className.equals("com.teamonehundred.pixelboat.ObstacleDuck"))
                 game_state.race.obstacles.set(k, new ObstacleDuck((int) x_obstacle, (int) y_obstacle));
-            else if (className == "com.teamonehundred.pixelboat.ObstacleFloatingBranch")
+            else if (className.equals("com.teamonehundred.pixelboat.ObstacleFloatingBranch"))
                 game_state.race.obstacles.set(k, new ObstacleFloatingBranch((int) x_obstacle, (int) y_obstacle));
             k++;
             x_obstacle = pref.getFloat("obstacle" + k + " x", -1);
@@ -134,7 +145,6 @@ public class PixelBoat extends ApplicationAdapter {
     public void create() {
          pref = Gdx.app.getPreferences("save");
 
-//        kryo.register(SceneMainGame.class, new MainGameSerializer());
 
         all_scenes = new Scene[7];
         all_scenes[0] = new SceneStartScreen();

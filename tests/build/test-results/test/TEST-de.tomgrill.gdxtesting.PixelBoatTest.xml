@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="de.tomgrill.gdxtesting.PixelBoatTest" tests="3" skipped="0" failures="3" errors="0" timestamp="2021-01-31T11:55:07" hostname="dragos-VirtualBox" time="0.059">
+  <properties/>
+  <testcase name="testSaveCameraPosition" classname="de.tomgrill.gdxtesting.PixelBoatTest" time="0.02">
+    <failure message="com.badlogic.gdx.utils.GdxRuntimeException: Couldn't load file: boat.png" type="com.badlogic.gdx.utils.GdxRuntimeException">com.badlogic.gdx.utils.GdxRuntimeException: Couldn't load file: boat.png
+	at com.badlogic.gdx.graphics.Pixmap.&lt;init&gt;(Pixmap.java:144)
+	at com.badlogic.gdx.graphics.TextureData$Factory.loadFromFile(TextureData.java:98)
+	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:122)
+	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:114)
+	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:110)
+	at com.teamonehundred.pixelboat.GameObject.initialise(GameObject.java:133)
+	at com.teamonehundred.pixelboat.GameObject.&lt;init&gt;(GameObject.java:83)
+	at com.teamonehundred.pixelboat.MovableObject.&lt;init&gt;(MovableObject.java:57)
+	at com.teamonehundred.pixelboat.Boat.&lt;init&gt;(Boat.java:68)
+	at com.teamonehundred.pixelboat.PlayerBoat.&lt;init&gt;(PlayerBoat.java:46)
+	at com.teamonehundred.pixelboat.SceneMainGame.&lt;init&gt;(SceneMainGame.java:70)
+	at de.tomgrill.gdxtesting.PixelBoatTest.createNewGame(PixelBoatTest.java:27)
+	at de.tomgrill.gdxtesting.PixelBoatTest.testSaveCameraPosition(PixelBoatTest.java:94)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at de.tomgrill.gdxtesting.GdxTestRunner.render(GdxTestRunner.java:59)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:129)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
+Caused by: com.badlogic.gdx.utils.GdxRuntimeException: File not found: boat.png (Internal)
+	at com.badlogic.gdx.files.FileHandle.read(FileHandle.java:142)
+	at com.badlogic.gdx.files.FileHandle.readBytes(FileHandle.java:228)
+	at com.badlogic.gdx.graphics.Pixmap.&lt;init&gt;(Pixmap.java:141)
+	... 25 more
+</failure>
+  </testcase>
+  <testcase name="testSaveSpecID" classname="de.tomgrill.gdxtesting.PixelBoatTest" time="0.0">
+    <failure message="com.badlogic.gdx.utils.GdxRuntimeException: Couldn't load file: boat.png" type="com.badlogic.gdx.utils.GdxRuntimeException">com.badlogic.gdx.utils.GdxRuntimeException: Couldn't load file: boat.png
+	at com.badlogic.gdx.graphics.Pixmap.&lt;init&gt;(Pixmap.java:144)
+	at com.badlogic.gdx.graphics.TextureData$Factory.loadFromFile(TextureData.java:98)
+	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:122)
+	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:114)
+	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:110)
+	at com.teamonehundred.pixelboat.GameObject.initialise(GameObject.java:133)
+	at com.teamonehundred.pixelboat.GameObject.&lt;init&gt;(GameObject.java:83)
+	at com.teamonehundred.pixelboat.MovableObject.&lt;init&gt;(MovableObject.java:57)
+	at com.teamonehundred.pixelboat.Boat.&lt;init&gt;(Boat.java:68)
+	at com.teamonehundred.pixelboat.PlayerBoat.&lt;init&gt;(PlayerBoat.java:46)
+	at com.teamonehundred.pixelboat.SceneMainGame.&lt;init&gt;(SceneMainGame.java:70)
+	at de.tomgrill.gdxtesting.PixelBoatTest.createNewGame(PixelBoatTest.java:27)
+	at de.tomgrill.gdxtesting.PixelBoatTest.testSaveSpecID(PixelBoatTest.java:70)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at de.tomgrill.gdxtesting.GdxTestRunner.render(GdxTestRunner.java:59)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:129)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
+Caused by: com.badlogic.gdx.utils.GdxRuntimeException: File not found: boat.png (Internal)
+	at com.badlogic.gdx.files.FileHandle.read(FileHandle.java:142)
+	at com.badlogic.gdx.files.FileHandle.readBytes(FileHandle.java:228)
+	at com.badlogic.gdx.graphics.Pixmap.&lt;init&gt;(Pixmap.java:141)
+	... 25 more
+</failure>
+  </testcase>
+  <testcase name="testSaveLegNumber" classname="de.tomgrill.gdxtesting.PixelBoatTest" time="0.0">
+    <failure message="com.badlogic.gdx.utils.GdxRuntimeException: Couldn't load file: boat.png" type="com.badlogic.gdx.utils.GdxRuntimeException">com.badlogic.gdx.utils.GdxRuntimeException: Couldn't load file: boat.png
+	at com.badlogic.gdx.graphics.Pixmap.&lt;init&gt;(Pixmap.java:144)
+	at com.badlogic.gdx.graphics.TextureData$Factory.loadFromFile(TextureData.java:98)
+	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:122)
+	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:114)
+	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:110)
+	at com.teamonehundred.pixelboat.GameObject.initialise(GameObject.java:133)
+	at com.teamonehundred.pixelboat.GameObject.&lt;init&gt;(GameObject.java:83)
+	at com.teamonehundred.pixelboat.MovableObject.&lt;init&gt;(MovableObject.java:57)
+	at com.teamonehundred.pixelboat.Boat.&lt;init&gt;(Boat.java:68)
+	at com.teamonehundred.pixelboat.PlayerBoat.&lt;init&gt;(PlayerBoat.java:46)
+	at com.teamonehundred.pixelboat.SceneMainGame.&lt;init&gt;(SceneMainGame.java:70)
+	at de.tomgrill.gdxtesting.PixelBoatTest.createNewGame(PixelBoatTest.java:27)
+	at de.tomgrill.gdxtesting.PixelBoatTest.testSaveLegNumber(PixelBoatTest.java:45)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at de.tomgrill.gdxtesting.GdxTestRunner.render(GdxTestRunner.java:59)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:129)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
+Caused by: com.badlogic.gdx.utils.GdxRuntimeException: File not found: boat.png (Internal)
+	at com.badlogic.gdx.files.FileHandle.read(FileHandle.java:142)
+	at com.badlogic.gdx.files.FileHandle.readBytes(FileHandle.java:228)
+	at com.badlogic.gdx.graphics.Pixmap.&lt;init&gt;(Pixmap.java:141)
+	... 25 more
+</failure>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

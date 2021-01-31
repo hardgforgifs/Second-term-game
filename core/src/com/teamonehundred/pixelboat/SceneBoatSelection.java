@@ -18,10 +18,14 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * @author William Walton
  * JavaDoc by Umer Fakher
  */
-class SceneBoatSelection implements Scene {
+public class SceneBoatSelection implements Scene {
     protected int scene_id = 5;
 
     protected boolean is_new_click = false;
+
+    public void setSpec_id(int spec_id) {
+        this.spec_id = spec_id;
+    }
 
     protected int spec_id = 0;
     protected int num_specs = 5;
