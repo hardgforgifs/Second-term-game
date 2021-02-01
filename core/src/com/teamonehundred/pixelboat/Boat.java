@@ -28,6 +28,10 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         return stamina;
     }
 
+    public void setStamina(float stamina) {
+        this.stamina = stamina;
+    }
+
     protected float stamina = 1.f;  // from 0 to 1, percentage of stamina max
     protected float stamina_usage = 0.005f;  //todo change this after testing
     protected float stamina_regen = .002f;

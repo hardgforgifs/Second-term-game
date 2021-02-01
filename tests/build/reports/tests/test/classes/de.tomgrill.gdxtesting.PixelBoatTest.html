@@ -23,13 +23,13 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">3</div>
+<div class="counter">1</div>
 <p>tests</p>
 </div>
 </td>
 <td>
 <div class="infoBox" id="failures">
-<div class="counter">3</div>
+<div class="counter">1</div>
 <p>failures</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.020s</div>
+<div class="counter">0.012s</div>
 <p>duration</p>
 </div>
 </td>
@@ -70,8 +70,8 @@
 <div id="tab0" class="tab">
 <h2>Failed tests</h2>
 <div class="test">
-<a name="testSaveCameraPosition"></a>
-<h3 class="failures">testSaveCameraPosition</h3>
+<a name="testSaveRaceStartTime"></a>
+<h3 class="failures">testSaveRaceStartTime</h3>
 <span class="code">
 <pre>com.badlogic.gdx.utils.GdxRuntimeException: Couldn't load file: boat.png
 	at com.badlogic.gdx.graphics.Pixmap.&lt;init&gt;(Pixmap.java:144)
@@ -84,87 +84,9 @@
 	at com.teamonehundred.pixelboat.MovableObject.&lt;init&gt;(MovableObject.java:57)
 	at com.teamonehundred.pixelboat.Boat.&lt;init&gt;(Boat.java:68)
 	at com.teamonehundred.pixelboat.PlayerBoat.&lt;init&gt;(PlayerBoat.java:46)
-	at com.teamonehundred.pixelboat.SceneMainGame.&lt;init&gt;(SceneMainGame.java:70)
-	at de.tomgrill.gdxtesting.PixelBoatTest.createNewGame(PixelBoatTest.java:27)
-	at de.tomgrill.gdxtesting.PixelBoatTest.testSaveCameraPosition(PixelBoatTest.java:94)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
-	at de.tomgrill.gdxtesting.GdxTestRunner.render(GdxTestRunner.java:59)
-	at com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:129)
-	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
-Caused by: com.badlogic.gdx.utils.GdxRuntimeException: File not found: boat.png (Internal)
-	at com.badlogic.gdx.files.FileHandle.read(FileHandle.java:142)
-	at com.badlogic.gdx.files.FileHandle.readBytes(FileHandle.java:228)
-	at com.badlogic.gdx.graphics.Pixmap.&lt;init&gt;(Pixmap.java:141)
-	... 25 more
-</pre>
-</span>
-</div>
-<div class="test">
-<a name="testSaveLegNumber"></a>
-<h3 class="failures">testSaveLegNumber</h3>
-<span class="code">
-<pre>com.badlogic.gdx.utils.GdxRuntimeException: Couldn't load file: boat.png
-	at com.badlogic.gdx.graphics.Pixmap.&lt;init&gt;(Pixmap.java:144)
-	at com.badlogic.gdx.graphics.TextureData$Factory.loadFromFile(TextureData.java:98)
-	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:122)
-	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:114)
-	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:110)
-	at com.teamonehundred.pixelboat.GameObject.initialise(GameObject.java:133)
-	at com.teamonehundred.pixelboat.GameObject.&lt;init&gt;(GameObject.java:83)
-	at com.teamonehundred.pixelboat.MovableObject.&lt;init&gt;(MovableObject.java:57)
-	at com.teamonehundred.pixelboat.Boat.&lt;init&gt;(Boat.java:68)
-	at com.teamonehundred.pixelboat.PlayerBoat.&lt;init&gt;(PlayerBoat.java:46)
-	at com.teamonehundred.pixelboat.SceneMainGame.&lt;init&gt;(SceneMainGame.java:70)
-	at de.tomgrill.gdxtesting.PixelBoatTest.createNewGame(PixelBoatTest.java:27)
-	at de.tomgrill.gdxtesting.PixelBoatTest.testSaveLegNumber(PixelBoatTest.java:45)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
-	at de.tomgrill.gdxtesting.GdxTestRunner.render(GdxTestRunner.java:59)
-	at com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:129)
-	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
-Caused by: com.badlogic.gdx.utils.GdxRuntimeException: File not found: boat.png (Internal)
-	at com.badlogic.gdx.files.FileHandle.read(FileHandle.java:142)
-	at com.badlogic.gdx.files.FileHandle.readBytes(FileHandle.java:228)
-	at com.badlogic.gdx.graphics.Pixmap.&lt;init&gt;(Pixmap.java:141)
-	... 25 more
-</pre>
-</span>
-</div>
-<div class="test">
-<a name="testSaveSpecID"></a>
-<h3 class="failures">testSaveSpecID</h3>
-<span class="code">
-<pre>com.badlogic.gdx.utils.GdxRuntimeException: Couldn't load file: boat.png
-	at com.badlogic.gdx.graphics.Pixmap.&lt;init&gt;(Pixmap.java:144)
-	at com.badlogic.gdx.graphics.TextureData$Factory.loadFromFile(TextureData.java:98)
-	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:122)
-	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:114)
-	at com.badlogic.gdx.graphics.Texture.&lt;init&gt;(Texture.java:110)
-	at com.teamonehundred.pixelboat.GameObject.initialise(GameObject.java:133)
-	at com.teamonehundred.pixelboat.GameObject.&lt;init&gt;(GameObject.java:83)
-	at com.teamonehundred.pixelboat.MovableObject.&lt;init&gt;(MovableObject.java:57)
-	at com.teamonehundred.pixelboat.Boat.&lt;init&gt;(Boat.java:68)
-	at com.teamonehundred.pixelboat.PlayerBoat.&lt;init&gt;(PlayerBoat.java:46)
-	at com.teamonehundred.pixelboat.SceneMainGame.&lt;init&gt;(SceneMainGame.java:70)
-	at de.tomgrill.gdxtesting.PixelBoatTest.createNewGame(PixelBoatTest.java:27)
-	at de.tomgrill.gdxtesting.PixelBoatTest.testSaveSpecID(PixelBoatTest.java:70)
+	at com.teamonehundred.pixelboat.SceneMainGame.&lt;init&gt;(SceneMainGame.java:78)
+	at de.tomgrill.gdxtesting.PixelBoatTest.createNewGame(PixelBoatTest.java:25)
+	at de.tomgrill.gdxtesting.PixelBoatTest.testSaveRaceStartTime(PixelBoatTest.java:124)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -198,18 +120,8 @@ Caused by: com.badlogic.gdx.utils.GdxRuntimeException: File not found: boat.png 
 </tr>
 </thead>
 <tr>
-<td class="failures">testSaveCameraPosition</td>
-<td class="failures">0.020s</td>
-<td class="failures">failed</td>
-</tr>
-<tr>
-<td class="failures">testSaveLegNumber</td>
-<td class="failures">0s</td>
-<td class="failures">failed</td>
-</tr>
-<tr>
-<td class="failures">testSaveSpecID</td>
-<td class="failures">0s</td>
+<td class="failures">testSaveRaceStartTime</td>
+<td class="failures">0.012s</td>
 <td class="failures">failed</td>
 </tr>
 </table>
@@ -222,7 +134,7 @@ Caused by: com.badlogic.gdx.utils.GdxRuntimeException: File not found: boat.png 
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 5.4.1</a> at Jan 31, 2021, 1:55:07 PM</p>
+<a href="http://www.gradle.org">Gradle 5.4.1</a> at Jan 31, 2021, 5:44:43 PM</p>
 </div>
 </div>
 </body>

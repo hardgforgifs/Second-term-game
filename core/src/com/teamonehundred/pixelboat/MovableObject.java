@@ -20,6 +20,10 @@ abstract class MovableObject extends GameObject {
         return speed;
     }
 
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+
     protected float speed = 0;
     protected float drag = .04f;  // amount speed is reduced by every frame naturally
     protected float acceleration = .2f;

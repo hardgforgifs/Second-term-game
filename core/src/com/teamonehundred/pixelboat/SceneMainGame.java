@@ -33,6 +33,10 @@ public class SceneMainGame implements Scene {
 
     protected int leg_number = 0;
 
+    public int getBoats_per_race() {
+        return boats_per_race;
+    }
+
     protected int boats_per_race = 7;
     protected int groups_per_game = 3;
 
