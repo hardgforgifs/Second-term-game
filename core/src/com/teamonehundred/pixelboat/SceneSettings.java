@@ -3,6 +3,7 @@ package com.teamonehundred.pixelboat;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -29,9 +30,13 @@ public class SceneSettings implements Scene{
     private Texture background_img;
     private Skin skin;
     private TextureAtlas atlas;
-    private Slider slider;
+    private Slider master_slider;
+    private Slider music_slider;
+    private Slider sound_slider;
     private Image bg_img;
-    private Label label_vol;
+    private Label label_master_vol;
+    private Label label_music_vol;
+    private Label label_sound_vol;
     private BitmapFont bitmapfont;
     private Button back_setting;
     private Texture back;
@@ -72,7 +77,9 @@ public class SceneSettings implements Scene{
     	this.musics = music;
     	
     	final Preferences prefs = Gdx.app.getPreferences("setting\\gamesetting");
-		float volume = prefs.getFloat("Volume", 0.5f);
+		float mastervolume = prefs.getFloat("MasterVolume", 0.5f);
+    	float musicvolume = prefs.getFloat("MusicVolume",0.5f);
+    	float soundvolume = prefs.getFloat("SoundVolume",0.5f);
     	
     	stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
@@ -82,9 +89,17 @@ public class SceneSettings implements Scene{
 		
 		style.font = bitmapfont;
 		style.fontColor = new Color(0,0,0,1);
-		label_vol = new Label("MusicsVolume",style);
-		label_vol.setPosition(100,480);
-		label_vol.setFontScale(1.0f);
+		label_master_vol = new Label("MasterVolume",style);
+		label_master_vol.setPosition(100,480);
+		label_master_vol.setFontScale(0.6f);
+		
+		label_music_vol = new Label("MusicVolume",style);
+		label_music_vol.setPosition(100,280);
+		label_music_vol.setFontScale(0.6f);
+		
+		label_sound_vol = new Label("Sound effect",style);
+		label_sound_vol.setPosition(100,80);
+		label_sound_vol.setFontScale(0.6f);
 		
 		background_img = new Texture(Gdx.files.internal("setting\\bg_settings.png"));
 		bg_img = new Image(new TextureRegion(background_img));
@@ -108,28 +123,68 @@ public class SceneSettings implements Scene{
 		
 		skin = new Skin(Gdx.files.internal("setting\\setting_slider/slider.json"));
 		atlas = new TextureAtlas("setting\\setting_slider/slider.atlas");
-		slider = new Slider(0 ,100 ,1 ,false ,skin);
-		slider.setSize(554,19);
-		slider.setPosition(300, 500);
-		slider.setZIndex(1);
+		master_slider = new Slider(0 ,100 ,1 ,false ,skin);
+		master_slider.setSize(554,19);
+		master_slider.setPosition(350, 500);
+		master_slider.setZIndex(1);
 		
-		slider.setValue(volume*100);
-		slider.addListener(new ChangeListener(){
+		master_slider.setValue(mastervolume*100);
+		master_slider.addListener(new ChangeListener(){
 
 			@Override
 			public void changed(ChangeEvent event, com.badlogic.gdx.scenes.scene2d.Actor actor) {
-				float vol = slider.getValue()/100;
+				float mastervol = master_slider.getValue()/100;
 				for(Music music:musics) {
-					music.setVolume(vol);
+					music.setVolume(mastervol);
 				};
-				prefs.putFloat("Volume", vol);
+				prefs.putFloat("MasterVolume", mastervol);
+				prefs.flush();
+			}
+		});
+		
+		music_slider = new Slider(0 ,100 ,1 ,false ,skin);
+		music_slider.setSize(554,19);
+		music_slider.setPosition(350, 300);
+		music_slider.setZIndex(1);
+		
+		music_slider.setValue(musicvolume*100);
+		music_slider.addListener(new ChangeListener(){
+
+			@Override
+			public void changed(ChangeEvent event, com.badlogic.gdx.scenes.scene2d.Actor actor) {
+				float mastervol = master_slider.getValue()/100;
+				float musicvol = music_slider.getValue()/100;
+				for(Music music:musics) {
+					music.setVolume(mastervol*musicvol);
+				};
+				prefs.putFloat("MusicVolume", musicvol);
+				prefs.flush();
+			}
+		});
+		
+		sound_slider = new Slider(0 ,100 ,1 ,false ,skin);
+		sound_slider.setSize(554,19);
+		sound_slider.setPosition(350, 100);
+		sound_slider.setZIndex(1);
+		
+		sound_slider.setValue(soundvolume*100);
+		sound_slider.addListener(new ChangeListener(){
+
+			@Override
+			public void changed(ChangeEvent event, com.badlogic.gdx.scenes.scene2d.Actor actor) {
+				float soundvol = sound_slider.getValue()/100;
+				prefs.putFloat("SoundVolume", soundvol);
 				prefs.flush();
 			}
 		});
 		
 		stage.addActor(bg_img);
-		stage.addActor(slider);
-		stage.addActor(label_vol);
+		stage.addActor(master_slider);
+		stage.addActor(music_slider);
+		stage.addActor(sound_slider);
+		stage.addActor(label_master_vol);
+		stage.addActor(label_music_vol);
+		stage.addActor(label_sound_vol);
 		stage.addActor(back_setting);
     }
 }

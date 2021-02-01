@@ -2,11 +2,9 @@ package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-
 
 /**
  * Main class for the PixelBoat game.
@@ -248,6 +246,7 @@ public class PixelBoat extends ApplicationAdapter {
     @Override
     public void render() {
     	if (init) {
+    		setMusicVol(startmusic);
         	startmusic.play();
         	init=false;
         }
@@ -266,6 +265,7 @@ public class PixelBoat extends ApplicationAdapter {
                 ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
                 // Added block of code for assessment 2
                 stopMusic();
+                setMusicVol(resultmusic);
                 resultmusic.play();
                 ((SceneResultsScreen) all_scenes[4]).leg_no = ((SceneMainGame) all_scenes[1]).getLeg_number();
                 // End of added block of code for assessment 2
@@ -273,6 +273,7 @@ public class PixelBoat extends ApplicationAdapter {
 
             else if (new_scene_id == 0) {
                 stopMusic();
+                setMusicVol(startmusic);
                 startmusic.play();
             }
 
@@ -287,6 +288,7 @@ public class PixelBoat extends ApplicationAdapter {
             // Added block of code for assessment 2
             else if (new_scene_id == 1){
                 stopMusic();
+                setMusicVol(mainmusic);
                 mainmusic.play();
                 ((SceneMainGame) all_scenes[1]).resetBoats();
             }
@@ -308,7 +310,15 @@ public class PixelBoat extends ApplicationAdapter {
         }
     }
 
-    /**
+    private void setMusicVol(Music music) {
+    	final Preferences prefs = Gdx.app.getPreferences("setting\\gamesetting");
+    	float mastervolume = prefs.getFloat("MasterVolume", 0.5f);
+    	float musicvolume = prefs.getFloat("MusicVolume",0.5f);
+    	float r_musicvolume = mastervolume*musicvolume;
+		music.setVolume(r_musicvolume);
+	}
+
+	/**
      * Disposes unneeded SpriteBatch and exits application.
      * <p>
      * Runs when the game needs to close.
