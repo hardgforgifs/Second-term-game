@@ -10,11 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-//import com.esotericsoftware.kryo.Kryo;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 
 /**
  * Represents the Main Game Scene for when the boat race starts.
@@ -36,6 +31,10 @@ class SceneStartScreen implements Scene {
     protected Texture options_hovered;
     protected Sprite options_sprite;
 
+    protected Viewport fill_viewport;
+    protected OrthographicCamera fill_camera;
+
+    // Added block of code for assessment 2
     protected Texture load;
     protected Texture load_hovered;
     protected Sprite load_sprite;
@@ -44,10 +43,8 @@ class SceneStartScreen implements Scene {
     protected Texture exit_hovered;
     protected Sprite exit_sprite;
 
-    protected Viewport fill_viewport;
-    protected OrthographicCamera fill_camera;
-
     public boolean is_saved_game = false;
+    // End of added block of code for assessment 2
 
     /**
      * Main constructor for a SceneStartGame.
@@ -68,7 +65,7 @@ class SceneStartScreen implements Scene {
         bg_sprite.setPosition(0, 0);
         bg_sprite.setSize(1280, 720);
 
-
+        // Modified block of code for assessment 2
         play = new Texture("TitleScreen/new_start_menu_play.png");
         play_hovered = new Texture("TitleScreen/new_start_menu_play_hovered.png");
         play_sprite = new Sprite(play);
@@ -92,6 +89,7 @@ class SceneStartScreen implements Scene {
         exit_sprite = new Sprite(exit);
         exit_sprite.setSize(512/2, 128/2);
         exit_sprite.setPosition((float) ((fill_camera.viewportWidth / 2.5) + (exit_sprite.getWidth() / 2)), (float) ((fill_camera.viewportHeight / 5) - (exit_sprite.getHeight() / 2)));
+        // End of modified block of code for assessment 2
     }
 
     /**
@@ -116,10 +114,12 @@ class SceneStartScreen implements Scene {
         batch.setProjectionMatrix(fill_camera.combined);
         batch.begin();
         bg_sprite.draw(batch);
-        load_sprite.draw(batch);
         play_sprite.draw(batch);
         options_sprite.draw(batch);
+        // Added block of code for assessment 2
+        load_sprite.draw(batch);
         exit_sprite.draw(batch);
+        // End of added block of code for assessment 2
         batch.end();
     }
 
@@ -151,6 +151,7 @@ class SceneStartScreen implements Scene {
         } else
             options_sprite.setTexture(options);
 
+        // Added block of code for assessment 2
         if (exit_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             exit_sprite.setTexture(exit_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
@@ -171,6 +172,7 @@ class SceneStartScreen implements Scene {
 
         } else
             load_sprite.setTexture(load);
+        // End of added block of code for assessment 2
 
         // Stay in SceneStartScreen
         return scene_id;

@@ -27,23 +27,11 @@ public class BoatRace {
     protected Texture bleachers_l;
     protected Texture bleachers_r;
 
-    public List<CollisionObject> getObstacles() {
-        return obstacles;
-    }
-
     protected List<CollisionObject> obstacles;
 
     protected int start_y = 200;
 
-    public int getEnd_y() {
-        return end_y;
-    }
-
     protected int end_y = 40000;
-
-    public int getLane_width() {
-        return lane_width;
-    }
 
     protected int lane_width = 400;
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane
@@ -51,16 +39,22 @@ public class BoatRace {
     protected boolean is_finished = false;
     protected long total_frames = 0;
 
-    public long getTime() {
-        return time;
-    }
-
-    public void setTime(long time) {
-        this.time = time;
-    }
-
+    // Added block of code for assessment 2
     protected long time = 0;
     protected long startTime;
+
+    public List<CollisionObject> getObstacles() { return obstacles; }
+
+    public int getEnd_y() { return end_y; }
+
+    public int getLane_width() {
+        return lane_width;
+    }
+
+    public long getTime() { return time; }
+
+    public void setTime(long time) { this.time = time; }
+    // End of added block of code for assessment 2
 
     /**
      * Main constructor for a BoatRace.
@@ -96,7 +90,7 @@ public class BoatRace {
 
         obstacles = new ArrayList<>();
 
-        // add some random obstacles, if this is a new game
+        // add some random obstacles
         for (int i = 0; i < 100; i++)
             obstacles.add(new ObstacleBranch(
                     (int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
@@ -139,7 +133,9 @@ public class BoatRace {
      * @author Umer Fakher
      */
     public void runStep() {
+        // Added block of code for assessment 2
         time += Gdx.graphics.getDeltaTime() * 1000;
+        // End of added block of code for assessment 2
         // dnf after 5 mins
         if (total_frames++ > 60 * 60 * 5) {
             is_finished = true;
@@ -257,8 +253,10 @@ public class BoatRace {
             //If current boat b is the player's boat then can display hud for this boat
             if (b instanceof PlayerBoat) {
                 if (((PlayerBoat) b).hasStartedLeg()) {
+                    // Modified block of code for assessment 2
                     //Calculate time elapsed from the start in milliseconds
                     long i = (startTime + time - ((PlayerBoat) b).getStartTime(false));
+                    // End of modified block of code for assessment 2
 
                     //Displays and updates the time elapsed overlay and keeps position consistent with player's boat
                     drawTimeDisplay(batch, b, "", i, -((PlayerBoat) b).ui_bar_width / 2,

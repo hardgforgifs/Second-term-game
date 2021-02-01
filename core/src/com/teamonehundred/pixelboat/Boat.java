@@ -24,14 +24,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     protected float durability = 1.f;  // from 0 to 1
     protected float durability_per_hit = .1f;
 
-    public float getStamina() {
-        return stamina;
-    }
-
-    public void setStamina(float stamina) {
-        this.stamina = stamina;
-    }
-
     protected float stamina = 1.f;  // from 0 to 1, percentage of stamina max
     protected float stamina_usage = 0.005f;  //todo change this after testing
     protected float stamina_regen = .002f;
@@ -49,11 +41,16 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     protected boolean has_finished_leg = false;
     protected boolean has_started_leg = false;
 
-    public int getSpecID() {
-        return specID;
-    }
-
+    // Added block of code for assessment 2
     protected int specID;
+
+    public float getStamina() { return stamina; }
+
+    public void setStamina(float stamina) { this.stamina = stamina; }
+
+    public int getSpecID() { return specID; }
+    // End of added block of code for assessment 2
+
 
     /* ################################### //
                   CONSTRUCTORS

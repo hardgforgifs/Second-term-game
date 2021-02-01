@@ -20,56 +20,51 @@ import java.util.List;
  * JavaDoc by Umer Fakher
  */
 public class SceneMainGame implements Scene {
-
     protected int scene_id = 1;
-
-    public int getLeg_number() {
-        return leg_number;
-    }
-
-    public void setLeg_number(int leg_number) {
-        this.leg_number = leg_number;
-    }
 
     protected int leg_number = 0;
 
-    public int getBoats_per_race() {
-        return boats_per_race;
-    }
-
     protected int boats_per_race = 7;
     protected int groups_per_game = 3;
-
-    public PlayerBoat getPlayer() {
-        return player;
-    }
 
     protected PlayerBoat player;
     protected List<Boat> all_boats;
 
     protected Texture bg;
 
-    public BoatRace getRace() {
-        return race;
-    }
-
-    public void setRace(BoatRace race) {
-        this.race = race;
-    }
-
     protected BoatRace race;
-    protected SceneResultsScreen results;
-    protected SceneBoatSelection boat_selection;
 
-    // Added
+    protected boolean last_run = false;
+
+    // Added block of code for assessment 2
     protected Texture save_quit_button;
     protected Texture save_quit_hovered;
     protected Sprite save_quit_sprite;
     protected boolean isPaused = false;
-    // /Added
 
-    protected boolean last_run = false;
 
+    public int getLeg_number() { return leg_number; }
+
+    public void setLeg_number(int leg_number) { this.leg_number = leg_number; }
+
+    public int getBoats_per_race() { return boats_per_race; }
+
+    public PlayerBoat getPlayer() {
+        return player;
+    }
+
+    public BoatRace getRace() {
+        return race;
+    }
+
+    public void set_start_time() {
+        race.startTime = System.currentTimeMillis();
+    }
+
+    public long get_start_time() {
+        return race.startTime;
+    }
+    // End of added block of code for assessment 2
 
     /**
      * Main constructor for a SceneMainGame.
@@ -83,14 +78,14 @@ public class SceneMainGame implements Scene {
         player.setName("Player");
         all_boats = new ArrayList<>();
 
-        // Added
+        // Added block of code for assessment 2
         save_quit_button = new Texture("SaveQuitUnselected.png");
         save_quit_hovered = new Texture("SaveQuitSelected.png");
         save_quit_sprite = new Sprite(save_quit_button);
         save_quit_sprite.setSize(512 / 2, 128 / 2);
         save_quit_sprite.setPosition(((float)Gdx.graphics.getWidth()/ 2 - (save_quit_sprite.getWidth() / 2)),
                                      ((float)Gdx.graphics.getHeight()/ 2) + (save_quit_sprite.getHeight() / 2));
-        // /Added
+        // End of added block of code for assessment 2
 
         all_boats.add(player);
         for (int i = 0; i < (boats_per_race * groups_per_game) - 1; i++) {
@@ -132,6 +127,8 @@ public class SceneMainGame implements Scene {
 
         batch.draw(bg, -10000, -2000, 0, 0, 1000000, 10000000);
         race.draw(batch);
+
+        // Added block of code for assessment 2
         if (isPaused)
         {
             // Create a local bach and display the main menu button
@@ -140,6 +137,7 @@ public class SceneMainGame implements Scene {
             save_quit_sprite.draw(pause_batch);
             pause_batch.end();
         }
+        // End of added block of code for assessment 2
         batch.end();
     }
 
@@ -152,10 +150,10 @@ public class SceneMainGame implements Scene {
      * @author William Walton
      */
     public int update() {
-        // stay in results after all legs done
+        // Modified block of code for assessment 2
+        // Stay in results after all legs done
         if (race.isFinished() && leg_number > 3) return 4;
 
-        // Added
         // Check if the pause button is pressed
         if (Gdx.input.isKeyJustPressed(Input.Keys.P))
         {
@@ -214,6 +212,7 @@ public class SceneMainGame implements Scene {
 
         }
         return scene_id;
+        // End of modified block of code for assessment 2
     }
 
     /**
@@ -246,14 +245,6 @@ public class SceneMainGame implements Scene {
      */
     public void setPlayerSpec(int spec) {
         player.setSpec(spec);
-    }
-
-    public void set_start_time() {
-        race.startTime = System.currentTimeMillis();
-    }
-
-    public long get_start_time() {
-        return race.startTime;
     }
 
 

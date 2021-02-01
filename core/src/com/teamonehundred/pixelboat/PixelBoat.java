@@ -17,17 +17,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * JavaDoc by Umer Fakher
  */
 public class PixelBoat extends ApplicationAdapter {
-    public Scene[] getAll_scenes() {
-        return all_scenes;
-    }
-
-    public void setAll_scenes(Scene[] all_scenes) {
-        this.all_scenes = all_scenes;
-    }
-
     protected Scene[] all_scenes;  // stores all game scenes and their data
     protected SpriteBatch batch;  // thing that draws the sprites
 
+    // Added new scene id for assessment 2
     // id of current game state
     // 0 = start menu
     // 1 = game
@@ -38,11 +31,14 @@ public class PixelBoat extends ApplicationAdapter {
     // 6 = loaded game
     protected int scene_id = 0;
 
-    public void setPref(Preferences pref) {
-        this.pref = pref;
-    }
-
+    // Added block of code for assessment 2
     protected Preferences pref;
+
+    public Scene[] getAll_scenes() { return all_scenes; }
+
+    public void setAll_scenes(Scene[] all_scenes) { this.all_scenes = all_scenes; }
+
+    public void setPref(Preferences pref) { this.pref = pref; }
 
     public void saveGame(SceneMainGame game_state) {
         pref.clear();
@@ -131,10 +127,9 @@ public class PixelBoat extends ApplicationAdapter {
 
 
         }
-//        System.out.println(pref.getLong("leg_time" + 0 + 0));
-//        System.out.println(game_state.all_boats.get(0).leg_times.get(0));
         return game_state;
     }
+    // End of added block of code for assessment 2
 
     /**
      * Create method runs when the game starts.
@@ -143,9 +138,12 @@ public class PixelBoat extends ApplicationAdapter {
      */
     @Override
     public void create() {
-         pref = Gdx.app.getPreferences("save");
+        // Added block of code for assessment 2
+        pref = Gdx.app.getPreferences("save");
+        // End of added block of code for assessment 2
 
 
+        // Modified block of code for assessment 2
         all_scenes = new Scene[7];
         all_scenes[0] = new SceneStartScreen();
         all_scenes[1] = new SceneMainGame();
@@ -154,11 +152,14 @@ public class PixelBoat extends ApplicationAdapter {
         all_scenes[4] = new SceneResultsScreen();
         all_scenes[5] = new SceneBoatSelection();
         all_scenes[6] = null;
+        // End of modified block of code for assessment 2
 
+        // Added block of code for assessment 2
         // Mark if a save already exists from a previous session
         if (!pref.getString("save", "no save exists").equals("no save exists"))
             ((SceneStartScreen)all_scenes[0]).is_saved_game = true;
         batch = new SpriteBatch();
+        // End of added block of code for assessment 2
     }
 
     /**
@@ -178,11 +179,14 @@ public class PixelBoat extends ApplicationAdapter {
             if (new_scene_id == 4)
                 ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
             else if (new_scene_id == 3 && scene_id == 5){
+                // Added block of code for assessment 2
                 all_scenes[1] = new SceneMainGame();
+                // End of added block of code for assessment 2
                 ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
             }
 
-            if (new_scene_id == 1){
+            // Added block of code for assessment 2
+            else if (new_scene_id == 1){
                 ((SceneMainGame) all_scenes[1]).set_start_time();
             }
 
@@ -196,6 +200,8 @@ public class PixelBoat extends ApplicationAdapter {
                 ((SceneStartScreen)all_scenes[0]).is_saved_game = true;
                 new_scene_id = 0;
             }
+            // End of added block of code for assessment 2
+
             // check if we need to change scene
             scene_id = new_scene_id;
         }
@@ -210,7 +216,9 @@ public class PixelBoat extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
+        // Added block of code for assessment 2
         pref.flush();
+        // End of added block of code for assessment 2
         Gdx.app.exit();
         System.exit(0);
     }

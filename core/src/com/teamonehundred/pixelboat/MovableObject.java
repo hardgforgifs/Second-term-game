@@ -15,19 +15,16 @@ abstract class MovableObject extends GameObject {
     // ################################### */
 
     protected float max_speed = 15;
-
-    public float getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(float speed) {
-        this.speed = speed;
-    }
-
     protected float speed = 0;
     protected float drag = .04f;  // amount speed is reduced by every frame naturally
     protected float acceleration = .2f;
     protected float rotation_speed = 2.f;
+
+    // Added block of code for assessment 2
+    public float getSpeed() { return speed; }
+
+    public void setSpeed(float speed) { this.speed = speed; }
+    // End of added block of coed for assessment 2
 
     /* ################################### //
                   CONSTRUCTORS

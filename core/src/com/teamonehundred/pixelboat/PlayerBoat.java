@@ -134,7 +134,9 @@ public class PlayerBoat extends Boat {
      * @param spec_id int for boat spec
      */
     public void setSpec(int spec_id) {
+        // Added block of code for assessment 2
         this.specID = spec_id;
+        // End of added block of code for assessment 2
         switch (spec_id) {
             case 0:
                 // debug

@@ -23,27 +23,27 @@ public class SceneBoatSelection implements Scene {
 
     protected boolean is_new_click = false;
 
-    public void setSpec_id(int spec_id) {
-        this.spec_id = spec_id;
-    }
-
     protected int spec_id = 0;
+    // Modified block of code for assessment 2
     protected int num_specs = 5;
+    // End of modified block of code for assessment 2
 
     protected Texture bg;
     protected Sprite bg_sprite;
-    
+
+    protected Texture[] boat_options;
+    protected Sprite[] boat_option_sprites;
+    // Added block of code for assessment 2
+    protected Texture[] boat_options_hovered;
+
     protected Texture stats_bg;
     protected Texture[] stats_boats;
     protected Sprite[] stats_bg_sprite;
 
-    protected Texture[] boat_options;
-    protected Texture[] boat_options_hovered;
-    protected Sprite[] boat_option_sprites;
-    
     protected Texture back;
     protected Texture back_hovered;
     protected Sprite back_sprite;
+    // End of added block of code for assessment 2
 
     protected Viewport fill_viewport;
     protected OrthographicCamera fill_camera;
@@ -66,7 +66,8 @@ public class SceneBoatSelection implements Scene {
         bg_sprite = new Sprite(bg);
         bg_sprite.setPosition(0, 0);
         bg_sprite.setSize(1280, 720);
-        
+
+        // Added block of code for assessment 2
         stats_bg = new Texture("boats/stats_background.png");
         
         
@@ -84,10 +85,12 @@ public class SceneBoatSelection implements Scene {
         	stats_bg_sprite[i].setPosition((fill_camera.viewportWidth / 2) - (stats_bg_sprite[i].getWidth() / 2), (float) ((fill_camera.viewportHeight / 1.35) - (stats_bg_sprite[i].getHeight() / 2)));
         	stats_bg_sprite[i].setSize(stats_bg_sprite[i].getWidth(), stats_bg_sprite[i].getHeight());
         }
+        // End of added block of code for assessment 2
 
         boat_options = new Texture[num_specs];
-        boat_options_hovered = new Texture[num_specs];
         boat_option_sprites = new Sprite[num_specs];
+        // Added block of code for assessment 2
+        boat_options_hovered = new Texture[num_specs];
 
         boat_options[0] = new Texture("boats/boat1.png");
         boat_options[1] = new Texture("boats/boat2.png");
@@ -106,9 +109,11 @@ public class SceneBoatSelection implements Scene {
         back_sprite = new Sprite(back);
         back_sprite.setSize(512 / 2, 128 / 2);
         back_sprite.setPosition((fill_camera.viewportWidth / 8) - (back_sprite.getWidth() / 2), (fill_camera.viewportHeight / 8) - (back_sprite.getHeight() / 2));
+        // End of added block of code for assessment 2
 
         for (int i = 0; i < num_specs; i++) {
             boat_option_sprites[i] = new Sprite(boat_options[i]);
+            // Added block of code for assessment 2
             boat_option_sprites[i].setSize((boat_option_sprites[i].getHeight() / 3), (boat_option_sprites[i].getWidth() / 3));
             
             if(i == 0) {
@@ -132,6 +137,7 @@ public class SceneBoatSelection implements Scene {
                 		(float) ((fill_camera.viewportWidth / 1.05) - (boat_option_sprites[i].getWidth() / 2)),
                         (float) ((fill_camera.viewportHeight / 2) - (boat_option_sprites[i].getHeight() / 2)));
             }
+            // End of added block of code for assessment 2
         }
     }
 
@@ -150,6 +156,7 @@ public class SceneBoatSelection implements Scene {
         Vector3 mouse_pos = fill_camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 
         for (int i = 0; i < num_specs; i++)
+            // Added block of code for assessment 2
             if (boat_option_sprites[i].getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             	boat_option_sprites[i].setTexture(boat_options_hovered[i]);
             	stats_bg_sprite[i].setTexture(stats_boats[i]);
@@ -170,6 +177,7 @@ public class SceneBoatSelection implements Scene {
 	            }
 	        } else
 	            back_sprite.setTexture(back);
+	        // End of added block of code for assessment 2
 
 
         return scene_id;
@@ -190,12 +198,14 @@ public class SceneBoatSelection implements Scene {
         batch.setProjectionMatrix(fill_camera.combined);
         batch.begin();
         bg_sprite.draw(batch);
+
+        // Modified block of code for assessment 2
         for (int i = 0; i < num_specs; i++) {
             boat_option_sprites[i].draw(batch);
             stats_bg_sprite[i].draw(batch);
         }
-
         back_sprite.draw(batch);
+        // End of modified block of code for assessment 2
 
         batch.end();
     }
