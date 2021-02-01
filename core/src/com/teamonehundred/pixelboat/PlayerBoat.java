@@ -2,6 +2,7 @@ package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -253,8 +254,13 @@ class PlayerBoat extends Boat {
                         ((Obstacle) object).getSprite().getX() < sprite.getX() + 200))
             return;
         if (this.getBounds().isColliding(object.getBounds())) {
-        	collisionsound.play();
-            if (!(object instanceof ObstacleLaneWall))
+        	
+        	final Preferences prefs = Gdx.app.getPreferences("setting\\gamesetting");
+        	float soundvolume = prefs.getFloat("SoundVolume",0.5f);
+        	float mastervolume = prefs.getFloat("MasterVolume",0.5f);
+        	collisionsound.play(soundvolume*mastervolume);
+            
+        	if (!(object instanceof ObstacleLaneWall))
                 hasCollided();
             object.hasCollided();
         }

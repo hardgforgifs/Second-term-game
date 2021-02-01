@@ -2,6 +2,7 @@ package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -80,6 +81,7 @@ public class PixelBoat extends ApplicationAdapter {
     @Override
     public void render() {
     	if (init) {
+    		setMusicVol(startmusic);
         	startmusic.play();
         	init=false;
         }
@@ -91,16 +93,19 @@ public class PixelBoat extends ApplicationAdapter {
             // special case updates
             if (new_scene_id == 4) {
             	stopMusic();
+            	setMusicVol(resultmusic);
             	resultmusic.play();
             	((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
             }
 //                ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
             else if (new_scene_id == 0) {
             	stopMusic();
+            	setMusicVol(startmusic);
             	startmusic.play();
             }
             else if (new_scene_id == 1) {
             	stopMusic();
+            	setMusicVol(mainmusic);
             	mainmusic.play();
             }
             else if (new_scene_id == 3 && scene_id == 5)
@@ -112,7 +117,15 @@ public class PixelBoat extends ApplicationAdapter {
         }
     }
 
-    /**
+    private void setMusicVol(Music music) {
+    	final Preferences prefs = Gdx.app.getPreferences("setting\\gamesetting");
+    	float mastervolume = prefs.getFloat("MasterVolume", 0.5f);
+    	float musicvolume = prefs.getFloat("MusicVolume",0.5f);
+    	float r_musicvolume = mastervolume*musicvolume; 
+		music.setVolume(r_musicvolume);
+	}
+
+	/**
      * Disposes unneeded SpriteBatch and exits application.
      * <p>
      * Runs when the game needs to close.
