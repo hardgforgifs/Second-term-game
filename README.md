@@ -22,7 +22,7 @@ Then select the new configuration, and you will be able to run it.
 After cloning the repo you will want to open it in the IDE.
 
 Then you will want to open `Edit Run/Debug Configurations` available on the top bar.
-Add a new `application` then you will want to configure it with the following options:
+Add a new `JUnit` then you will want to configure it with the following options:
 
 Main class: `-cp second-term-game.tests.test`  
 Working directory: `complete path to cloned repo\second-term-game\core\assets`  
