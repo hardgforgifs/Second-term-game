@@ -1,7 +1,6 @@
 package de.tomgrill.gdxtesting;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.teamonehundred.pixelboat.*;
 import junit.framework.TestCase;
 import org.junit.Before;
@@ -105,7 +104,7 @@ public class PixelBoatTest extends TestCase {
         reload();
 
         // The specID from the newly loaded game state should be the same as the one that was saved
-        int loadedSpecID = testSceneMainGame.getPlayer().getSpecID();
+        int loadedSpecID = testSceneMainGame.getPlayer().getSpec_id();
         assertEquals(loadedSpecID, specID);
     }
 

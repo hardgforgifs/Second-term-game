@@ -135,7 +135,7 @@ public class PlayerBoat extends Boat {
      */
     public void setSpec(int spec_id) {
         // Added block of code for assessment 2
-        this.specID = spec_id;
+        this.spec_id = spec_id;
         // End of added block of code for assessment 2
         switch (spec_id) {
             case 0:
@@ -148,6 +148,7 @@ public class PlayerBoat extends Boat {
                 break;
             case 2:
                 // fast low durability
+                stamina_usage = 0.005f;
                 max_speed = 20;
                 durability_per_hit = .2f;
             default:

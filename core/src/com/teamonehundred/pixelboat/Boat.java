@@ -1,5 +1,6 @@
 package com.teamonehundred.pixelboat;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -42,13 +43,15 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     protected boolean has_started_leg = false;
 
     // Added block of code for assessment 2
-    protected int specID;
+    protected int spec_id;
+
+    protected List<Float[]> effects = new ArrayList<>();
 
     public float getStamina() { return stamina; }
 
     public void setStamina(float stamina) { this.stamina = stamina; }
 
-    public int getSpecID() { return specID; }
+    public int getSpec_id() { return spec_id; }
     // End of added block of code for assessment 2
 
 
@@ -113,6 +116,41 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     /* ################################### //
                     METHODS
     // ################################### */
+
+    // Added block of code for assessment 2
+    public void updateBoostEffect() {
+        for (int i = 0; i < effects.size(); i++) {
+            Float[] effect = effects.get(i);
+            // Apply speed boost effect
+            if (effect[0] == 1) {
+                speed = Math.max(10, speed);
+                acceleration = .4f;
+                max_speed = 20;
+                effect[1] -= Gdx.graphics.getDeltaTime();
+                if (effect[1] <= 0f){
+                    reset();
+                    effects.remove(i);
+                }
+
+            }
+        }
+//        if (boostType == 1 && boostTimeRemaining <= 0f) {
+//            speed = Math.max(10, speed);
+//            acceleration += .2f;
+//            max_speed += 5;
+//        }
+//
+//        if (boostTimeRemaining < 0f) {
+//            boostType = 0;
+//            acceleration -= .2f;
+//            max_speed -= 5;
+//            boostTimeRemaining = 0f;
+//        }
+//
+//        else if (boostTimeRemaining > 0f)
+//            boostTimeRemaining -= Gdx.graphics.getDeltaTime();
+    }
+    // End of added block of code for assessment 2
 
     /**
      * Function called when this boat collides with another object
@@ -297,7 +335,20 @@ public abstract class Boat extends MovableObject implements CollisionObject {
                         ((Obstacle) object).getSprite().getX() < sprite.getX() + 200))
             return;
         if (this.getBounds().isColliding(object.getBounds())) {
-            if (!(object instanceof ObstacleLaneWall))
+            // Added block of code for assessment 2
+            if (object instanceof PowerUp) {
+                // 0 = no boost
+                // 1 = speed boost
+                // 2 = robustness boost
+                // 3 = maneuverability boost
+                // 4 = stamina boost
+                // 5 = invulnerability boost
+                float boostType = ((PowerUp) object).getRandomEffect();
+                // Add the effect to the list of ongoing boosts
+                effects.add(new Float[]{boostType, 5f});
+            }
+            // End of added block of code for assessment 2
+            else if (!(object instanceof ObstacleLaneWall))
                 hasCollided();
             object.hasCollided();
         }
@@ -350,9 +401,25 @@ public abstract class Boat extends MovableObject implements CollisionObject {
      * Reset max_speed, durability and stamina to defaults
      */
     public void reset() {
-        this.max_speed = 15;
-        this.durability = 1;
-        this.stamina = 1;
+        // Modified block of code for assessment 2
+        switch (spec_id) {
+            case 0:
+                // debug
+                stamina_usage = 0f;
+                durability_per_hit = 0f;
+                break;
+            case 1:
+                // default
+                break;
+            case 2:
+                // fast low durability
+                max_speed = 20;
+                acceleration = .2f;
+                durability_per_hit = .2f;
+            default:
+                break;
+        }
+        // End of moded block of code for assessment 2
     }
 
     /**

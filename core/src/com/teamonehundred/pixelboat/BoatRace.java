@@ -28,6 +28,7 @@ public class BoatRace {
     protected Texture bleachers_r;
 
     protected List<CollisionObject> obstacles;
+    protected List<PowerUp> powerups;
 
     protected int start_y = 200;
 
@@ -89,6 +90,7 @@ public class BoatRace {
         }
 
         obstacles = new ArrayList<>();
+        powerups = new ArrayList<>();
 
         // add some random obstacles
         for (int i = 0; i < 100; i++)
@@ -102,6 +104,10 @@ public class BoatRace {
 
         for (int i = 0; i < 100; i++)
             obstacles.add(new ObstacleDuck((int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
+                    (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
+
+        for (int i = 0; i < 100; i++)
+            powerups.add(new SpeedPowerUp((int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
                     (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
 
 
@@ -197,6 +203,17 @@ public class BoatRace {
                     boats.get(i).checkCollisions(obstacle);
             }
 
+            // Added block of code for assessment 2
+            // check for boosts pickups
+            for (PowerUp powerup : powerups) {
+                if (powerup.isShown())
+                    boats.get(i).checkCollisions(powerup);
+            }
+
+            // Apply the effect of the current boost
+            boats.get(i).updateBoostEffect();
+            // End of added block of code for assessment 2
+
             // check if out of lane
             if (boats.get(i).getSprite().getX() > getLaneCentre(i) + lane_width / 2 ||
                     boats.get(i).getSprite().getX() < getLaneCentre(i) - lane_width / 2)
@@ -223,6 +240,11 @@ public class BoatRace {
             // check if can be cast back up
             if (obs instanceof Obstacle && obs.isShown())
                 all_sprites.add(((Obstacle) obs).getSprite());
+        }
+
+        for (PowerUp powerup : powerups) {
+            if (powerup.is_shown)
+                all_sprites.add(powerup.getSprite());
         }
 
         for (Boat b : boats) {
@@ -252,7 +274,11 @@ public class BoatRace {
         for (Boat b : boats) {
             //If current boat b is the player's boat then can display hud for this boat
             if (b instanceof PlayerBoat) {
+                System.out.println(b.spec_id);
+                if (b.effects.size() > 0)
+                    System.out.println(b.effects.get(0)[1]);
                 if (((PlayerBoat) b).hasStartedLeg()) {
+
                     // Modified block of code for assessment 2
                     //Calculate time elapsed from the start in milliseconds
                     long i = (startTime + time - ((PlayerBoat) b).getStartTime(false));

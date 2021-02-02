@@ -45,7 +45,7 @@ public class PixelBoat extends ApplicationAdapter {
         // Mark that a save exists in preferences
         pref.putString("save", "save exists");
         pref.putInteger("leg_number", game_state.leg_number);
-        pref.putInteger("player_spec_id", ((SceneMainGame)all_scenes[1]).player.getSpecID());
+        pref.putInteger("player_spec_id", ((SceneMainGame)all_scenes[1]).player.getSpec_id());
         pref.putFloat("camera_x", game_state.player.getCamera().position.x);
         pref.putFloat("camera_y", game_state.player.getCamera().position.y);
         pref.putLong("race_start_time", game_state.race.startTime);
