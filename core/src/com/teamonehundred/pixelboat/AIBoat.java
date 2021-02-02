@@ -35,9 +35,16 @@ class AIBoat extends Boat {
      */
     AIBoat(int x, int y) {
         super(x, y);
+        initialise();
+    }
+
+    // Added block of code for assessment 2
+    AIBoat(int x, int y, String texture_path) {
+        super(x, y, texture_path);
 
         initialise();
     }
+    // End of added block of code for assessment 2
 
     /**
      * Construct a AIBoat object with at point (x,y) with width and height and texture path

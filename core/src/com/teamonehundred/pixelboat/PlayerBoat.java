@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +86,20 @@ public class PlayerBoat extends Boat {
         initialise();
     }
 
+    // Added block of code for assessment 2
+    public void setTexture(String texture_path, float w, float h) {
+        this.texture = new Texture(texture_path);
+        animation_regions = new TextureRegion[4];
+        float texture_width = 1f / (4);
+        for (int i = 0; i < 4; i++) {
+            animation_regions[i] = new TextureRegion(texture, i * texture_width, 0f, (i + 1) * texture_width, 1f);
+        }
+
+        sprite = new Sprite(animation_regions[0]);
+        sprite.setSize(w, h);
+        sprite.setOriginCenter();
+    }
+    // End of added block of code for assessment 2
     /**
      * Destructor disposes of this texture once it is no longer referenced.
      */
@@ -121,39 +136,6 @@ public class PlayerBoat extends Boat {
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(0, Gdx.graphics.getHeight() / 3, 0);
         camera.update();
-    }
-
-    /**
-     * Sets the spec type of boat.
-     * <p>
-     * Can be in these states:
-     * - debug
-     * - default
-     * - fast low durability
-     *
-     * @param spec_id int for boat spec
-     */
-    public void setSpec(int spec_id) {
-        // Added block of code for assessment 2
-        this.spec_id = spec_id;
-        // End of added block of code for assessment 2
-        switch (spec_id) {
-            case 0:
-                // debug
-                stamina_usage = 0f;
-                durability_per_hit = 0f;
-                break;
-            case 1:
-                // default
-                break;
-            case 2:
-                // fast low durability
-                stamina_usage = 0.005f;
-                max_speed = 20;
-                durability_per_hit = .2f;
-            default:
-                break;
-        }
     }
 
     /**

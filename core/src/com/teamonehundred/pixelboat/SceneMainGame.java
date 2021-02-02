@@ -7,10 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+
+import java.util.*;
 
 /**
  * Represents the Main Game Scene for when the boat race starts.
@@ -89,8 +87,12 @@ public class SceneMainGame implements Scene {
 
         all_boats.add(player);
         for (int i = 0; i < (boats_per_race * groups_per_game) - 1; i++) {
-            all_boats.add(new AIBoat(0, 40));
+            // Modified block of code for assessment 2
+            int spec_id = new Random().nextInt(5);
+            all_boats.add(new AIBoat(0, 40, "boats/Boat" + (spec_id+1) + "/boat" + (spec_id + 1) + ".png"));
+            all_boats.get(i + 1).setSpec(spec_id);
             all_boats.get(all_boats.size() - 1).setName("AI Boat " + Integer.toString(i));
+            // End of modified block of code for assessment 2
         }
         Collections.swap(all_boats, 0, 3); // move player to middle of first group
 
@@ -245,6 +247,9 @@ public class SceneMainGame implements Scene {
      */
     public void setPlayerSpec(int spec) {
         player.setSpec(spec);
+        player.setTexture("boats/Boat" + (player.spec_id + 1) + "/boat" + (player.spec_id + 1) + ".png",
+                80, 100);
+//        player.setTexture("boat.png");
     }
 
 

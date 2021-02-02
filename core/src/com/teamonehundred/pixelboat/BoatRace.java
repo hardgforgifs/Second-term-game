@@ -1,7 +1,6 @@
 package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -83,7 +82,7 @@ public class BoatRace {
             boats.get(i).reset_motion();
             boats.get(i).sprite.setPosition(getLaneCentre(i), 40);  // reset boats y and place in lane
             boats.get(i).setFramesRaced(0);
-            boats.get(i).reset();
+            boats.get(i).setStats();
 
             if (boats.get(i) instanceof PlayerBoat)
                 ((PlayerBoat) boats.get(i)).resetCameraPos();
@@ -274,9 +273,9 @@ public class BoatRace {
         for (Boat b : boats) {
             //If current boat b is the player's boat then can display hud for this boat
             if (b instanceof PlayerBoat) {
-                System.out.println(b.spec_id);
-                if (b.effects.size() > 0)
-                    System.out.println(b.effects.get(0)[1]);
+                System.out.println(b.max_speed);
+//                if (b.effects.size() > 0)
+//                    System.out.println(b.effects.get(0)[1]);
                 if (((PlayerBoat) b).hasStartedLeg()) {
 
                     // Modified block of code for assessment 2

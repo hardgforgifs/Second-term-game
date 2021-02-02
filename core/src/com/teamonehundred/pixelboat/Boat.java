@@ -29,6 +29,8 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     protected float stamina_usage = 0.005f;  //todo change this after testing
     protected float stamina_regen = .002f;
 
+    protected float maneuverability = 1f;
+
     protected List<Long> leg_times = new ArrayList<>();  // times for every previous leg
     protected long start_time = -1;
     protected long end_time = -1;  // ms since epoch when starting and finishing current leg
@@ -71,6 +73,12 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     Boat(int x, int y) {
         super(x, y, 80, 100, "boat.png", 4);
     }
+
+    // Added block of code for assessment 2
+    Boat(int x, int y, String texture_path) {
+        super(x, y, 80, 100, texture_path, 4);
+    }
+    // End of added block of code for assessment 2
 
     /**
      * Construct a Boat object with at point (x,y) with width and height and texture path
@@ -118,6 +126,22 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     // ################################### */
 
     // Added block of code for assessment 2
+    /**
+     * Sets the spec type of boat.
+     * <p>
+     *
+     * @param spec_id int for boat spec
+     */
+    public void setSpec(int spec_id) {
+        this.spec_id = spec_id;
+        setStats();
+//        setTexture();
+    }
+
+//    private void setTexture() {
+//        this.texture =
+//    }
+
     public void updateBoostEffect() {
         for (int i = 0; i < effects.size(); i++) {
             Float[] effect = effects.get(i);
@@ -128,7 +152,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
                 max_speed = 20;
                 effect[1] -= Gdx.graphics.getDeltaTime();
                 if (effect[1] <= 0f){
-                    reset();
+                    setStats();
                     effects.remove(i);
                 }
 
@@ -397,30 +421,47 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         this.has_started_leg = has_started_leg;
     }
 
+    // Modified block of code for assessment 2
     /**
-     * Reset max_speed, durability and stamina to defaults
+     * Sets the stats of the boat based on the spec_id that was allocated to it
      */
-    public void reset() {
-        // Modified block of code for assessment 2
+    public void setStats() {
         switch (spec_id) {
             case 0:
-                // debug
-                stamina_usage = 0f;
-                durability_per_hit = 0f;
+                durability_per_hit = .2f;
+                max_speed = 15;
+                acceleration = .2f;
+                maneuverability = 1f;
                 break;
             case 1:
-                // default
+                durability_per_hit = .25f;
+                max_speed = 25;
+                acceleration = .2f;
+                maneuverability = 1f;
                 break;
             case 2:
-                // fast low durability
+                durability_per_hit = .1f;
                 max_speed = 20;
+                acceleration = .1f;
+                maneuverability = 1f;
+                break;
+            case 3:
+                durability_per_hit = .15f;
+                max_speed = 10;
                 acceleration = .2f;
-                durability_per_hit = .2f;
+                maneuverability = 1f;
+                break;
+            case 4:
+                durability_per_hit = .25f;
+                max_speed = 15;
+                acceleration = .3f;
+                maneuverability = 1f;
+                break;
             default:
                 break;
         }
-        // End of moded block of code for assessment 2
     }
+    // End of modified block of code for assessment 2
 
     /**
      * Gets current best time for boat from its list of leg_times.
