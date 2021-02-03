@@ -254,12 +254,12 @@ class PlayerBoat extends Boat {
                         ((Obstacle) object).getSprite().getX() < sprite.getX() + 200))
             return;
         if (this.getBounds().isColliding(object.getBounds())) {
-        	
+        	//added block of code for assessment 2
         	final Preferences prefs = Gdx.app.getPreferences("setting\\gamesetting");
         	float soundvolume = prefs.getFloat("SoundVolume",0.5f);
         	float mastervolume = prefs.getFloat("MasterVolume",0.5f);
         	collisionsound.play(soundvolume*mastervolume);
-            
+        	//added block of code for assessment 2
         	if (!(object instanceof ObstacleLaneWall))
                 hasCollided();
             object.hasCollided();

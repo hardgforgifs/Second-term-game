@@ -44,6 +44,7 @@ public class PixelBoat extends ApplicationAdapter {
      */
     @Override
     public void create() {
+    	//added block of code for assessment 2
     	 startmusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/Funky_Full.mp3"));
          mainmusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/Beyond The Win.mp3"));
          resultmusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/victory_fireworks.mp3"));
@@ -51,10 +52,10 @@ public class PixelBoat extends ApplicationAdapter {
          startmusic.setLooping(true);
          mainmusic.setLooping(true);
          resultmusic.setLooping(true);
-         
-         
+       
         musics = new Music[]{startmusic,mainmusic,resultmusic};
-         
+      //added block of code for assessment 2
+        
         all_scenes = new Scene[6];
         all_scenes[0] = new SceneStartScreen();
         all_scenes[1] = new SceneMainGame(collisionsound);
@@ -67,12 +68,16 @@ public class PixelBoat extends ApplicationAdapter {
         
        
     }
-
+  //added block of code for assessment 2
     private void stopMusic() {
     	for(Music music:musics) {
 			music.stop();
 		};
     }
+  //added block of code for assessment 2
+    
+    
+    
     /**
      * Render function runs every frame.
      * <p>
@@ -80,24 +85,29 @@ public class PixelBoat extends ApplicationAdapter {
      */
     @Override
     public void render() {
+    	//added block of code for assessment 2
     	if (init) {
     		setMusicVol(startmusic);
         	startmusic.play();
         	init=false;
         }
+    	//added block of code for assessment 2
         // run the current scene
         int new_scene_id = all_scenes[scene_id].update();
         all_scenes[scene_id].draw(batch);
 
         if (scene_id != new_scene_id) {
-            // special case updates
+        	//added block of code for assessment 2
             if (new_scene_id == 4) {
             	stopMusic();
             	setMusicVol(resultmusic);
             	resultmusic.play();
+            //added block of code for assessment 2
             	((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
             }
 //                ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
+            
+          //added block of code for assessment 2
             else if (new_scene_id == 0) {
             	stopMusic();
             	setMusicVol(startmusic);
@@ -108,6 +118,7 @@ public class PixelBoat extends ApplicationAdapter {
             	setMusicVol(mainmusic);
             	mainmusic.play();
             }
+          //added block of code for assessment 2
             else if (new_scene_id == 3 && scene_id == 5)
                 ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
 
@@ -116,7 +127,7 @@ public class PixelBoat extends ApplicationAdapter {
             scene_id = new_scene_id;
         }
     }
-
+  //added block of code for assessment 2
     private void setMusicVol(Music music) {
     	final Preferences prefs = Gdx.app.getPreferences("setting\\gamesetting");
     	float mastervolume = prefs.getFloat("MasterVolume", 0.5f);
@@ -124,7 +135,7 @@ public class PixelBoat extends ApplicationAdapter {
     	float r_musicvolume = mastervolume*musicvolume; 
 		music.setVolume(r_musicvolume);
 	}
-
+  //added block of code for assessment 2
 	/**
      * Disposes unneeded SpriteBatch and exits application.
      * <p>
