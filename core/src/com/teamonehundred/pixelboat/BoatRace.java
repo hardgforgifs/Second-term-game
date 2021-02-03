@@ -27,6 +27,7 @@ public class BoatRace {
     protected Texture bleachers_r;
 
     protected List<CollisionObject> obstacles;
+
     protected List<PowerUp> powerups;
 
     protected int start_y = 200;
@@ -54,6 +55,8 @@ public class BoatRace {
     public long getTime() { return time; }
 
     public void setTime(long time) { this.time = time; }
+
+    public List<PowerUp> getPowerups() { return powerups; }
     // End of added block of code for assessment 2
 
     /**

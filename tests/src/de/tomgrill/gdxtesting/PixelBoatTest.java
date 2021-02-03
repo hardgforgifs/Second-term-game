@@ -6,6 +6,7 @@ import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,25 @@ public class PixelBoatTest extends TestCase {
         testSceneMainGame = testGame.loadGame();
     }
 
+    /** id: PixelBoatTest00
+     *  description: tests if the game recognizes if there is no saved file, making loading the game unavailable
+     *  input data: a new(empty) save file
+     *  expected_outcome: the leg number that is saved is the same as the one that is loaded
+     *  requirements: UR_SAVE_GAME, FR_SAVE_GAME
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testSaveGameExists() {
+        // Set the file location to a blank file
+        testGame.setPref(Gdx.app.getPreferences("blank_file"));
+
+        // The value of is_saved_game should be false, which would mean that the load game button is unavailable
+        testGame.getAll_scenes()[0] = new SceneStartScreen();
+        assertFalse(((SceneStartScreen)testGame.getAll_scenes()[0]).is_saved_game);
+
+    }
+
     /** id: PixelBoatTest01
      *  description: tests if the leg number persists after save
      *  input data: a random leg number <5
@@ -92,17 +112,23 @@ public class PixelBoatTest extends TestCase {
      *  @author: Dragos Stoican
      */
     @Test
-    public void testSavePlayerSpecID() {
-        // Assign a random specID
-        int specID = random.nextInt(5);
-        testSceneMainGame.getPlayer().setSpec(specID);
+    public void testSaveBoatsSpecID() {
+        // Assign a random specID for each boat
+        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
+            int specID = random.nextInt(5);
+            testSceneMainGame.getAllBoats().get(i).setSpec(specID);
+        }
+        // Save the boats so their specs can be compared later
+        List<Boat> boats = testSceneMainGame.getAllBoats();
 
         // Save and load the game state
         reload();
 
-        // The specID from the newly loaded game state should be the same as the one that was saved
-        int loadedSpecID = testSceneMainGame.getPlayer().getSpec_id();
-        assertEquals(loadedSpecID, specID);
+        // The specs of each boat from the newly loaded game state should be the same as the one that was saved
+        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
+            assertEquals(testSceneMainGame.getAllBoats().get(i).getSpec_id(),
+                    boats.get(i).getSpec_id());
+        }
     }
 
     /** id: PixelBoatTest03
@@ -463,7 +489,7 @@ public class PixelBoatTest extends TestCase {
      */
     @Test
     public void testSaveLegTimes() {
-        // Assign a random leg times for each boat
+        // Assign random leg times for each boat
         for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
             for (int k = 0; k < 3; k++) {
                 // To set the leg time we need to generate end_time and start_time
@@ -481,9 +507,66 @@ public class PixelBoatTest extends TestCase {
         // Save and load the game state
         reload();
 
-        // The frames raced of each boat from the newly loaded game state should be the same as the one that was saved
+        // The leg times of each boat from the newly loaded game state should be the same as the one that was saved
         for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
             assertEquals(testSceneMainGame.getAllBoats().get(i).getLegTimes(), boats.get(i).getLegTimes());
+        }
+    }
+
+    /** id: PixelBoatTest16
+     *  description: tests if the powerups persists after save
+     *  input data: no input other than the newly started game
+     *  expected outcome: the powerups that are saved are the same as the ones that are loaded
+     *  requirements: UR_SAVE_GAME, FR_SAVE_GAME
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testSavePowerupsLocation() {
+        // Save the list of the powerups so they can be compared later
+        List<PowerUp> powerups = new ArrayList<>(testSceneMainGame.getRace().getPowerups());
+
+        // Save and load the game state
+        reload();
+        List<PowerUp> loadedPowerups = new ArrayList<>(testSceneMainGame.getRace().getPowerups());
+
+        // For every powerup, the x and y position should be the same as the one that was saved
+        for (int k = 0; k < powerups.size(); k++) {
+            assertEquals(powerups.get(0).getSprite().getX(), loadedPowerups.get(0).getSprite().getX());
+
+            assertEquals(powerups.get(0).getSprite().getY(), loadedPowerups.get(0).getSprite().getY());
+        }
+    }
+
+    /** id: PixelBoatTest17
+     *  description: tests if the boats leg times persists after save
+     *  input data: random leg times for each boat
+     *  expected outcome: the boats leg times that are saved are the same as the ones that are loaded
+     *  requirements: UR_SAVE_GAME, FR_SAVE_GAME
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testSaveBoatEffects() {
+        // Assign random effects for each boat
+        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
+            // Generate 3 random effects
+            for (int k = 0; k < 3; k++) {
+                Float[] random_effect = new Float[]{random.nextFloat(), random.nextFloat()};
+                testSceneMainGame.getAllBoats().get(i).getEffects().add(random_effect);
+            }
+
+        }
+        // Save the boats so they can be compared later
+        List<Boat> boats = testSceneMainGame.getAllBoats();
+
+        // Save and load the game state
+        reload();
+
+        // The current effects of each boat from the newly loaded game state should be the same as the one that was saved
+        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
+            for (int j = 0; j < boats.get(i).getEffects().size(); j++)
+                assertArrayEquals(testSceneMainGame.getAllBoats().get(i).getEffects().get(j), boats.get(i).getEffects().get(j));
         }
     }
 }

@@ -45,7 +45,7 @@ public class PixelBoat extends ApplicationAdapter {
         // Mark that a save exists in preferences
         pref.putString("save", "save exists");
         pref.putInteger("leg_number", game_state.leg_number);
-        pref.putInteger("player_spec_id", ((SceneMainGame)all_scenes[1]).player.getSpec_id());
+//        pref.putInteger("player_spec_id", ((SceneMainGame)all_scenes[1]).player.getSpec_id());
         pref.putFloat("camera_x", game_state.player.getCamera().position.x);
         pref.putFloat("camera_y", game_state.player.getCamera().position.y);
         pref.putLong("race_start_time", game_state.race.startTime);
@@ -96,7 +96,7 @@ public class PixelBoat extends ApplicationAdapter {
         SceneMainGame game_state = new SceneMainGame();
         game_state.isPaused = true;
         game_state.leg_number = pref.getInteger("leg_number");
-        game_state.getPlayer().setSpec(pref.getInteger("player_spec_id"));
+//        game_state.getPlayer().setSpec(pref.getInteger("player_spec_id"));
         game_state.race.startTime = pref.getLong("race_start_time");
         game_state.race.time = pref.getLong("race_duration");
 
@@ -155,7 +155,7 @@ public class PixelBoat extends ApplicationAdapter {
                 float time  = pref.getFloat("effect" + i + j + " time");
                 game_state.getAllBoats().get(i).effects.add(new Float[]{type, time});
                 j++;
-                type = pref.getFloat("effect" + j + " type", -1);
+                type = pref.getFloat("effect" + i + j + " type", -1);
             }
         }
         return game_state;
@@ -219,6 +219,7 @@ public class PixelBoat extends ApplicationAdapter {
             // Added block of code for assessment 2
             else if (new_scene_id == 1){
                 ((SceneMainGame) all_scenes[1]).set_start_time();
+                ((SceneMainGame) all_scenes[1]).resetBoats();
             }
 
             else if (new_scene_id == 6){

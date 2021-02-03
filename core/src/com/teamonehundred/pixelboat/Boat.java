@@ -26,6 +26,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     protected String name = "default boat name";
 
     protected float durability = 1.f;  // from 0 to 1
+
     protected float durability_per_hit = .1f;
 
     protected float stamina = 1.f;  // from 0 to 1, percentage of stamina max
@@ -52,11 +53,19 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
     protected List<Float[]> effects = new ArrayList<>();
 
+    public List<Float[]> getEffects() { return effects; }
+
     public float getStamina() { return stamina; }
 
     public void setStamina(float stamina) { this.stamina = stamina; }
 
     public int getSpec_id() { return spec_id; }
+
+    public float getDurability() { return durability; }
+
+    public void setDurability(float durability) { this.durability = durability; }
+
+    public float getDurability_per_hit() { return durability_per_hit; }
     // End of added block of code for assessment 2
 
 
@@ -163,7 +172,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
             if (effect[0] == 1) {
                 speed = Math.max(10, speed);
                 acceleration = .4f;
-                max_speed = 20;
+                max_speed = 25;
             }
 
             else if (effect[0] == 2) {
@@ -488,6 +497,11 @@ public abstract class Boat extends MovableObject implements CollisionObject {
             default:
                 break;
         }
+    }
+
+    public void reset() {
+        durability = 1f;
+        stamina = 1f;
     }
     // End of modified block of code for assessment 2
 
