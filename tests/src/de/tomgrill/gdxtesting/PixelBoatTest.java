@@ -13,9 +13,6 @@ import java.util.Random;
 
 @RunWith(GdxTestRunner.class)
 public class PixelBoatTest extends TestCase {
-
-
-
     PixelBoat testGame;
     SceneMainGame testSceneMainGame;
     Random random;

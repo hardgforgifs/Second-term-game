@@ -30,16 +30,16 @@ public class PowerUp extends GameObject implements CollisionObject{
         Random random = new Random();
         float effect = random.nextFloat();
         // 20% chance to get each boost
-        if (effect <= 0.2)
+//        if (effect <= 0.2)
             return 1;
-        else if (effect <= 0.4)
-            return 2;
-        else if (effect <= 0.6)
-            return 3;
-        else if (effect <= 0.8)
-            return 4;
-        else
-            return 5;
+//        else if (effect <= 0.4)
+//            return 2;
+//        else if (effect <= 0.6)
+//            return 3;
+//        else if (effect <= 0.8)
+//            return 4;
+//        else
+//            return 5;
     }
 
     @Override

@@ -153,12 +153,8 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         setTexture("boats/Boat" + (spec_id + 1) + "/boat" + (spec_id + 1) + ".png",
                 80, 100);
         setStats();
-//        setTexture();
     }
 
-//    private void setTexture() {
-//        this.texture =
-//    }
 
     public void updateBoostEffect() {
         for (int i = 0; i < effects.size(); i++) {
@@ -168,12 +164,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
                 speed = Math.max(10, speed);
                 acceleration = .4f;
                 max_speed = 20;
-                effect[1] -= Gdx.graphics.getDeltaTime();
-                if (effect[1] <= 0f){
-                    setStats();
-                    effects.remove(i);
-                }
-
             }
 
             else if (effect[0] == 2) {
@@ -183,11 +173,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
             else if (effect[0] == 3) {
                 maneuverability = 4f;
-                effect[1] -= Gdx.graphics.getDeltaTime();
-                if (effect[1] <= 0f){
-                    setStats();
-                    effects.remove(i);
-                }
             }
 
             else if (effect[0] == 4) {
@@ -197,11 +182,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
             else if (effect[0] == 5) {
                 durability_per_hit = 0f;
-                effect[1] -= Gdx.graphics.getDeltaTime();
-                if (effect[1] <= 0f){
-                    setStats();
-                    effects.remove(i);
-                }
             }
         }
 //        if (boostType == 1 && boostTimeRemaining <= 0f) {

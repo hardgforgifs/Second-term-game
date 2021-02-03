@@ -183,6 +183,18 @@ public class BoatRace {
                 // if not start or end, must be racing
                 boat.addFrameRaced();
             }
+
+            // Added block of code for assessment 2
+            // Reduce the timer for the boat's effects from powerups
+            for (int i = 0; i < boat.effects.size(); i++) {
+                Float[] effect = boat.effects.get(i);
+                effect[1] -= Gdx.graphics.getDeltaTime();
+                if (effect[1] <= 0f) {
+                    boat.setStats();
+                    boat.effects.remove(i);
+                }
+            }
+            // End of added block of code for assessment 2
         }
 
         boolean not_finished = false;
@@ -276,7 +288,7 @@ public class BoatRace {
         for (Boat b : boats) {
             //If current boat b is the player's boat then can display hud for this boat
             if (b instanceof PlayerBoat) {
-                System.out.println(b.max_speed);
+                System.out.println(b.effects.size());
 //                if (b.effects.size() > 0)
 //                    System.out.println(b.effects.get(0)[1]);
                 if (((PlayerBoat) b).hasStartedLeg()) {

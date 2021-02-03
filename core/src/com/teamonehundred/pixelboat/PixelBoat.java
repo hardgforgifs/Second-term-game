@@ -79,6 +79,13 @@ public class PixelBoat extends ApplicationAdapter {
             pref.putLong("boat" + i + " frames_raced", game_state.all_boats.get(i).frames_raced);
             pref.putBoolean("boat" + i + " has_started_leg", game_state.all_boats.get(i).has_started_leg);
             pref.putBoolean("boat" + i + " has_finished_leg", game_state.all_boats.get(i).has_finished_leg);
+
+            // Save the list of effects
+            for (int k = 0; k < game_state.getAllBoats().get(i).effects.size(); k++) {
+                Float[] effect = game_state.getAllBoats().get(i).effects.get(k);
+                pref.putFloat("effect" + i + k + " type", effect[0]);
+                pref.putFloat("effect" + i + k + " time", effect[1]);
+            }
             for (int j = 0; j < game_state.all_boats.get(i).leg_times.size(); j++) {
                 pref.putLong("leg_time" + i + j, game_state.all_boats.get(i).leg_times.get(j));
             }
@@ -141,7 +148,15 @@ public class PixelBoat extends ApplicationAdapter {
                 j++;
             }
 
-
+            // Load the current effects of powerups
+            j = 0;
+            float type = pref.getFloat("effect" + i + j + " type", -1);
+            while(type != -1) {
+                float time  = pref.getFloat("effect" + i + j + " time");
+                game_state.getAllBoats().get(i).effects.add(new Float[]{type, time});
+                j++;
+                type = pref.getFloat("effect" + j + " type", -1);
+            }
         }
         return game_state;
     }
