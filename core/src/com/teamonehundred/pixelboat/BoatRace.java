@@ -105,9 +105,12 @@ public class BoatRace {
             obstacles.add(new ObstacleDuck((int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
                     (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
 
+        // Added block of code for assessment 2
+        // Add random powerups
         for (int i = 0; i < 100; i++)
-            powerups.add(new SpeedPowerUp((int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
+            powerups.add(new PowerUp((int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
                     (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
+        // End of added block of code for assessment 2
 
 
         // add the lane separators

@@ -60,11 +60,17 @@ public class PixelBoat extends ApplicationAdapter {
 
         }
 
+        for (int k = 0; k < game_state.race.powerups.size(); k++) {
+            pref.putFloat("powerup" + k + " x", game_state.race.powerups.get(k).getSprite().getX());
+            pref.putFloat("powerup" + k + " y", game_state.race.powerups.get(k).getSprite().getY());
+        }
+
 
         for (int i = 0; i < game_state.boats_per_race; i++) {
             pref.putFloat("boat" + i + " x", game_state.all_boats.get(i).sprite.getX());
             pref.putFloat("boat" + i + " y", game_state.all_boats.get(i).sprite.getY());
             pref.putFloat("boat" + i + " rotation", game_state.all_boats.get(i).sprite.getRotation());
+            pref.putInteger("boat" + i + " spec_id", game_state.all_boats.get(i).getSpec_id());
             pref.putFloat("boat" + i + " speed", game_state.all_boats.get(i).speed);
             pref.putFloat("boat" + i + " stamina", game_state.all_boats.get(i).stamina);
             pref.putLong("boat" + i + " start_time", game_state.all_boats.get(i).start_time);
@@ -83,13 +89,13 @@ public class PixelBoat extends ApplicationAdapter {
         SceneMainGame game_state = new SceneMainGame();
         game_state.isPaused = true;
         game_state.leg_number = pref.getInteger("leg_number");
-        game_state.setPlayerSpec(pref.getInteger("player_spec_id"));
+        game_state.getPlayer().setSpec(pref.getInteger("player_spec_id"));
         game_state.race.startTime = pref.getLong("race_start_time");
         game_state.race.time = pref.getLong("race_duration");
 
         int k = 0;
         float x_obstacle = pref.getFloat("obstacle" + k + " x", -1);
-        while(x_obstacle != -1) {
+        while (x_obstacle != -1) {
             float y_obstacle = pref.getFloat("obstacle" + k + " y");
             String className = pref.getString("obstacle" + k + " class");
             if (className.equals("com.teamonehundred.pixelboat.ObstacleBranch"))
@@ -102,6 +108,14 @@ public class PixelBoat extends ApplicationAdapter {
             x_obstacle = pref.getFloat("obstacle" + k + " x", -1);
         }
 
+        k = 0;
+        float x_powerup = pref.getFloat("powerup" + k + " x", -1);
+        while (x_powerup != -1) {
+            float y_powerup = pref.getFloat("powerup" + k + " y");
+            game_state.race.powerups.set(k++, new PowerUp((int) x_powerup, (int) y_powerup));
+            x_powerup = pref.getFloat("powerup" + k + " x", -1);
+        }
+
         float camera_x = pref.getFloat("camera_x");
         float camera_y = pref.getFloat("camera_y");
         game_state.player.camera.position.set(camera_x, camera_y, 0);
@@ -109,6 +123,8 @@ public class PixelBoat extends ApplicationAdapter {
             float x = pref.getFloat("boat" + i + " x");
             float y = pref.getFloat("boat" + i + " y");
             float rotation = pref.getFloat("boat" + i + " rotation");
+            int spec_id = pref.getInteger("boat" + i + " spec_id");
+            game_state.all_boats.get(i).setSpec(spec_id);
             game_state.all_boats.get(i).sprite.setPosition(x, y);
             game_state.all_boats.get(i).sprite.setRotation(rotation);
             game_state.all_boats.get(i).speed = pref.getFloat("boat" + i + " speed");
@@ -182,7 +198,7 @@ public class PixelBoat extends ApplicationAdapter {
                 // Added block of code for assessment 2
                 all_scenes[1] = new SceneMainGame();
                 // End of added block of code for assessment 2
-                ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
+                ((SceneMainGame) all_scenes[1]).getPlayer().setSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
             }
 
             // Added block of code for assessment 2

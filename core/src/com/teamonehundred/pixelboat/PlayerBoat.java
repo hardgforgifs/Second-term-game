@@ -86,20 +86,6 @@ public class PlayerBoat extends Boat {
         initialise();
     }
 
-    // Added block of code for assessment 2
-    public void setTexture(String texture_path, float w, float h) {
-        this.texture = new Texture(texture_path);
-        animation_regions = new TextureRegion[4];
-        float texture_width = 1f / (4);
-        for (int i = 0; i < 4; i++) {
-            animation_regions[i] = new TextureRegion(texture, i * texture_width, 0f, (i + 1) * texture_width, 1f);
-        }
-
-        sprite = new Sprite(animation_regions[0]);
-        sprite.setSize(w, h);
-        sprite.setOriginCenter();
-    }
-    // End of added block of code for assessment 2
     /**
      * Destructor disposes of this texture once it is no longer referenced.
      */

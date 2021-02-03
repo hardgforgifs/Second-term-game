@@ -1,6 +1,9 @@
 package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -126,6 +129,19 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     // ################################### */
 
     // Added block of code for assessment 2
+
+    public void setTexture(String texture_path, float w, float h) {
+        this.texture = new Texture(texture_path);
+        animation_regions = new TextureRegion[4];
+        float texture_width = 1f / (4);
+        for (int i = 0; i < 4; i++) {
+            animation_regions[i] = new TextureRegion(texture, i * texture_width, 0f, (i + 1) * texture_width, 1f);
+        }
+
+        sprite = new Sprite(animation_regions[0]);
+        sprite.setSize(w, h);
+        sprite.setOriginCenter();
+    }
     /**
      * Sets the spec type of boat.
      * <p>
@@ -134,6 +150,8 @@ public abstract class Boat extends MovableObject implements CollisionObject {
      */
     public void setSpec(int spec_id) {
         this.spec_id = spec_id;
+        setTexture("boats/Boat" + (spec_id + 1) + "/boat" + (spec_id + 1) + ".png",
+                80, 100);
         setStats();
 //        setTexture();
     }

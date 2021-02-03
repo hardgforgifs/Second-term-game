@@ -95,10 +95,10 @@ public class PixelBoatTest extends TestCase {
      *  @author: Dragos Stoican
      */
     @Test
-    public void testSaveSpecID() {
+    public void testSavePlayerSpecID() {
         // Assign a random specID
-        int specID = random.nextInt(6);
-        testSceneMainGame.setPlayerSpec(specID);
+        int specID = random.nextInt(5);
+        testSceneMainGame.getPlayer().setSpec(specID);
 
         // Save and load the game state
         reload();

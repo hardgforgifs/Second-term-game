@@ -245,12 +245,11 @@ public class SceneMainGame implements Scene {
      * @param spec Integer for player spec.
      * @author Umer Fakher
      */
-    public void setPlayerSpec(int spec) {
-        player.setSpec(spec);
-        player.setTexture("boats/Boat" + (player.spec_id + 1) + "/boat" + (player.spec_id + 1) + ".png",
-                80, 100);
-//        player.setTexture("boat.png");
-    }
+//    public void setPlayerSpec(int spec) {
+//        player.setSpec(spec);
+//        player.setTexture("boats/Boat" + (player.spec_id + 1) + "/boat" + (player.spec_id + 1) + ".png",
+//                80, 100);
+//    }
 
 
 
