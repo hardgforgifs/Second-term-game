@@ -48,6 +48,7 @@ class SceneResultsScreen implements Scene {
      *
      * @return returns an integer which is either the scene_id or 1
      * @author Umer Fakher
+     * @modifiedBy Samuel Plane
      */
     public int update() {
         //Testing code for outputting results after a leg to terminal
@@ -55,7 +56,16 @@ class SceneResultsScreen implements Scene {
         //If left mouse button is pressed end current scene (a SceneResultsScreen)
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             // don't leave if this is the final results screen
-            for (Boat b : boats) if (b.getLegTimes().size() > 3) return scene_id;
+            System.out.println("");
+            System.out.println("New");
+            for (Boat b : boats) {
+                System.out.println(b.name + " " + b.getLegTimes().size());
+                if (b.getLegTimes().size() > 3) {
+                    System.out.println("Boat with 4+ leg times" + b.name);
+                    return scene_id;
+                }
+            }
+            System.out.println("Next");
             return 1;
         }
         // otherwise remain in current scene (a SceneResultsScreen)

@@ -25,7 +25,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
     protected float durability = 1.f;  // from 0 to 1
     protected float durability_per_hit = .1f;
     protected float stamina = 1.f;  // from 0 to 1, percentage of stamina max
-    protected float stamina_usage = 0.002f;  //todo change this after testing
+    protected float stamina_usage = 0.000f;  //todo change this after testing
     protected float stamina_regen = .003f;
 
     protected List<Long> leg_times = new ArrayList<>();  // times for every previous leg
@@ -115,12 +115,14 @@ abstract class Boat extends MovableObject implements CollisionObject {
         durability -= durability - durability_per_hit <= 0 ? durability : durability_per_hit;
 
         //Implements the functionality for boats losing all their durability
+        /*
         if (durability <= 0) {
             this.setStartTime(0);
             this.setEndTime(500000);
             this.setHasFinishedLeg(true);
             this.setLegTime();
         }
+        */
     }
 
 
@@ -130,7 +132,6 @@ abstract class Boat extends MovableObject implements CollisionObject {
      *
      * @author William Walton
      * @modifiedBy Samuel Plane
-     *
      */
     @Override
     public void accelerate() {
@@ -266,6 +267,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
         return this.end_time;
     }
 
+
     /**
      * Returns the difference between the end time and start time in milliseconds.
      *
@@ -274,7 +276,9 @@ abstract class Boat extends MovableObject implements CollisionObject {
      */
     public long getCalcTime() {
         return time_to_add + (this.end_time - this.start_time);
+
     }
+
 
     /**
      * Adds the difference between end time and start time into the leg times list as a long value.
@@ -284,6 +288,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
     public void setLegTime() {
         this.leg_times.add(this.getCalcTime());
     }
+
 
     /**
      * Returns recorded leg times of this boat.
@@ -295,6 +300,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
         return leg_times;
     }
 
+
     /**
      * Returns the time penalties to be added this boat accumulated by crossing the lines.
      *
@@ -304,6 +310,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
         return time_to_add;
     }
 
+
     /**
      * Sets the time penalties to be added by this boat accumulated by crossing the lines.
      *
@@ -312,6 +319,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
     public void setTimeToAdd(long time_to_add) {
         this.time_to_add = time_to_add;
     }
+
 
     /**
      * Checks to see if the this boat has collided with the other CollisionObject object passed.
@@ -332,6 +340,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
             object.hasCollided();
         }
     }
+
 
     /**
      * Used to return the CollisionBounds object representing this boat. Used for collision detection
@@ -358,23 +367,28 @@ abstract class Boat extends MovableObject implements CollisionObject {
         return my_bounds;
     }
 
+
     // Getters and Setters for has_started_leg and has_finished_leg
 
     public boolean hasFinishedLeg() {
         return has_finished_leg;
     }
 
+
     public void setHasFinishedLeg(boolean has_finished_leg) {
         this.has_finished_leg = has_finished_leg;
     }
+
 
     public boolean hasStartedLeg() {
         return has_started_leg;
     }
 
+
     public void setHasStartedLeg(boolean has_started_leg) {
         this.has_started_leg = has_started_leg;
     }
+
 
     /**
      * Reset max_speed, durability and stamina to defaults
@@ -384,6 +398,7 @@ abstract class Boat extends MovableObject implements CollisionObject {
         this.durability = 1;
         this.stamina = 1;
     }
+
 
     /**
      * Gets current best time for boat from its list of leg_times.

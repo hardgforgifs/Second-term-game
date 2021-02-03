@@ -114,6 +114,7 @@ class BoatRace {
      *
      * @author William Walton
      * @author Umer Fakher
+     * @modifiedBy Samuel Plane
      */
     public void runStep() {
         // dnf after 5 mins
@@ -143,9 +144,17 @@ class BoatRace {
                 boat.setStartTime(0);
                 boat.setEndTime((long) (boat.getStartTime(false) + ((1000.0 / 60.0) * boat.getFramesRaced())));
                 boat.setLegTime();
-
                 boat.setHasFinishedLeg(true);
             }
+            // Check if any boats have broken down
+
+            else if (!boat.hasFinishedLeg() && boat.durability <= 0) {
+                boat.setStartTime(0);
+                boat.setEndTime(300000);
+                boat.setLegTime();
+                boat.setHasFinishedLeg(true);
+            }
+
             // check if any boats have started
             else if (!boat.hasStartedLeg() && boat.getSprite().getY() > start_y) {
                 boat.setStartTime(System.currentTimeMillis());
@@ -233,7 +242,12 @@ class BoatRace {
             if (b instanceof PlayerBoat) {
                 if (((PlayerBoat) b).hasStartedLeg()) {
                     //Calculate time elapsed from the start in milliseconds
-                    long i = (System.currentTimeMillis() - ((PlayerBoat) b).getStartTime(false));
+                    long i;
+                    if (!b.hasFinishedLeg()) {
+                        i = (System.currentTimeMillis() - ((PlayerBoat) b).getStartTime(false));
+                    } else {
+                        i = (long) Integer.MIN_VALUE;
+                    }
 
                     //Displays and updates the time elapsed overlay and keeps position consistent with player's boat
                     drawTimeDisplay(batch, b, "", i, -((PlayerBoat) b).ui_bar_width / 2,
@@ -276,10 +290,14 @@ class BoatRace {
      * @author Umer Fakher
      */
     public void drawTimeDisplay(SpriteBatch batch, Boat b, String label_text, long time, float x, float y) {
-        if (label_text.equals("")) {
-            label_text = "Time (min:sec) = %02d:%02d";
+        if (time == (long) Integer.MIN_VALUE) {
+            font.draw(batch, "Completed Leg", x, y);
+        } else {
+            if (label_text.equals("")) {
+                label_text = "Time (min:sec) = %02d:%02d";
+            }
+            font.draw(batch, String.format(label_text, time / 60000, time / 1000 % 60), x, y);
         }
-        font.draw(batch, String.format(label_text, time / 60000, time / 1000 % 60), x, y);
     }
 
     /**

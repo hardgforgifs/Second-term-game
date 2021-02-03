@@ -105,12 +105,15 @@ class SceneMainGame implements Scene {
      * @author William Walton
      */
     public int update() {
+        //Obsolete?
         if (player.hasFinishedLeg()) {
             while (!race.isFinished()) race.runStep();
         }
+        //
         if (!race.isFinished()) race.runStep();
             // only run 3 guaranteed legs
         else if (leg_number < 3) {
+            System.out.println("New leg");
             race = new BoatRace(all_boats.subList(0, boats_per_race));
 
             leg_number++;
@@ -118,7 +121,7 @@ class SceneMainGame implements Scene {
             // generate some "realistic" times for all boats not shown
             for (int i = boats_per_race; i < all_boats.size(); i++) {
                 all_boats.get(i).setStartTime(0);
-                all_boats.get(i).setEndTime((long) (65000 + 10000 * Math.random()));
+                all_boats.get(i).setEndTime((long) (60000 + 10000 * Math.random()));
                 all_boats.get(i).setLegTime();
             }
 
@@ -211,8 +214,14 @@ class SceneMainGame implements Scene {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
+                System.out.println("Catch");
                 e.printStackTrace();
             }
         }
+    }
+
+
+    public int getLeg_number() {
+        return leg_number;
     }
 }

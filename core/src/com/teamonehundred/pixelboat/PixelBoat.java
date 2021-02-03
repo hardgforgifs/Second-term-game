@@ -63,11 +63,11 @@ public class PixelBoat extends ApplicationAdapter {
             else if (new_scene_id == 3 && scene_id == 5)
                 ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
 
-
             // check if we need to change scene
             scene_id = new_scene_id;
         }
     }
+
 
     /**
      * Disposes unneeded SpriteBatch and exits application.
