@@ -18,7 +18,7 @@ abstract class MovableObject extends GameObject {
     protected float speed = 0;
     protected float drag = .04f;  // amount speed is reduced by every frame naturally
     protected float acceleration = .2f;
-    protected float rotation_speed = 2.f;
+    protected float maneuverability = 2.f;
 
     // Added block of code for assessment 2
     public float getSpeed() { return speed; }
@@ -86,7 +86,7 @@ abstract class MovableObject extends GameObject {
      * @author William Walton
      */
     public void turn(int amount) {
-        sprite.rotate(amount * rotation_speed);
+        sprite.rotate(amount * maneuverability);
     }
 
 

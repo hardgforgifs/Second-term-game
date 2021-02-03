@@ -30,7 +30,7 @@ class ObstacleDuck extends Obstacle {
         // have the duck move at a constant speed
         drag = 0;
         speed = .2f;
-        rotation_speed = .2f;
+        maneuverability = .2f;
     }
 
     /**

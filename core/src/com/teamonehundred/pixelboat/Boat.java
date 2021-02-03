@@ -29,7 +29,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     protected float stamina_usage = 0.005f;  //todo change this after testing
     protected float stamina_regen = .002f;
 
-    protected float maneuverability = 1f;
+//    protected float maneuverability = 1f;
 
     protected List<Long> leg_times = new ArrayList<>();  // times for every previous leg
     protected long start_time = -1;
@@ -157,6 +157,34 @@ public abstract class Boat extends MovableObject implements CollisionObject {
                 }
 
             }
+
+            else if (effect[0] == 2) {
+                durability += .2f;
+                effects.remove(i);
+            }
+
+            else if (effect[0] == 3) {
+                maneuverability = 4f;
+                effect[1] -= Gdx.graphics.getDeltaTime();
+                if (effect[1] <= 0f){
+                    setStats();
+                    effects.remove(i);
+                }
+            }
+
+            else if (effect[0] == 4) {
+                durability += .5f;
+                effects.remove(i);
+            }
+
+            else if (effect[0] == 5) {
+                durability_per_hit = 0f;
+                effect[1] -= Gdx.graphics.getDeltaTime();
+                if (effect[1] <= 0f){
+                    setStats();
+                    effects.remove(i);
+                }
+            }
         }
 //        if (boostType == 1 && boostTimeRemaining <= 0f) {
 //            speed = Math.max(10, speed);
@@ -182,8 +210,10 @@ public abstract class Boat extends MovableObject implements CollisionObject {
      * @author William Walton
      */
     public void hasCollided() {
+        // Modified block of code for assessment 2
         durability -= durability - durability_per_hit <= 0 ? 0 : durability_per_hit;
-        max_speed -= max_speed - 1 <= 5 ? 0 : 1;
+        speed = speed - 5f;
+        // End of modified block of code for assessment 2
     }
 
     /**
@@ -429,31 +459,31 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         switch (spec_id) {
             case 0:
                 durability_per_hit = .2f;
-                max_speed = 15;
+                max_speed = 16;
                 acceleration = .2f;
-                maneuverability = 1f;
+                maneuverability = 2f;
                 break;
             case 1:
                 durability_per_hit = .25f;
-                max_speed = 25;
+                max_speed = 20;
                 acceleration = .2f;
-                maneuverability = 1f;
+                maneuverability = 1.5f;
                 break;
             case 2:
                 durability_per_hit = .1f;
-                max_speed = 20;
+                max_speed = 18;
                 acceleration = .1f;
-                maneuverability = 1f;
+                maneuverability = 1.5f;
                 break;
             case 3:
                 durability_per_hit = .15f;
-                max_speed = 10;
+                max_speed = 14;
                 acceleration = .2f;
-                maneuverability = 1f;
+                maneuverability = 3f;
                 break;
             case 4:
                 durability_per_hit = .25f;
-                max_speed = 15;
+                max_speed = 16;
                 acceleration = .3f;
                 maneuverability = 1f;
                 break;
