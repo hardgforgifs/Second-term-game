@@ -15,6 +15,7 @@ import java.util.List;
  *
  * @author James Frost
  * @author William Walton
+ * @modifiedBy Samuel Plane
  * JavaDoc by Umer Fakher
  */
 public class PlayerBoat extends Boat {
