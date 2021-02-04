@@ -3,6 +3,7 @@ package de.tomgrill.gdxtesting;
 
 import com.teamonehundred.pixelboat.*;
 import junit.framework.TestCase;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -12,16 +13,6 @@ import java.util.List;
 
 @RunWith(GdxTestRunner.class)
 public class BoatRaceTest extends TestCase {
-//    @Mock
-//    Texture lane_sep;
-//
-//    @Before
-//    public void init() {
-//        MockitoAnnotations.initMocks(this);
-//    }
-
-
-
     /** id: BoatRaceTest01
      *  description: tests the correct instantiation of obstacles
      *  input data: new instance of BoatRace
@@ -30,13 +21,26 @@ public class BoatRaceTest extends TestCase {
      *  category: white box testing
      *  author: Dragos Stoican
      */
+    List<Boat> all_boats;
+    SceneMainGame testSceneMainGame;
+    BoatRace testRace;
+
+    @Before
+    public void init() {
+        testSceneMainGame = new SceneMainGame();
+        testRace = new BoatRace(testSceneMainGame.getAllBoats());
+    }
+
     @Test
     public void testBoatRaceObstacleCreation() {
-//        Gdx.gl = mock(GL20.class);
-        List<Boat> all_boats = new ArrayList<>();
-        BoatRace testRace = new BoatRace(all_boats);
         assertFalse(testRace.getObstacles().isEmpty());
     }
+
+    @Test
+    public void testBoatRaceBoatsCreation() {
+        assertFalse(testRace.getBoats().isEmpty());
+    }
+
 
     /** id: BoatRaceTest02
      *  description: tests if a boat out of lane receives penalties, while a boat inside its lane is not penalised
@@ -48,26 +52,27 @@ public class BoatRaceTest extends TestCase {
      */
     @Test
     public void testBoatOutOfLane() {
-        List<Boat> all_boats = new ArrayList<>();
-        // Create the two boats and add them to the list
-        Boat testBoat = new PlayerBoat(0, 0);
-        Boat testBoat2 = new PlayerBoat(0, 0);
-        all_boats.add(testBoat);
-        all_boats.add(testBoat2);
-
-        // Create the race instance, this will position the boats on their lanes
-        BoatRace testRace = new BoatRace(all_boats);
         // Move a boat to a position that is definitely outside the lane
-        all_boats.get(0).getSprite().setPosition(-testRace.getLane_width() * 2, testRace.getEnd_y() / 2);
+        testRace.getBoats().get(0).getSprite().setPosition(-testRace.getLane_width() * 2, testRace.getEnd_y() / 2);
         // Run a step of the race
         testRace.runStep();
 
         // After the step is ran, the first boat should be penalised, while the second one shouldn't
-        assertTrue(all_boats.get(0).getTimeToAdd() > 0);
-        assertTrue(all_boats.get(1).getTimeToAdd() == 0);
+        assertTrue(testRace.getBoats().get(0).getTimeToAdd() > 0);
+        assertTrue(testRace.getBoats().get(1).getTimeToAdd() == 0);
     }
 
-    public void testRunStep() {
 
+    @Test
+    public void testBoostDuration() {
+        // Add a speed boost to one of the boats boat
+        // The speed boost should have a very low duration so we can test if it disappears after it's timer reaches 0
+        Float[] effect = new Float[] {1f, 0.001f};
+        testRace.getBoats().get(0).getEffects().add(effect);
+
+        // Run a step of the race
+        testRace.runStep();
+
+        assertTrue(testRace.getBoats().get(0).getEffects().isEmpty());
     }
 }

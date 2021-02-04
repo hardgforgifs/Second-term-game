@@ -41,6 +41,18 @@ public class BoatTest extends TestCase {
         assertTrue(startStamina > test_boat.getStamina());
     }
 
+    @Test
+    public void testStaminaRegen() {
+        // Set the boat's stamina to 0
+        test_boat.setStamina(0f);
+
+        // Update the position and the stamina of the boat
+        test_boat.updatePosition();
+
+        // After the update, the stamina should have increased
+        assertTrue(test_boat.getStamina() > 0);
+    }
+
     /** id: BoatTest01
      *  description: tests the correct input processing for the player's boat
      *  input data: new instance of a PlayerBoat
@@ -180,5 +192,21 @@ public class BoatTest extends TestCase {
         // Now the durability lost per hit of the boat should be 0
         assertEquals(test_boat.getDurability_per_hit(), 0f);
     }
+
+//    @Test
+//    public void testSpeedBoostDuration() {
+//        // Add a speed boost to the boat
+//        // The speed boost should have a very low duration so we can if it disappear after it's timer reaches 0
+//        Float[] effect = new Float[] {1f, 0.001f};
+//        test_boat.getEffects().add(effect);
+//
+//        // Apply the effect to the boat
+//        test_boat.updateBoostEffect();
+//
+//        // Simulate a frame
+//        test_boat.getEffects().get(0)[1] -= Gdx.graphics.getDeltaTime();
+//
+//
+//    }
 
 }
