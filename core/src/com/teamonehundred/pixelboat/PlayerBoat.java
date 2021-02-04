@@ -32,6 +32,10 @@ public class PlayerBoat extends Boat {
 
     protected int ui_bar_width = 500;
 
+    // Added block of code for assessment 2
+    protected Texture[] effect_textures;
+    // End of added block of code for assessment 2
+
     /* ################################### //
                   CONSTRUCTORS
     // ################################### */
@@ -109,6 +113,17 @@ public class PlayerBoat extends Boat {
         stamina_texture = new Texture("stamina_texture.png");
         durability_texture = new Texture("durability_texture.png");
 
+        // Added block of code for assessment 2
+        effect_textures = new Texture[5];
+        effect_textures[0] = new Texture("Buffs/Speed.png");
+        effect_textures[1] = new Texture("Buffs/Repair.png");
+        effect_textures[2] = new Texture("Buffs/Maneuverability.png");
+        effect_textures[3] = new Texture("Buffs/Repair.png");
+        effect_textures[4] = new Texture("Buffs/Invulnerable.png");
+
+        // End of added block of code for assessment 2
+
+
         stamina_bar = new Sprite(stamina_texture);
         durability_bar = new Sprite(durability_texture);
 
@@ -176,6 +191,16 @@ public class PlayerBoat extends Boat {
         List<Sprite> ret = new ArrayList<Sprite>();
         ret.add(stamina_bar);
         ret.add(durability_bar);
+        // Added block of code for assessment 2
+        for (int i = 0; i < effects.size(); i++) {
+            Float[] effect = effects.get(i);
+            Sprite effect_sprite = new Sprite(effect_textures[(int)(effect[0] - 1)]);
+            effect_sprite.setPosition(sprite.getX() - ui_bar_width / 2  + sprite.getWidth() / 2 + i * 50,
+                    sprite.getY() - 100);
+            effect_sprite.setSize(40, 40);
+            ret.add(effect_sprite);
+        }
+        // End of added block of code for assessment 2
         return ret;
     }
 

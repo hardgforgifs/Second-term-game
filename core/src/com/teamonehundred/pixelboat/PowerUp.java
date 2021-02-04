@@ -13,14 +13,6 @@ public class PowerUp extends GameObject implements CollisionObject{
         super(x, y, w, h, texture_path);
     }
 
-    PowerUp(int x, int y, int w, int h, String texture_path, int frame_count) {
-        super(x, y, w, h, texture_path, frame_count);
-    }
-
-    PowerUp(int x, int y, int w, int h, Texture texture, int frame_count) {
-        super(x, y, w, h, texture, frame_count);
-    }
-
     @Override
     public void hasCollided() {
         is_shown = false;
@@ -46,7 +38,7 @@ public class PowerUp extends GameObject implements CollisionObject{
     public CollisionBounds getBounds() {
         CollisionBounds my_bounds = new CollisionBounds();
         Rectangle main_rect = new Rectangle(
-                sprite.getX() + (0.31f * sprite.getWidth()),
+                sprite.getX() + (0.35f * sprite.getWidth()),
                 sprite.getY() + (0.06f * sprite.getHeight()),
                 0.31f * sprite.getWidth(),
                 0.88f * sprite.getHeight());

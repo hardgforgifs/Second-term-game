@@ -61,26 +61,6 @@ public class BoatTest extends TestCase {
      *  category: white box testing
      *  author: Dragos Stoican
      */
-//    @Test
-//    public void testControls() throws AWTException {
-//        // Create thhe player boat and a robot to execute the key presses
-//        PlayerBoat testPlayerBoat = new PlayerBoat(0, 0);
-//        Robot r = new Robot();
-//
-//        // Save the initial speed of the boat
-//        float startSpeed = testPlayerBoat.getSpeed();
-//
-//        // Make the robot press the W key
-//        int keycode = KeyEvent.VK_W;
-//        r.keyPress(keycode);
-//        // Process the input
-//        testPlayerBoat.updatePosition();
-//        // The speed of the boat should be greater than before
-//        assertTrue(testPlayerBoat.getSpeed() > startSpeed);
-//
-//        // Realease the W key
-//        r.keyRelease(keycode);
-//    }
 
     @Test
     public void testBoatAccelerate() {

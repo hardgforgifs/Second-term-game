@@ -177,7 +177,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
             else if (effect[0] == 2) {
                 durability += Math.min(.2f, 1f - durability);
-                effects.remove(i);
             }
 
             else if (effect[0] == 3) {
@@ -186,7 +185,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
             else if (effect[0] == 4) {
                 stamina += Math.min(.5f, 1f - stamina);
-                effects.remove(i);
             }
 
             else if (effect[0] == 5) {
