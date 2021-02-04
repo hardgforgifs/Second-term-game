@@ -33,6 +33,9 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     protected float stamina_usage = 0.005f;  //todo change this after testing
     protected float stamina_regen = .002f;
 
+    //
+    protected int time_to_recover= 100;
+
 //    protected float maneuverability = 1f;
 
     protected List<Long> leg_times = new ArrayList<>();  // times for every previous leg
@@ -157,11 +160,11 @@ public abstract class Boat extends MovableObject implements CollisionObject {
      *
      * @param spec_id int for boat spec
      */
-    public void setSpec(int spec_id) {
+    public void setSpec(int spec_id, int difficulty) {
         this.spec_id = spec_id;
         setTexture("boats/Boat" + (spec_id + 1) + "/boat" + (spec_id + 1) + ".png",
                 80, 100);
-        setStats();
+        setStats(difficulty);
     }
 
 
@@ -223,16 +226,20 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         // End of modified block of code for assessment 2
     }
 
+
     /**
      * Function called when the boat accelerates
      *
      * @author William Walton
+     * @modifiedBy Samuel Plane
      */
     @Override
     public void accelerate() {
         stamina = stamina - stamina_usage <= 0 ? 0 : stamina - stamina_usage;
         if (stamina > 0) {
-            super.accelerate();
+            // Added block of code for assessment 2
+            speed += speed >= max_speed? 0 : acceleration;
+            // End of added block of code for assessment 2
             frames_to_animate += 1;
         }
 
@@ -462,7 +469,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     /**
      * Sets the stats of the boat based on the spec_id that was allocated to it
      */
-    public void setStats() {
+    public void setStats(int difficulty) {
         switch (spec_id) {
             case 0:
                 durability_per_hit = .2f;
@@ -497,13 +504,32 @@ public abstract class Boat extends MovableObject implements CollisionObject {
             default:
                 break;
         }
+        switch (difficulty) {
+            case 0:
+                time_to_recover = 60;
+                break;
+            case 1:
+                time_to_recover = 80;
+                break;
+            case 2:
+                time_to_recover = 100;
+                break;
+        }
     }
+
 
     public void reset() {
         durability = 1f;
         stamina = 1f;
+        //Added block of code for assessment 2
+        max_speed -= 1;
+        acceleration -= .02f;
+        maneuverability -= 0.02f;
+        //End of added block of code for assessment 2
+
     }
     // End of modified block of code for assessment 2
+
 
     /**
      * Gets current best time for boat from its list of leg_times.

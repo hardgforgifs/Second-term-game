@@ -24,6 +24,7 @@ public class SceneBoatSelection implements Scene {
     protected boolean is_new_click = false;
 
     protected int spec_id = 0;
+    protected int difficulty_level = 1;
     // Modified block of code for assessment 2
     protected int num_specs = 5;
     // End of modified block of code for assessment 2
@@ -42,7 +43,12 @@ public class SceneBoatSelection implements Scene {
 
     protected Texture back;
     protected Texture back_hovered;
+
+    protected Sprite easy_sprite;
+    protected Sprite normal_sprite;
+    protected Sprite hard_sprite;
     protected Sprite back_sprite;
+    protected Sprite cont_sprite;
     // End of added block of code for assessment 2
 
     protected Viewport fill_viewport;
@@ -109,6 +115,23 @@ public class SceneBoatSelection implements Scene {
         back_sprite = new Sprite(back);
         back_sprite.setSize(512 / 2, 128 / 2);
         back_sprite.setPosition((fill_camera.viewportWidth / 8) - (back_sprite.getWidth() / 2), (fill_camera.viewportHeight / 8) - (back_sprite.getHeight() / 2));
+
+        easy_sprite = new Sprite(back);
+        easy_sprite.setSize(512 / 4, 128 / 4);
+        easy_sprite.setPosition((13 * (fill_camera.viewportWidth / 16)) - (easy_sprite.getWidth() / 2), (fill_camera.viewportHeight / 8) - (easy_sprite.getHeight() / 2));
+
+        normal_sprite = new Sprite(back);
+        normal_sprite.setSize(512 / 4, 128 / 4);
+        normal_sprite.setPosition((13 * (fill_camera.viewportWidth / 16)) - (normal_sprite.getWidth() / 2), (2 * (fill_camera.viewportHeight / 8)) - (normal_sprite.getHeight() / 2));
+
+        hard_sprite = new Sprite(back);
+        hard_sprite.setSize(512 / 4, 128 / 4);
+        hard_sprite.setPosition((15 * (fill_camera.viewportWidth / 16)) - (hard_sprite.getWidth() / 2), (2 * (fill_camera.viewportHeight / 8)) - (hard_sprite.getHeight() / 2));
+
+        cont_sprite = new Sprite(back);
+        cont_sprite.setSize(512 / 4, 128 / 4);
+        cont_sprite.setPosition((15 * (fill_camera.viewportWidth / 16)) - (cont_sprite.getWidth() / 2), (fill_camera.viewportHeight / 8) - (hard_sprite.getHeight() / 2));
+
         // End of added block of code for assessment 2
 
         for (int i = 0; i < num_specs; i++) {
@@ -141,6 +164,7 @@ public class SceneBoatSelection implements Scene {
         }
     }
 
+
     /**
      * Update function for SceneBoatSelection. Ends SceneBoatSelection based on user input otherwise stays in scene.
      * <p>
@@ -155,33 +179,72 @@ public class SceneBoatSelection implements Scene {
 
         Vector3 mouse_pos = fill_camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 
-        for (int i = 0; i < num_specs; i++)
+        for (int i = 0; i < num_specs; i++) {
             // Added block of code for assessment 2
             if (boat_option_sprites[i].getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
-            	boat_option_sprites[i].setTexture(boat_options_hovered[i]);
-            	stats_bg_sprite[i].setTexture(stats_boats[i]);
+                boat_option_sprites[i].setTexture(boat_options_hovered[i]);
+                stats_bg_sprite[i].setTexture(stats_boats[i]);
                 if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && is_new_click) {
                     spec_id = i;
-                    return 3;  // return 3 to exit
+                    return scene_id;
                 }
-            }else {
-            	boat_option_sprites[i].setTexture(boat_options[i]);
-            	stats_bg_sprite[i].setTexture(stats_bg);
+            } else {
+                boat_option_sprites[i].setTexture(boat_options[i]);
+                stats_bg_sprite[i].setTexture(stats_bg);
             }
-        
-	        if (back_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
-	            back_sprite.setTexture(back_hovered);
-	            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-	            	is_new_click = false;
-	                return 0;
-	            }
-	        } else
-	            back_sprite.setTexture(back);
-	        // End of added block of code for assessment 2
 
+        }
+
+        if (back_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
+            back_sprite.setTexture(back_hovered);
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                is_new_click = false;
+                return 0;
+            }
+        } else
+            back_sprite.setTexture(back);
+
+        if (easy_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
+            easy_sprite.setTexture(back_hovered);
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                is_new_click = false;
+                difficulty_level = 0;
+            }
+        } else
+            easy_sprite.setTexture(back);
+
+        if (normal_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
+            normal_sprite.setTexture(back_hovered);
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                is_new_click = false;
+                difficulty_level = 1;
+            }
+        } else
+            normal_sprite.setTexture(back);
+
+        if (hard_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
+            hard_sprite.setTexture(back_hovered);
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                is_new_click = false;
+                difficulty_level = 2;
+
+            }
+        } else
+            hard_sprite.setTexture(back);
+
+        if (cont_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
+            cont_sprite.setTexture(back_hovered);
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                is_new_click = false;
+                return 3;
+            }
+        } else
+            cont_sprite.setTexture(back);
+        // End of added block of code for assessment 2
 
         return scene_id;
     }
+
 
     /**
      * Draw function for SceneBoatSelection.
@@ -205,6 +268,10 @@ public class SceneBoatSelection implements Scene {
             stats_bg_sprite[i].draw(batch);
         }
         back_sprite.draw(batch);
+        easy_sprite.draw(batch);
+        normal_sprite.draw(batch);
+        hard_sprite.draw(batch);
+        cont_sprite.draw(batch);
         // End of modified block of code for assessment 2
 
         batch.end();
@@ -228,5 +295,10 @@ public class SceneBoatSelection implements Scene {
      */
     public int getSpecID() {
         return spec_id;
+    }
+
+
+    public int getDifficulty_level() {
+        return difficulty_level;
     }
 }

@@ -46,6 +46,7 @@ public class PixelBoat extends ApplicationAdapter {
         pref.putString("save", "save exists");
         pref.putInteger("leg_number", game_state.leg_number);
 //        pref.putInteger("player_spec_id", ((SceneMainGame)all_scenes[1]).player.getSpec_id());
+        pref.putInteger("player_difficulty", ((SceneBoatSelection)all_scenes[5]).getDifficulty_level());
         pref.putFloat("camera_x", game_state.player.getCamera().position.x);
         pref.putFloat("camera_y", game_state.player.getCamera().position.y);
         pref.putLong("race_start_time", game_state.race.startTime);
@@ -92,6 +93,7 @@ public class PixelBoat extends ApplicationAdapter {
         }
     }
 
+
     public SceneMainGame loadGame() {
         SceneMainGame game_state = new SceneMainGame();
         game_state.isPaused = true;
@@ -123,6 +125,8 @@ public class PixelBoat extends ApplicationAdapter {
             x_powerup = pref.getFloat("powerup" + k + " x", -1);
         }
 
+        int player_diff = pref.getInteger("player_difficulty");
+
         float camera_x = pref.getFloat("camera_x");
         float camera_y = pref.getFloat("camera_y");
         game_state.player.camera.position.set(camera_x, camera_y, 0);
@@ -131,7 +135,11 @@ public class PixelBoat extends ApplicationAdapter {
             float y = pref.getFloat("boat" + i + " y");
             float rotation = pref.getFloat("boat" + i + " rotation");
             int spec_id = pref.getInteger("boat" + i + " spec_id");
-            game_state.all_boats.get(i).setSpec(spec_id);
+            if (game_state.all_boats.get(i) instanceof PlayerBoat) {
+                game_state.all_boats.get(i).setSpec(spec_id, player_diff);
+            } else {
+                game_state.all_boats.get(i).setSpec(spec_id, 0);
+            }
             game_state.all_boats.get(i).sprite.setPosition(x, y);
             game_state.all_boats.get(i).sprite.setRotation(rotation);
             game_state.all_boats.get(i).speed = pref.getFloat("boat" + i + " speed");
@@ -204,7 +212,6 @@ public class PixelBoat extends ApplicationAdapter {
         int new_scene_id = all_scenes[scene_id].update();
         all_scenes[scene_id].draw(batch);
 
-
         if (scene_id != new_scene_id) {
             // special case updates
             if (new_scene_id == 4)
@@ -213,7 +220,7 @@ public class PixelBoat extends ApplicationAdapter {
                 // Added block of code for assessment 2
                 all_scenes[1] = new SceneMainGame();
                 // End of added block of code for assessment 2
-                ((SceneMainGame) all_scenes[1]).getPlayer().setSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
+                ((SceneMainGame) all_scenes[1]).getPlayer().setSpec(((SceneBoatSelection) all_scenes[5]).getSpecID(), ((SceneBoatSelection) all_scenes[5]).getDifficulty_level());
             }
 
             // Added block of code for assessment 2

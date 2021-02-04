@@ -85,7 +85,7 @@ public class BoatRace {
             boats.get(i).reset_motion();
             boats.get(i).sprite.setPosition(getLaneCentre(i), 40);  // reset boats y and place in lane
             boats.get(i).setFramesRaced(0);
-            boats.get(i).setStats();
+            boats.get(i).setStats(0);
 
             if (boats.get(i) instanceof PlayerBoat)
                 ((PlayerBoat) boats.get(i)).resetCameraPos();
@@ -193,7 +193,7 @@ public class BoatRace {
                 Float[] effect = boat.effects.get(i);
                 effect[1] -= Gdx.graphics.getDeltaTime();
                 if (effect[1] <= 0f) {
-                    boat.setStats();
+                    boat.setStats(0);
                     boat.effects.remove(i);
                 }
             }

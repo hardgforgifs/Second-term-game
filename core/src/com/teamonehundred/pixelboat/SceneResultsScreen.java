@@ -55,13 +55,16 @@ class SceneResultsScreen implements Scene {
         //If left mouse button is pressed end current scene (a SceneResultsScreen)
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             // don't leave if this is the final results screen
-            for (Boat b : boats) if (b.getLegTimes().size() > 3) return scene_id;
+            for (Boat b : boats) if (b.getLegTimes().size() > 3) {
+                return scene_id;
+            }
             return 1;
         }
         // otherwise remain in current scene (a SceneResultsScreen)
         return scene_id;
 
     }
+
 
     /**
      * Draw function for SceneResultsScreen.
