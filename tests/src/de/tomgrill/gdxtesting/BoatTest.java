@@ -1,16 +1,11 @@
 package de.tomgrill.gdxtesting;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.teamonehundred.pixelboat.Boat;
 import com.teamonehundred.pixelboat.PlayerBoat;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.awt.*;
-import java.awt.event.KeyEvent;
 
 @RunWith(GdxTestRunner.class)
 public class BoatTest extends TestCase {
