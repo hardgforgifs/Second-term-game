@@ -12,16 +12,6 @@ import java.util.List;
 
 @RunWith(GdxTestRunner.class)
 public class BoatRaceTest extends TestCase {
-//    @Mock
-//    Texture lane_sep;
-//
-//    @Before
-//    public void init() {
-//        MockitoAnnotations.initMocks(this);
-//    }
-
-
-
     /** id: BoatRaceTest01
      *  description: tests the correct instantiation of obstacles
      *  input data: new instance of BoatRace
@@ -32,7 +22,6 @@ public class BoatRaceTest extends TestCase {
      */
     @Test
     public void testBoatRaceObstacleCreation() {
-//        Gdx.gl = mock(GL20.class);
         List<Boat> all_boats = new ArrayList<>();
         BoatRace testRace = new BoatRace(all_boats);
         assertFalse(testRace.getObstacles().isEmpty());
