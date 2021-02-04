@@ -498,6 +498,8 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     }
 
     public void reset() {
+        speed = 0f;
+        effects.clear();
         durability = 1f;
         stamina = 1f;
     }

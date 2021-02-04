@@ -293,9 +293,6 @@ public class BoatRace {
         for (Boat b : boats) {
             //If current boat b is the player's boat then can display hud for this boat
             if (b instanceof PlayerBoat) {
-                System.out.println(b.effects.size());
-//                if (b.effects.size() > 0)
-//                    System.out.println(b.effects.get(0)[1]);
                 if (((PlayerBoat) b).hasStartedLeg()) {
 
                     // Modified block of code for assessment 2

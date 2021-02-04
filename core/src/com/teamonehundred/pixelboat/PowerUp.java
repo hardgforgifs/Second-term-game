@@ -38,10 +38,9 @@ public class PowerUp extends GameObject implements CollisionObject{
     public CollisionBounds getBounds() {
         CollisionBounds my_bounds = new CollisionBounds();
         Rectangle main_rect = new Rectangle(
-                sprite.getX() + (0.35f * sprite.getWidth()),
+                sprite.getX() + (0.3f * sprite.getWidth()),
                 sprite.getY() + (0.06f * sprite.getHeight()),
-                0.31f * sprite.getWidth(),
-                0.88f * sprite.getHeight());
+                0.4f * sprite.getWidth(), sprite.getHeight());
         my_bounds.addBound(main_rect);
 
         my_bounds.setOrigin(new Vector2(
