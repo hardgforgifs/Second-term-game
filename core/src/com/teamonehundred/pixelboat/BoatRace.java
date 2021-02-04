@@ -44,6 +44,8 @@ public class BoatRace {
     protected long time = 0;
     protected long startTime;
 
+    public List<Boat> getBoats() { return boats; }
+
     public List<CollisionObject> getObstacles() { return obstacles; }
 
     public int getEnd_y() { return end_y; }

@@ -38,8 +38,12 @@ public class SceneMainGame implements Scene {
     protected Texture save_quit_button;
     protected Texture save_quit_hovered;
     protected Sprite save_quit_sprite;
+
     protected boolean isPaused = false;
 
+    public boolean isPaused() { return isPaused; }
+
+    public void setPaused(boolean paused) { isPaused = paused; }
 
     public int getLeg_number() { return leg_number; }
 
@@ -202,7 +206,6 @@ public class SceneMainGame implements Scene {
         else
         {
             Vector3 mouse_pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-//            System.out.println(mouse_pos);
             if(save_quit_sprite.getBoundingRectangle().contains(mouse_pos.x, Gdx.graphics.getHeight() - mouse_pos.y)){
                 save_quit_sprite.setTexture(save_quit_hovered);
                 if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {

@@ -55,6 +55,7 @@ public class PixelBoatTest extends TestCase {
 
         // Reset the game
         testGame = createNewGame();
+        testSceneMainGame = (SceneMainGame) testGame.getAll_scenes()[1];
 
         // Load the game state that was saved
         testSceneMainGame = testGame.loadGame();
@@ -123,7 +124,6 @@ public class PixelBoatTest extends TestCase {
 
         // Save and load the game state
         reload();
-
         // The specs of each boat from the newly loaded game state should be the same as the one that was saved
         for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
             assertEquals(testSceneMainGame.getAllBoats().get(i).getSpec_id(),
