@@ -41,8 +41,6 @@ public class SceneMainGame implements Scene {
 
     protected boolean isPaused = false;
 
-    public boolean isPaused() { return isPaused; }
-
     public void setPaused(boolean paused) { isPaused = paused; }
 
     public int getLeg_number() { return leg_number; }

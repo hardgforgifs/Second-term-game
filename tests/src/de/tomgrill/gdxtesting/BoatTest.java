@@ -36,6 +36,14 @@ public class BoatTest extends TestCase {
         assertTrue(startStamina > test_boat.getStamina());
     }
 
+    /** id: BoatTest02
+     *  description: tests a boats stamina regen when it stops accelerating
+     *  input data: new instance of a boat, with 0 stamina
+     *  expected outcome: stamina after updating the boat should be higher than before
+     *  requirements: FR_STAM_USAGE
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
     @Test
     public void testStaminaRegen() {
         // Set the boat's stamina to 0
@@ -48,15 +56,14 @@ public class BoatTest extends TestCase {
         assertTrue(test_boat.getStamina() > 0);
     }
 
-    /** id: BoatTest01
-     *  description: tests the correct input processing for the player's boat
+    /** id: BoatTest03
+     *  description: tests the correct input processing for the player's boat when the W button is pressed
      *  input data: new instance of a PlayerBoat
-     *  expected outcome: acceleration and rotation should be affected by the buttons
+     *  expected outcome: speed should be affected by the button
      *  requirements: UR_PLAYABILITY, FR_PLAYABILITY
      *  category: white box testing
      *  author: Dragos Stoican
      */
-
     @Test
     public void testBoatAccelerate() {
         // Save the starting speed
@@ -69,6 +76,14 @@ public class BoatTest extends TestCase {
         assertTrue(test_boat.getSpeed() > speed);
     }
 
+    /** id: BoatTest04
+     *  description: tests the correct input processing for the player's boat when the D button is pressed
+     *  input data: new instance of a PlayerBoat
+     *  expected outcome: rotation should be affected by the button
+     *  requirements: UR_PLAYABILITY, FR_PLAYABILITY
+     *  category: white box testing
+     *  author: Dragos Stoican
+     */
     @Test
     public void testTurningRight() {
         // Save the current rotation
@@ -81,6 +96,14 @@ public class BoatTest extends TestCase {
         assertTrue(test_boat.getSprite().getRotation() < rotation);
     }
 
+    /** id: BoatTest05
+     *  description: tests the correct input processing for the player's boat when the A button is pressed
+     *  input data: new instance of a PlayerBoat
+     *  expected outcome: rotation should be affected by the button
+     *  requirements: UR_PLAYABILITY, FR_PLAYABILITY
+     *  category: white box testing
+     *  author: Dragos Stoican
+     */
     @Test
     public void testTurningLeft() {
         // Save the current rotation
@@ -93,6 +116,14 @@ public class BoatTest extends TestCase {
         assertTrue(test_boat.getSprite().getRotation() > rotation);
     }
 
+    /** id: BoatTest06
+     *  description: tests if the speed boost correctly affects a boat
+     *  input data: new instance of a PlayerBoat that is affected by a speed boost
+     *  expected outcome: max speed and acceleration should be increased
+     *  requirements: UR_PICKUP_BOOSTS, FR_PICKUP_BOOSTS
+     *  category: white box testing
+     *  author: Dragos Stoican
+     */
     @Test
     public void testSpeedBoostEffect() {
         // Add a speed boost effect to the boat
@@ -109,6 +140,14 @@ public class BoatTest extends TestCase {
         assertTrue(test_boat.getAcceleration() > old_acceleration);
     }
 
+    /** id: BoatTest07
+     *  description: tests if the durability boost correctly affects a boat
+     *  input data: new instance of a PlayerBoat, with low durability, that is affected by a durability boost
+     *  expected outcome: the boats durability should increase
+     *  requirements: UR_PICKUP_BOOSTS, FR_PICKUP_BOOSTS
+     *  category: white box testing
+     *  author: Dragos Stoican
+     */
     @Test
     public void testRobustnessBoostEffect() {
         // Set the durability of the boost really low so we can test if it increases
@@ -125,6 +164,14 @@ public class BoatTest extends TestCase {
         assertTrue(test_boat.getDurability() > 0.1f);
     }
 
+    /** id: BoatTest08
+     *  description: tests if the maneuverability boost correctly affects a boat
+     *  input data: new instance of a PlayerBoat that is affected by a maneuverability boost
+     *  expected outcome: maneuverability should be increased
+     *  requirements: UR_PICKUP_BOOSTS, FR_PICKUP_BOOSTS
+     *  category: white box testing
+     *  author: Dragos Stoican
+     */
     @Test
     public void testManeuverabilityBoostEffect() {
         // Add a maneuverability boost effect to the boat
@@ -139,6 +186,14 @@ public class BoatTest extends TestCase {
         assertTrue(test_boat.getManeuverability() > old_maneuverability);
     }
 
+    /** id: BoatTest09
+     *  description: tests if the stamina boost correctly affects a boat
+     *  input data: new instance of a PlayerBoat that is affected by a stamina boost
+     *  expected outcome: stamina should be increased
+     *  requirements: UR_PICKUP_BOOSTS, FR_PICKUP_BOOSTS
+     *  category: white box testing
+     *  author: Dragos Stoican
+     */
     @Test
     public void testStaminaBoostEffect() {
         // Set the stamina of the boost really low so we can test if it increases
@@ -155,6 +210,14 @@ public class BoatTest extends TestCase {
         assertTrue(test_boat.getStamina() > 0.1f);
     }
 
+    /** id: BoatTest08
+     *  description: tests if the invulnerability boost correctly affects a boat
+     *  input data: new instance of a PlayerBoat that is affected by a invulnerability boost
+     *  expected outcome: durability lost per hit should be 0
+     *  requirements: UR_PICKUP_BOOSTS, FR_PICKUP_BOOSTS
+     *  category: white box testing
+     *  author: Dragos Stoican
+     */
     @Test
     public void testInvulnerabilityBoostEffect() {
         // Add a invulnerability boost effect to the boat
@@ -167,21 +230,5 @@ public class BoatTest extends TestCase {
         // Now the durability lost per hit of the boat should be 0
         assertEquals(test_boat.getDurability_per_hit(), 0f);
     }
-
-//    @Test
-//    public void testSpeedBoostDuration() {
-//        // Add a speed boost to the boat
-//        // The speed boost should have a very low duration so we can if it disappear after it's timer reaches 0
-//        Float[] effect = new Float[] {1f, 0.001f};
-//        test_boat.getEffects().add(effect);
-//
-//        // Apply the effect to the boat
-//        test_boat.updateBoostEffect();
-//
-//        // Simulate a frame
-//        test_boat.getEffects().get(0)[1] -= Gdx.graphics.getDeltaTime();
-//
-//
-//    }
 
 }
