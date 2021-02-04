@@ -11,13 +11,17 @@ import org.junit.runner.RunWith;
 public class BoatTest extends TestCase {
 
     Boat test_boat;
+
+    /**
+     * This method is called before each test to create a new boat to apply the tests to
+     */
     @Before
     public void init() {
         test_boat = new PlayerBoat(0, 0);
     }
 
     /** id: BoatTest01
-     *  description: tests a boats stamina decreases when it accelerates
+     *  description: tests if boat's stamina decreases when it accelerates
      *  input data: new instance of a boat
      *  expected outcome: stamina after accelerating should be lower than before accelerating
      *  requirements: FR_STAM_USAGE
@@ -37,7 +41,7 @@ public class BoatTest extends TestCase {
     }
 
     /** id: BoatTest02
-     *  description: tests a boats stamina regen when it stops accelerating
+     *  description: tests if boat's stamina regen when it stops accelerating
      *  input data: new instance of a boat, with 0 stamina
      *  expected outcome: stamina after updating the boat should be higher than before
      *  requirements: FR_STAM_USAGE

@@ -39,6 +39,10 @@ public class SceneMainGame implements Scene {
     protected Texture save_quit_hovered;
     protected Sprite save_quit_sprite;
 
+    protected Texture resume_button;
+    protected Texture resume_hovered;
+    protected Sprite resume_sprite;
+
     protected boolean isPaused = false;
 
     public void setPaused(boolean paused) { isPaused = paused; }
@@ -85,6 +89,13 @@ public class SceneMainGame implements Scene {
         save_quit_sprite.setSize(512 / 2, 128 / 2);
         save_quit_sprite.setPosition(((float)Gdx.graphics.getWidth()/ 2 - (save_quit_sprite.getWidth() / 2)),
                                      ((float)Gdx.graphics.getHeight()/ 2) + (save_quit_sprite.getHeight() / 2));
+
+        resume_button = new Texture("ResumeUnselected.png");
+        resume_hovered = new Texture("ResumeSelected.png");
+        resume_sprite = new Sprite(resume_button);
+        resume_sprite.setSize(512 / 2, 128 / 2);
+        resume_sprite.setPosition(((float)Gdx.graphics.getWidth()/ 2 - (resume_sprite.getWidth() / 2)),
+                ((float)Gdx.graphics.getHeight()/ 2) + (resume_sprite.getHeight()) + 35);
         // End of added block of code for assessment 2
 
         all_boats.add(player);
@@ -139,6 +150,7 @@ public class SceneMainGame implements Scene {
             SpriteBatch pause_batch =  new SpriteBatch();
             pause_batch.begin();
             save_quit_sprite.draw(pause_batch);
+            resume_sprite.draw(pause_batch);
             pause_batch.end();
         }
         // End of added block of code for assessment 2
@@ -212,6 +224,15 @@ public class SceneMainGame implements Scene {
             }
             else
                 save_quit_sprite.setTexture(save_quit_button);
+
+            if(resume_sprite.getBoundingRectangle().contains(mouse_pos.x, Gdx.graphics.getHeight() - mouse_pos.y)){
+                resume_sprite.setTexture(resume_hovered);
+                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                    isPaused = false;
+                }
+            }
+            else
+                resume_sprite.setTexture(resume_button);
 
         }
         return scene_id;

@@ -15,14 +15,23 @@ import java.util.List;
 @RunWith(GdxTestRunner.class)
 public class MainGameTest extends TestCase {
     SceneMainGame testSceneMainGame;
-//    BoatRace testRace;
 
+    /**
+     * This method is called before each test to create a new instance of SceneMainGame to run the tests on
+     */
     @Before
     public void init() {
         testSceneMainGame = new SceneMainGame();
-//        testRace = new BoatRace(testSceneMainGame.getAllBoats());
     }
 
+    /** id: SceneMainGame01
+     *  description: tests if boats stop moving when the game is paused
+     *  input data: new instance of a SceneMainGame
+     *  expected outcome: the position of each boat should be the same if the game is paused after we run a race step
+     *  requirements: UR_PAUSE_MENU
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
     @Test
     public void testPausedGameBoatsNotMoving() {
         // Save a list of the boats locations so we can compare later
