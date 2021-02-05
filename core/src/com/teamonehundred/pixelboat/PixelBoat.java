@@ -74,6 +74,7 @@ public class PixelBoat extends ApplicationAdapter {
             pref.putInteger("boat" + i + " spec_id", game_state.all_boats.get(i).getSpec_id());
             pref.putFloat("boat" + i + " speed", game_state.all_boats.get(i).speed);
             pref.putFloat("boat" + i + " stamina", game_state.all_boats.get(i).stamina);
+            pref.putInteger("boat" + i + "time_to_recover", game_state.all_boats.get(i).time_to_recover);
             pref.putLong("boat" + i + " start_time", game_state.all_boats.get(i).start_time);
             pref.putLong("boat" + i + " end_time", game_state.all_boats.get(i).end_time);
             pref.putLong("boat" + i + " time_to_add", game_state.all_boats.get(i).time_to_add);
@@ -140,6 +141,7 @@ public class PixelBoat extends ApplicationAdapter {
             } else {
                 game_state.all_boats.get(i).setSpec(spec_id, 0);
             }
+            game_state.all_boats.get(i).time_to_recover = pref.getInteger("boat" + i + "time_to_recover");
             game_state.all_boats.get(i).sprite.setPosition(x, y);
             game_state.all_boats.get(i).sprite.setRotation(rotation);
             game_state.all_boats.get(i).speed = pref.getFloat("boat" + i + " speed");

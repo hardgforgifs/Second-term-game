@@ -43,6 +43,14 @@ public class SceneBoatSelection implements Scene {
 
     protected Texture back;
     protected Texture back_hovered;
+    protected Texture easy;
+    protected Texture easy_hovered;
+    protected Texture normal;
+    protected Texture normal_hovered;
+    protected Texture hard;
+    protected Texture hard_hovered;
+    protected Texture cont;
+    protected Texture cont_covered;
 
     protected Sprite easy_sprite;
     protected Sprite normal_sprite;
@@ -112,19 +120,28 @@ public class SceneBoatSelection implements Scene {
         
         back = new Texture("TitleScreen/back.png");
         back_hovered = new Texture("TitleScreen/back_hovered.png");
+        easy = new Texture("Easy.png");
+        easy_hovered = new Texture("EasySelected.png");
+        normal = new Texture("Medium.png");
+        normal_hovered = new Texture("MediumSelected.png");
+        hard = new Texture("Hard.png");
+        hard_hovered = new Texture("HardSelected.png");
+        cont = new Texture("ContinueSelected.png");
+        cont_covered = new Texture("ContinueUnselected.png");
+
         back_sprite = new Sprite(back);
         back_sprite.setSize(512 / 2, 128 / 2);
         back_sprite.setPosition((fill_camera.viewportWidth / 8) - (back_sprite.getWidth() / 2), (fill_camera.viewportHeight / 8) - (back_sprite.getHeight() / 2));
 
-        easy_sprite = new Sprite(back);
+        easy_sprite = new Sprite(easy);
         easy_sprite.setSize(512 / 4, 128 / 4);
         easy_sprite.setPosition((13 * (fill_camera.viewportWidth / 16)) - (easy_sprite.getWidth() / 2), (fill_camera.viewportHeight / 8) - (easy_sprite.getHeight() / 2));
 
-        normal_sprite = new Sprite(back);
+        normal_sprite = new Sprite(normal);
         normal_sprite.setSize(512 / 4, 128 / 4);
         normal_sprite.setPosition((13 * (fill_camera.viewportWidth / 16)) - (normal_sprite.getWidth() / 2), (2 * (fill_camera.viewportHeight / 8)) - (normal_sprite.getHeight() / 2));
 
-        hard_sprite = new Sprite(back);
+        hard_sprite = new Sprite(hard);
         hard_sprite.setSize(512 / 4, 128 / 4);
         hard_sprite.setPosition((15 * (fill_camera.viewportWidth / 16)) - (hard_sprite.getWidth() / 2), (2 * (fill_camera.viewportHeight / 8)) - (hard_sprite.getHeight() / 2));
 
@@ -205,41 +222,41 @@ public class SceneBoatSelection implements Scene {
             back_sprite.setTexture(back);
 
         if (easy_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
-            easy_sprite.setTexture(back_hovered);
+            easy_sprite.setTexture(easy_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 is_new_click = false;
                 difficulty_level = 0;
             }
         } else
-            easy_sprite.setTexture(back);
+            easy_sprite.setTexture(easy);
 
         if (normal_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
-            normal_sprite.setTexture(back_hovered);
+            normal_sprite.setTexture(normal_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 is_new_click = false;
                 difficulty_level = 1;
             }
         } else
-            normal_sprite.setTexture(back);
+            normal_sprite.setTexture(normal);
 
         if (hard_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
-            hard_sprite.setTexture(back_hovered);
+            hard_sprite.setTexture(hard_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 is_new_click = false;
                 difficulty_level = 2;
 
             }
         } else
-            hard_sprite.setTexture(back);
+            hard_sprite.setTexture(hard);
 
         if (cont_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
-            cont_sprite.setTexture(back_hovered);
+            cont_sprite.setTexture(cont_covered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 is_new_click = false;
                 return 3;
             }
         } else
-            cont_sprite.setTexture(back);
+            cont_sprite.setTexture(cont);
         // End of added block of code for assessment 2
 
         return scene_id;
