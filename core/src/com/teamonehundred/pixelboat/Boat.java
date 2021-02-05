@@ -506,10 +506,10 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         }
         switch (difficulty) {
             case 0:
-                time_to_recover = 60;
+                time_to_recover = 50;
                 break;
             case 1:
-                time_to_recover = 80;
+                time_to_recover = 75;
                 break;
             case 2:
                 time_to_recover = 100;

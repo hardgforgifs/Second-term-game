@@ -224,8 +224,8 @@ class AIBoat extends Boat {
         stamina = 1f;
         max_speed -= 1;
         acceleration -= .02f;
-        maneuverability -= 0.02f;
-        stamina_regen += 0.0005f;
+        maneuverability -= 0.025f;
+        stamina_regen += 0.001f;
     }
     //End of added block of code for assessment 2
 }
