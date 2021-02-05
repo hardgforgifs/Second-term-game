@@ -1,11 +1,15 @@
 package de.tomgrill.gdxtesting;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.teamonehundred.pixelboat.Boat;
 import com.teamonehundred.pixelboat.PlayerBoat;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Vector;
 
 @RunWith(GdxTestRunner.class)
 public class BoatTest extends TestCase {
@@ -233,6 +237,37 @@ public class BoatTest extends TestCase {
 
         // Now the durability lost per hit of the boat should be 0
         assertEquals(test_boat.getDurability_per_hit(), 0f);
+    }
+
+    /** id: BoatTest09
+     *  description: tests if the camera stays centered on the player
+     *  input data: new instance of a PlayerBoat
+     *  expected outcome: the difference between the position of the boat and the position of the player should stay
+     *                    the same after moving the player
+     *  requirements: FR_POV
+     *  category: white box testing
+     *  author: Dragos Stoican
+     */
+    @Test
+    public void testCameraPOV() {
+        // Save the position of the camera
+        Vector3 camera_position = ((PlayerBoat)test_boat).getCamera().position;
+
+        // Save the difference between the position of the camera and the position of the player
+        float x_diff = camera_position.x - test_boat.getSprite().getX();
+        float y_diff = camera_position.y - test_boat.getSprite().getY();
+
+        // Accelerate and move the boat
+        test_boat.accelerate();
+        test_boat.updatePosition();
+
+        // The difference between the camera and the player should still be the same
+        camera_position = ((PlayerBoat)test_boat).getCamera().position;
+        float new_x_diff = camera_position.x - test_boat.getSprite().getX();
+        float new_y_diff = camera_position.y - test_boat.getSprite().getY();
+
+        assertEquals(x_diff, new_x_diff);
+        assertEquals(y_diff, new_y_diff);
     }
 
 }
