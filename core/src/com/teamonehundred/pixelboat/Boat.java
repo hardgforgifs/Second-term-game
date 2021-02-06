@@ -33,8 +33,9 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     protected float stamina_usage = 0.005f;  //todo change this after testing
     protected float stamina_regen = .002f;
 
-    //
+    //Added block of code for assessment 2
     protected int time_to_recover= 100;
+    //End of added block of code for assessment 2
 
 //    protected float maneuverability = 1f;
 
@@ -506,13 +507,13 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         }
         switch (difficulty) {
             case 0:
-                time_to_recover = 50;
+                time_to_recover = 30;
                 break;
             case 1:
-                time_to_recover = 75;
+                time_to_recover = 60;
                 break;
             case 2:
-                time_to_recover = 100;
+                time_to_recover = 90;
                 break;
         }
     }

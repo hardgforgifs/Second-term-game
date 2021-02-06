@@ -81,6 +81,9 @@ public class PixelBoat extends ApplicationAdapter {
             pref.putLong("boat" + i + " frames_raced", game_state.all_boats.get(i).frames_raced);
             pref.putBoolean("boat" + i + " has_started_leg", game_state.all_boats.get(i).has_started_leg);
             pref.putBoolean("boat" + i + " has_finished_leg", game_state.all_boats.get(i).has_finished_leg);
+            //This is a boolean used in the stamina and durability leg, which has not yet been merged with main, so this will need to be uncommented when that happens as it currently does not exist
+            //This will also need to be changed in the load game procedure
+            //pref.putBoolean("boat" + i + " recovering", game_state.all_boats.get(i).recovering);
 
             // Save the list of effects
             for (int k = 0; k < game_state.getAllBoats().get(i).effects.size(); k++) {
@@ -152,6 +155,8 @@ public class PixelBoat extends ApplicationAdapter {
             game_state.all_boats.get(i).frames_raced = pref.getLong("boat" + i + " frames_raced");
             game_state.all_boats.get(i).has_started_leg = pref.getBoolean("boat" + i + " has_started_leg");
             game_state.all_boats.get(i).has_finished_leg = pref.getBoolean("boat" + i + " has_finished_leg");
+            //See above in save game procedure for why this has been commented out
+            //game_state.all_boats.get(i).recovering = pref.getBoolean("boat" + i + " recovering");
             int j = 0;
             while (pref.getLong("leg_time" + i + j, -1) != -1) {
                 game_state.all_boats.get(i).leg_times.add(pref.getLong("leg_time" + i + j));
