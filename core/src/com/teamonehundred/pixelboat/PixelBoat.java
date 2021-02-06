@@ -46,8 +46,6 @@ public class PixelBoat extends ApplicationAdapter {
 //        pref.putInteger("player_spec_id", ((SceneMainGame)all_scenes[1]).player.getSpec_id());
         pref.putFloat("camera_x", game_state.player.getCamera().position.x);
         pref.putFloat("camera_y", game_state.player.getCamera().position.y);
-        pref.putLong("race_start_time", game_state.race.startTime);
-        pref.putLong("race_duration", game_state.race.time);
         for (int k = 0; k < game_state.race.obstacles.size(); k++) {
             // Don't save the lane walls
             if (!((Obstacle) game_state.race.obstacles.get(k)).getClass().getName().equals("com.teamonehundred.pixelboat.ObstacleLaneWall")) {
@@ -95,8 +93,6 @@ public class PixelBoat extends ApplicationAdapter {
         game_state.isPaused = true;
         game_state.leg_number = pref.getInteger("leg_number");
 //        game_state.getPlayer().setSpec(pref.getInteger("player_spec_id"));
-        game_state.race.startTime = pref.getLong("race_start_time");
-        game_state.race.time = pref.getLong("race_duration");
 
         int k = 0;
         float x_obstacle = pref.getFloat("obstacle" + k + " x", -1);
@@ -212,7 +208,6 @@ public class PixelBoat extends ApplicationAdapter {
 
             // Added block of code for assessment 2
             else if (new_scene_id == 1){
-                ((SceneMainGame) all_scenes[1]).set_start_time();
                 ((SceneMainGame) all_scenes[1]).resetBoats();
             }
 

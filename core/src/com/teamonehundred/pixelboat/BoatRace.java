@@ -41,8 +41,6 @@ public class BoatRace {
     protected long total_frames = 0;
 
     // Added block of code for assessment 2
-    protected long time = 0;
-    protected long startTime;
 
     public List<Boat> getBoats() { return boats; }
 
@@ -53,10 +51,6 @@ public class BoatRace {
     public int getLane_width() {
         return lane_width;
     }
-
-    public long getTime() { return time; }
-
-    public void setTime(long time) { this.time = time; }
 
     public List<PowerUp> getPowerups() { return powerups; }
     // End of added block of code for assessment 2
@@ -146,9 +140,6 @@ public class BoatRace {
      * @author Umer Fakher
      */
     public void runStep() {
-        // Added block of code for assessment 2
-        time += Gdx.graphics.getDeltaTime() * 1000;
-        // End of added block of code for assessment 2
         // dnf after 5 mins
         if (total_frames++ > 60 * 60 * 5) {
             is_finished = true;
@@ -297,11 +288,11 @@ public class BoatRace {
 
                     // Modified block of code for assessment 2
                     //Calculate time elapsed from the start in milliseconds
-                    long i = (startTime + time - ((PlayerBoat) b).getStartTime(false));
+                    long curTime = (long) ((1000.0 / 60.0) * b.getFramesRaced());
                     // End of modified block of code for assessment 2
 
                     //Displays and updates the time elapsed overlay and keeps position consistent with player's boat
-                    drawTimeDisplay(batch, b, "", i, -((PlayerBoat) b).ui_bar_width / 2,
+                    drawTimeDisplay(batch, b, "", curTime, -((PlayerBoat) b).ui_bar_width / 2,
                             500 + ((PlayerBoat) b).getSprite().getY());
 
                     //Draws a leg time display on the screen when the given boat has completed a leg of the race.
