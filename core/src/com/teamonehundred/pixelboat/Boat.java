@@ -492,6 +492,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         effects.clear();
         durability = 1f;
         stamina = 1f;
+        time_to_add = 0;
     }
     // End of modified block of code for assessment 2
 

@@ -84,15 +84,16 @@ public class BoatRaceTest extends TestCase {
      *  author: Dragos Stoican
      */
     @Test
-    public void testBoostDuration() {
+    public void testBoostDurationDecreases() {
         // Add a speed boost to one of the boats boat
         // The speed boost should have a very low duration so we can test if it disappears after it's timer reaches 0
-        Float[] effect = new Float[] {1f, 0.001f};
+        Float[] effect = new Float[] {1f, 1f};
         testRace.getBoats().get(0).getEffects().add(effect);
 
         // Run a step of the race
         testRace.runStep();
 
-        assertTrue(testRace.getBoats().get(0).getEffects().isEmpty());
+        // The boost's duration should have decreased below 0 so it is not gone
+        assertTrue(testRace.getBoats().get(0).getEffects().get(0)[1] < 1f);
     }
 }

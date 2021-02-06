@@ -83,6 +83,8 @@ project(":tests") {
 
     sourceSets.test.java.srcDirs = ["src/"]
 
+//    workingDir = new File("../core/assets")
+
     dependencies {
 
         compile project(path: ":core", configuration: "default")
