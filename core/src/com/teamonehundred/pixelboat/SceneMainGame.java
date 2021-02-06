@@ -61,13 +61,6 @@ public class SceneMainGame implements Scene {
         return race;
     }
 
-    public void set_start_time() {
-        race.startTime = System.currentTimeMillis();
-    }
-
-    public long get_start_time() {
-        return race.startTime;
-    }
     // End of added block of code for assessment 2
 
     /**
