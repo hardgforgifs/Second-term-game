@@ -270,4 +270,103 @@ public class BoatTest extends TestCase {
         assertEquals(y_diff, new_y_diff);
     }
 
+    /** id: BoatTest10
+     *  description: tests if the speed of a boat is correctly reset
+     *  input data: new instance of a PlayerBoat
+     *  expected outcome: the speed of the boat should be 0 after resetting
+     *  requirements: UR_BOAT_SPEC
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testBoatResetSpeed() {
+        // Add random values for speed
+        test_boat.setSpeed(100);
+
+        // Reset the boat
+        test_boat.reset();
+
+        // The speed should now be 0
+        assertTrue(test_boat.getSpeed() == 0);
+    }
+
+    /** id: BoatTest11
+     *  description: tests if the durability of a boat is correctly reset
+     *  input data: new instance of a PlayerBoat
+     *  expected outcome: the durability of the boat should be 0 after resetting
+     *  requirements: UR_BOAT_SPEC
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testBoatResetDurability() {
+        // Add random values for durability
+        test_boat.setDurability(100);
+
+        // Reset the boat
+        test_boat.reset();
+
+        // The durability should now be 0
+        assertTrue(test_boat.getDurability() == 1f);
+    }
+
+    /** id: BoatTest12
+     *  description: tests if the stamina of a boat is correctly reset
+     *  input data: new instance of a PlayerBoat
+     *  expected outcome: the stamina of the boat should be 0 after resetting
+     *  requirements: UR_BOAT_SPEC
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testBoatResetStamina() {
+        // Add random values for stamina
+        test_boat.setStamina(100);
+
+        // Reset the boat
+        test_boat.reset();
+
+        // The stamina should now be 0
+        assertTrue(test_boat.getStamina() == 1f);
+    }
+
+    /** id: BoatTest13
+     *  description: tests if the added time of a boat is correctly reset
+     *  input data: new instance of a PlayerBoat
+     *  expected outcome: the added time of the boat should be 0 after resetting
+     *  requirements: UR_BOAT_SPEC
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testBoatResetAddedTime() {
+        // Add random values for added time
+        test_boat.setTimeToAdd(100);
+
+        // Reset the boat
+        test_boat.reset();
+
+        // The added time should now be 0
+        assertTrue(test_boat.getTimeToAdd() == 0);
+    }
+
+    /** id: BoatTest14
+     *  description: tests if the effects of a boat is correctly reset
+     *  input data: new instance of a PlayerBoat
+     *  expected outcome: there should be no effects on the boat after resetting
+     *  requirements: UR_BOAT_SPEC
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testBoatResetEffects() {
+        // Add an effect
+        test_boat.getEffects().add(new Float[] {1f, 5f});
+
+        // Reset the boat
+        test_boat.reset();
+
+        // There should be no effects after reseting
+        assertTrue(test_boat.getEffects().isEmpty());
+    }
 }
