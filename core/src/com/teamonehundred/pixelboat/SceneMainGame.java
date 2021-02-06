@@ -261,11 +261,13 @@ public class SceneMainGame implements Scene {
         return all_boats;
     }
 
+    // Added block of code for assessment 2
     public void resetBoats() {
         for (Boat b : all_boats) {
             b.reset();
         }
     }
+    // End of added block of code for assessment 2
 
 
     /**
