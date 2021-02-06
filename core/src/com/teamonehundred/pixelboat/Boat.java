@@ -192,6 +192,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
             }
 
             else if (effect[0] == 4 && effect[1] == 5f) {
+                System.out.println("stamina boost");
                 stamina += Math.min(.5f, 1f - stamina);
             }
 

@@ -116,9 +116,9 @@ public class PlayerBoat extends Boat {
         // Added block of code for assessment 2
         effect_textures = new Texture[5];
         effect_textures[0] = new Texture("Buffs/Speed.png");
-        effect_textures[1] = new Texture("Buffs/Stamina.png");
+        effect_textures[1] = new Texture("Buffs/Repair.png");
         effect_textures[2] = new Texture("Buffs/Maneuverability.png");
-        effect_textures[3] = new Texture("Buffs/Repair.png");
+        effect_textures[3] = new Texture("Buffs/Stamina.png");
         effect_textures[4] = new Texture("Buffs/Invulnerable.png");
 
         // End of added block of code for assessment 2
