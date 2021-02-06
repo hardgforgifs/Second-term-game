@@ -27,6 +27,7 @@ public class PixelBoat extends ApplicationAdapter {
     // 5 =boat selection
     protected int scene_id = 0;
 
+
     /**
      * Create method runs when the game starts.
      * <p>
@@ -49,6 +50,7 @@ public class PixelBoat extends ApplicationAdapter {
      * Render function runs every frame.
      * <p>
      * Controls functionality of frame switching.
+     * @modifiedBy Samuel Plane
      */
     @Override
     public void render() {
@@ -58,11 +60,14 @@ public class PixelBoat extends ApplicationAdapter {
 
         if (scene_id != new_scene_id) {
             // special case updates
-            if (new_scene_id == 4)
-                ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
-            else if (new_scene_id == 3 && scene_id == 5)
-                ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
+            if (new_scene_id == 4) {
 
+                ((SceneResultsScreen) all_scenes[4]).leg_no = ((SceneMainGame) all_scenes[1]).getLeg_number();
+                ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
+            }
+            else if (new_scene_id == 3 && scene_id == 5) {
+                ((SceneMainGame) all_scenes[1]).setPlayerSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
+            }
             // check if we need to change scene
             scene_id = new_scene_id;
         }

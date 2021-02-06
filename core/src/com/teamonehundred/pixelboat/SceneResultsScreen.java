@@ -20,6 +20,9 @@ import java.util.List;
  */
 class SceneResultsScreen implements Scene {
     protected int scene_id = 4;
+    //Added block of code for assessment 2
+    protected int leg_no;
+    //End of added block of code for assessment 2
 
     protected List<Boat> boats;
     protected BitmapFont font; // For Text Display
@@ -55,18 +58,13 @@ class SceneResultsScreen implements Scene {
 
         //If left mouse button is pressed end current scene (a SceneResultsScreen)
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+            System.out.println(leg_no);
             // don't leave if this is the final results screen
-            System.out.println("");
-            System.out.println("New");
-            for (Boat b : boats) {
-                System.out.println(b.name + " " + b.getLegTimes().size());
-                if (b.getLegTimes().size() > 3) {
-                    System.out.println("Boat with 4+ leg times" + b.name);
-                    return scene_id;
-                }
+            if (leg_no >= 4) {
+                return scene_id;
+            } else {
+                return 1;
             }
-            System.out.println("Next");
-            return 1;
         }
         // otherwise remain in current scene (a SceneResultsScreen)
         return scene_id;

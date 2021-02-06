@@ -20,7 +20,6 @@ import java.util.List;
 class SceneMainGame implements Scene {
 
     protected int scene_id = 1;
-
     protected int leg_number = 0;
 
     protected int boats_per_race = 7;
@@ -61,7 +60,7 @@ class SceneMainGame implements Scene {
         bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
         race = new BoatRace(all_boats.subList(0, boats_per_race));
-        leg_number++;
+        //leg_number++;
 
         waiting = new Texture("WaitingGraphic.png");
     }
@@ -113,7 +112,8 @@ class SceneMainGame implements Scene {
         if (!race.isFinished()) race.runStep();
             // only run 3 guaranteed legs
         else if (leg_number < 3) {
-            System.out.println("New leg");
+            System.out.println("current");
+            System.out.println(leg_number);
             race = new BoatRace(all_boats.subList(0, boats_per_race));
 
             leg_number++;
