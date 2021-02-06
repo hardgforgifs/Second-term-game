@@ -94,8 +94,8 @@ public class BoatRaceTest extends TestCase {
         testRace.runStep();
 
         // The boost's duration should have decreased, it could also have decreased below 0
-        assertTrue(testRace.getBoats().get(0).getEffects().get(0)[1] < 1f ||
-                testRace.getBoats().get(0).getEffects().isEmpty());
+        assertTrue(testRace.getBoats().get(0).getEffects().isEmpty() ||
+                testRace.getBoats().get(0).getEffects().get(0)[1] < 1f);
     }
 
     @Test
