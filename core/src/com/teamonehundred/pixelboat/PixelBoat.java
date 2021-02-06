@@ -44,6 +44,7 @@ public class PixelBoat extends ApplicationAdapter {
         pref.putString("save", "save exists");
         pref.putInteger("leg_number", game_state.leg_number);
 //        pref.putInteger("player_spec_id", ((SceneMainGame)all_scenes[1]).player.getSpec_id());
+        pref.putInteger("player_difficulty", ((SceneBoatSelection)all_scenes[5]).getDifficulty_level());
         pref.putFloat("camera_x", game_state.player.getCamera().position.x);
         pref.putFloat("camera_y", game_state.player.getCamera().position.y);
         for (int k = 0; k < game_state.race.obstacles.size(); k++) {
@@ -69,12 +70,16 @@ public class PixelBoat extends ApplicationAdapter {
             pref.putInteger("boat" + i + " spec_id", game_state.all_boats.get(i).getSpec_id());
             pref.putFloat("boat" + i + " speed", game_state.all_boats.get(i).speed);
             pref.putFloat("boat" + i + " stamina", game_state.all_boats.get(i).stamina);
+            pref.putInteger("boat" + i + "time_to_recover", game_state.all_boats.get(i).time_to_recover);
             pref.putLong("boat" + i + " start_time", game_state.all_boats.get(i).start_time);
             pref.putLong("boat" + i + " end_time", game_state.all_boats.get(i).end_time);
             pref.putLong("boat" + i + " time_to_add", game_state.all_boats.get(i).time_to_add);
             pref.putLong("boat" + i + " frames_raced", game_state.all_boats.get(i).frames_raced);
             pref.putBoolean("boat" + i + " has_started_leg", game_state.all_boats.get(i).has_started_leg);
             pref.putBoolean("boat" + i + " has_finished_leg", game_state.all_boats.get(i).has_finished_leg);
+            //This is a boolean used in the stamina and durability leg, which has not yet been merged with main, so this will need to be uncommented when that happens as it currently does not exist
+            //This will also need to be changed in the load game procedure
+            //pref.putBoolean("boat" + i + " recovering", game_state.all_boats.get(i).recovering);
 
             // Save the list of effects
             for (int k = 0; k < game_state.getAllBoats().get(i).effects.size(); k++) {
@@ -87,6 +92,7 @@ public class PixelBoat extends ApplicationAdapter {
             }
         }
     }
+
 
     public SceneMainGame loadGame() {
         SceneMainGame game_state = new SceneMainGame();
@@ -117,6 +123,8 @@ public class PixelBoat extends ApplicationAdapter {
             x_powerup = pref.getFloat("powerup" + k + " x", -1);
         }
 
+        int player_diff = pref.getInteger("player_difficulty");
+
         float camera_x = pref.getFloat("camera_x");
         float camera_y = pref.getFloat("camera_y");
         game_state.player.camera.position.set(camera_x, camera_y, 0);
@@ -125,7 +133,12 @@ public class PixelBoat extends ApplicationAdapter {
             float y = pref.getFloat("boat" + i + " y");
             float rotation = pref.getFloat("boat" + i + " rotation");
             int spec_id = pref.getInteger("boat" + i + " spec_id");
-            game_state.all_boats.get(i).setSpec(spec_id);
+            if (game_state.all_boats.get(i) instanceof PlayerBoat) {
+                game_state.all_boats.get(i).setSpec(spec_id, player_diff);
+            } else {
+                game_state.all_boats.get(i).setSpec(spec_id, 0);
+            }
+            game_state.all_boats.get(i).time_to_recover = pref.getInteger("boat" + i + "time_to_recover");
             game_state.all_boats.get(i).sprite.setPosition(x, y);
             game_state.all_boats.get(i).sprite.setRotation(rotation);
             game_state.all_boats.get(i).speed = pref.getFloat("boat" + i + " speed");
@@ -136,6 +149,8 @@ public class PixelBoat extends ApplicationAdapter {
             game_state.all_boats.get(i).frames_raced = pref.getLong("boat" + i + " frames_raced");
             game_state.all_boats.get(i).has_started_leg = pref.getBoolean("boat" + i + " has_started_leg");
             game_state.all_boats.get(i).has_finished_leg = pref.getBoolean("boat" + i + " has_finished_leg");
+            //See above in save game procedure for why this has been commented out
+            //game_state.all_boats.get(i).recovering = pref.getBoolean("boat" + i + " recovering");
             int j = 0;
             while (pref.getLong("leg_time" + i + j, -1) != -1) {
                 game_state.all_boats.get(i).leg_times.add(pref.getLong("leg_time" + i + j));
@@ -194,7 +209,6 @@ public class PixelBoat extends ApplicationAdapter {
         int new_scene_id = all_scenes[scene_id].update();
         all_scenes[scene_id].draw(batch);
 
-
         if (scene_id != new_scene_id) {
             // special case updates
             if (new_scene_id == 4)
@@ -203,7 +217,7 @@ public class PixelBoat extends ApplicationAdapter {
                 // Added block of code for assessment 2
                 all_scenes[1] = new SceneMainGame();
                 // End of added block of code for assessment 2
-                ((SceneMainGame) all_scenes[1]).getPlayer().setSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
+                ((SceneMainGame) all_scenes[1]).getPlayer().setSpec(((SceneBoatSelection) all_scenes[5]).getSpecID(), ((SceneBoatSelection) all_scenes[5]).getDifficulty_level());
             }
 
             // Added block of code for assessment 2

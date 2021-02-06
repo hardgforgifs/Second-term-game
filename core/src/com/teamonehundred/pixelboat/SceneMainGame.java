@@ -96,7 +96,7 @@ public class SceneMainGame implements Scene {
             // Modified block of code for assessment 2
             int spec_id = new Random().nextInt(5);
             all_boats.add(new AIBoat(0, 40, "boats/Boat" + (spec_id+1) + "/boat" + (spec_id + 1) + ".png"));
-            all_boats.get(i + 1).setSpec(spec_id);
+            all_boats.get(i + 1).setSpec(spec_id, 0);
             all_boats.get(all_boats.size() - 1).setName("AI Boat " + Integer.toString(i));
             // End of modified block of code for assessment 2
         }
@@ -257,6 +257,7 @@ public class SceneMainGame implements Scene {
     // Added block of code for assessment 2
     public void resetBoats() {
         for (Boat b : all_boats) {
+            // Added block of code for assessment 2
             b.reset();
         }
     }

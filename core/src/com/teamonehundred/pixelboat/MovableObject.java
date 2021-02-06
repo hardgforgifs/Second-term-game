@@ -18,11 +18,7 @@ abstract class MovableObject extends GameObject {
     protected float speed = 0;
     protected float drag = .04f;  // amount speed is reduced by every frame naturally
 
-
-
     protected float acceleration = .2f;
-
-
 
     protected float maneuverability = 2.f;
 
@@ -69,6 +65,7 @@ abstract class MovableObject extends GameObject {
     MovableObject(int x, int y, int w, int h, String texture_path, int frame_count) {
         super(x, y, w, h, texture_path, frame_count);
     }
+
 
     /**
      * A constructor for MovableObject.

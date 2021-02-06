@@ -51,6 +51,8 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     // Added block of code for assessment 2
     protected int spec_id;
 
+    protected int time_to_recover= 100;
+
     protected List<Float[]> effects = new ArrayList<>();
 
     public List<Float[]> getEffects() { return effects; }
@@ -163,11 +165,11 @@ public abstract class Boat extends MovableObject implements CollisionObject {
      *
      * @param spec_id int for boat spec
      */
-    public void setSpec(int spec_id) {
+    public void setSpec(int spec_id, int difficulty) {
         this.spec_id = spec_id;
         setTexture("boats/Boat" + (spec_id + 1) + "/boat" + (spec_id + 1) + ".png",
                 80, 100);
-        setStats();
+        setStats(difficulty);
     }
 
 
@@ -450,7 +452,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     /**
      * Sets the stats of the boat based on the spec_id that was allocated to it
      */
-    public void setStats() {
+    public void setStats(int difficulty) {
         switch (spec_id) {
             case 0:
                 durability_per_hit = .2f;
@@ -485,7 +487,19 @@ public abstract class Boat extends MovableObject implements CollisionObject {
             default:
                 break;
         }
+        switch (difficulty) {
+            case 0:
+                time_to_recover = 30;
+                break;
+            case 1:
+                time_to_recover = 60;
+                break;
+            case 2:
+                time_to_recover = 90;
+                break;
+        }
     }
+
 
     public void reset() {
         speed = 0f;
@@ -493,8 +507,12 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         durability = 1f;
         stamina = 1f;
         time_to_add = 0;
+        max_speed -= 1;
+        acceleration -= .02f;
+        maneuverability -= 0.02f;
     }
     // End of modified block of code for assessment 2
+
 
     /**
      * Gets current best time for boat from its list of leg_times.
