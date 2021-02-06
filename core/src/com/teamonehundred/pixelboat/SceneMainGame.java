@@ -263,6 +263,7 @@ public class SceneMainGame implements Scene {
         for (Boat b : all_boats) {
             // Added block of code for assessment 2
             b.reset();
+            b.increaseDifficulty();
         }
     }
     // End of added block of code for assessment 2

@@ -53,6 +53,8 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
     protected int time_to_recover= 100;
 
+    public int getTime_to_recover() { return time_to_recover; }
+
     protected List<Float[]> effects = new ArrayList<>();
 
     public List<Float[]> getEffects() { return effects; }
@@ -500,19 +502,30 @@ public abstract class Boat extends MovableObject implements CollisionObject {
                 break;
         }
     }
+    // End of modified block of code for assessment 2
 
+    // Added block of code for assessment 2
 
+    /**
+     * This method deals with resetting the boats after each leg
+     */
     public void reset() {
         speed = 0f;
         effects.clear();
         durability = 1f;
         stamina = 1f;
         time_to_add = 0;
+    }
+
+    /**
+     * This method deals with increasing the difficulty of the game as the leg progress
+     */
+    public void increaseDifficulty() {
         max_speed -= 1;
         acceleration -= .02f;
         maneuverability -= 0.02f;
     }
-    // End of modified block of code for assessment 2
+    // End of added block of code for assessment 2
 
 
     /**

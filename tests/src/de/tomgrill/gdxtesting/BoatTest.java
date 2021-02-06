@@ -369,4 +369,39 @@ public class BoatTest extends TestCase {
         // There should be no effects after reseting
         assertTrue(test_boat.getEffects().isEmpty());
     }
+
+    @Test
+    public void testIncreaseDifficultyPerLeg() {
+        // Save the current stats of the boat
+        float max_speed = test_boat.getMax_speed();
+        float maneuverability = test_boat.getManeuverability();
+        float acceleration = test_boat.getAcceleration();
+
+        // resetting a boat should affect
+        test_boat.increaseDifficulty();
+
+        // The stats should be lower after increasing the difficulty
+        assertTrue(max_speed > test_boat.getMax_speed());
+        assertTrue(maneuverability > test_boat.getManeuverability());
+        assertTrue(acceleration > test_boat.getAcceleration());
+    }
+
+    @Test
+    public void testDifficultySelection() {
+        // Save the time to recover for each difficulty
+        test_boat.setSpec(1, 0);
+        float recovery0 = test_boat.getTime_to_recover();
+
+        test_boat.setSpec(1, 1);
+        float recovery1 = test_boat.getTime_to_recover();
+
+        test_boat.setSpec(1, 2);
+        float recovery2 = test_boat.getTime_to_recover();
+
+        assertTrue(recovery0 < recovery1 && recovery1 < recovery2);
+    }
+//    @Test
+//    public void testBoatDifficulty() {
+//
+//    }
 }

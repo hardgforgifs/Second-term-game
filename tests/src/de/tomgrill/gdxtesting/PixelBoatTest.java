@@ -569,4 +569,23 @@ public class PixelBoatTest extends TestCase {
                 assertArrayEquals(testSceneMainGame.getAllBoats().get(i).getEffects().get(j), boats.get(i).getEffects().get(j));
         }
     }
+
+    @Test
+    public void testSaveDifficulty() {
+        // Assign a difficulty value for each boat
+        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
+            int difficulty = random.nextInt(3);
+//            testSceneMainGame.getPlayer().ge
+        }
+        // Save the boats so they can be compared later
+        List<Boat> boats = testSceneMainGame.getAllBoats();
+
+        // Save and load the game state
+        reload();
+
+        // The frames raced of each boat from the newly loaded game state should be the same as the one that was saved
+        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
+            assertEquals(testSceneMainGame.getAllBoats().get(i).getFramesRaced(), boats.get(i).getFramesRaced());
+        }
+    }
 }
