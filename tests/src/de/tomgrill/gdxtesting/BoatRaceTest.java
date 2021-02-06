@@ -93,7 +93,8 @@ public class BoatRaceTest extends TestCase {
         // Run a step of the race
         testRace.runStep();
 
-        // The boost's duration should have decreased below 0 so it is not gone
-        assertTrue(testRace.getBoats().get(0).getEffects().get(0)[1] < 1f);
+        // The boost's duration should have decreased, it could also have decreased below 0
+        assertTrue(testRace.getBoats().get(0).getEffects().get(0)[1] < 1f ||
+                testRace.getBoats().get(0).getEffects().isEmpty());
     }
 }
