@@ -32,6 +32,8 @@ public class PixelBoat extends ApplicationAdapter {
     // Added block of code for assessment 2
     protected Preferences pref;
 
+    protected SpriteBatch static_batch;
+
     public Scene[] getAll_scenes() { return all_scenes; }
 
     public void setAll_scenes(Scene[] all_scenes) { this.all_scenes = all_scenes; }
@@ -190,11 +192,13 @@ public class PixelBoat extends ApplicationAdapter {
         all_scenes[4] = new SceneResultsScreen();
         all_scenes[5] = new SceneBoatSelection();
 
+        batch = new SpriteBatch();
         // Added block of code for assessment 2
         // Mark if a save already exists from a previous session
         if (!pref.getString("save", "no save exists").equals("no save exists"))
             ((SceneStartScreen)all_scenes[0]).is_saved_game = true;
-        batch = new SpriteBatch();
+
+        static_batch = new SpriteBatch();
         // End of added block of code for assessment 2
     }
 
@@ -208,6 +212,9 @@ public class PixelBoat extends ApplicationAdapter {
         // run the current scene
         int new_scene_id = all_scenes[scene_id].update();
         all_scenes[scene_id].draw(batch);
+        if (scene_id == 1) {
+            ((SceneMainGame)all_scenes[scene_id]).drawStatic(static_batch);
+        }
 
         if (scene_id != new_scene_id) {
             // special case updates

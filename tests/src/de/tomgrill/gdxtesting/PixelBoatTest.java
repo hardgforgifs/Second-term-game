@@ -117,7 +117,7 @@ public class PixelBoatTest extends TestCase {
         // Assign a random specID for each boat
         for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
             int specID = random.nextInt(5);
-            testSceneMainGame.getAllBoats().get(i).setSpec(specID);
+            testSceneMainGame.getAllBoats().get(i).setSpec(specID, 0);
         }
         // Save the boats so their specs can be compared later
         List<Boat> boats = testSceneMainGame.getAllBoats();

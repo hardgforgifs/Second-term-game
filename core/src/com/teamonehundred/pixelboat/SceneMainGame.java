@@ -71,6 +71,7 @@ public class SceneMainGame implements Scene {
      * @author William Walton
      */
     public SceneMainGame() {
+//        static_batch = new SpriteBatch();
         player = new PlayerBoat(-15, 0);
         player.setName("Player");
         all_boats = new ArrayList<>();
@@ -136,19 +137,22 @@ public class SceneMainGame implements Scene {
         batch.draw(bg, -10000, -2000, 0, 0, 1000000, 10000000);
         race.draw(batch);
 
-        // Added block of code for assessment 2
+        batch.end();
+    }
+
+    // Added block of code for assessment 2
+    public void drawStatic(SpriteBatch batch) {
+        batch.begin();
+        race.drawUI(batch, player);
         if (isPaused)
         {
             // Create a local bach and display the main menu button
-            SpriteBatch pause_batch =  new SpriteBatch();
-            pause_batch.begin();
-            save_quit_sprite.draw(pause_batch);
-            resume_sprite.draw(pause_batch);
-            pause_batch.end();
+            save_quit_sprite.draw(batch);
+            resume_sprite.draw(batch);
         }
-        // End of added block of code for assessment 2
         batch.end();
     }
+    // End of added block of code for assessment 2
 
     /**
      * Calls main runStep method for BoatRace which is repeatedly called for updating the game state.

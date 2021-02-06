@@ -41,7 +41,6 @@ public class BoatRace {
     protected long total_frames = 0;
 
     // Added block of code for assessment 2
-
     public List<Boat> getBoats() { return boats; }
 
     public List<CollisionObject> getObstacles() { return obstacles; }
@@ -281,26 +280,6 @@ public class BoatRace {
         for (Sprite sp : getSprites())
             sp.draw(batch);
 
-        for (Boat b : boats) {
-            //If current boat b is the player's boat then can display hud for this boat
-            if (b instanceof PlayerBoat) {
-                if (((PlayerBoat) b).hasStartedLeg()) {
-
-                    // Modified block of code for assessment 2
-                    //Calculate time elapsed from the start in milliseconds
-                    long curTime = (long) ((1000.0 / 60.0) * b.getFramesRaced());
-                    // End of modified block of code for assessment 2
-
-                    //Displays and updates the time elapsed overlay and keeps position consistent with player's boat
-                    drawTimeDisplay(batch, b, "", curTime, -((PlayerBoat) b).ui_bar_width / 2,
-                            500 + ((PlayerBoat) b).getSprite().getY());
-
-                    //Draws a leg time display on the screen when the given boat has completed a leg of the race.
-                    drawLegTimeDisplay(batch, b);
-                }
-            }
-        }
-
         int race_width = boats.size() * lane_width;
         Texture temp = new Texture("object_placeholder.png");
 
@@ -314,6 +293,22 @@ public class BoatRace {
 
         temp.dispose();
     }
+
+    // Added block of code for assessment 2
+    public void drawUI(SpriteBatch batch, PlayerBoat boat) {
+        //Calculate time elapsed from the start in milliseconds
+        long curTime = (long) ((1000.0 / 60.0) * boat.getFramesRaced());
+
+
+        //Displays and updates the time elapsed overlay
+        if (boat.has_started_leg)
+            drawTimeDisplay(batch, boat, "", curTime, (float)Gdx.graphics.getWidth()/2 - 50,
+                    0.9f * (float)Gdx.graphics.getHeight());
+
+        //Draws a leg time display on the screen when the given boat has completed a leg of the race.
+        drawLegTimeDisplay(batch, boat);
+    }
+    // End of added block of code for assessment 2
 
     /**
      * Draws the a time display on the screen.
@@ -348,8 +343,8 @@ public class BoatRace {
         if (b.getEndTime(false) != -1) {
             for (long l : b.getLegTimes()) {
                 String label = String.format("Leg Time %d (min:sec) = ", b.getLegTimes().indexOf(l) + 1) + "%02d:%02d";
-                drawTimeDisplay(batch, b, label, l, -((PlayerBoat) b).ui_bar_width / 2,
-                        500 - ((b.getLegTimes().indexOf(l) + 1) * 20) + ((PlayerBoat) b).getSprite().getY());
+                drawTimeDisplay(batch, b, label, l, (float)Gdx.graphics.getWidth()/2 - 50,
+                        0.9f * (float)Gdx.graphics.getHeight() - ((b.getLegTimes().indexOf(l) + 1) * 20));
             }
 
         }
