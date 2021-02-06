@@ -24,9 +24,6 @@ public class SceneBoatSelection implements Scene {
     protected boolean is_new_click = false;
 
     protected int spec_id = 0;
-    // Modified block of code for assessment 2
-    protected int num_specs = 5;
-    // End of modified block of code for assessment 2
 
     protected Texture bg;
     protected Sprite bg_sprite;
@@ -34,6 +31,7 @@ public class SceneBoatSelection implements Scene {
     protected Texture[] boat_options;
     protected Sprite[] boat_option_sprites;
     // Added block of code for assessment 2
+    protected int num_specs = 5;
     protected Texture[] boat_options_hovered;
 
     protected Texture stats_bg;
@@ -85,11 +83,9 @@ public class SceneBoatSelection implements Scene {
         	stats_bg_sprite[i].setPosition((fill_camera.viewportWidth / 2) - (stats_bg_sprite[i].getWidth() / 2), (float) ((fill_camera.viewportHeight / 1.35) - (stats_bg_sprite[i].getHeight() / 2)));
         	stats_bg_sprite[i].setSize(stats_bg_sprite[i].getWidth(), stats_bg_sprite[i].getHeight());
         }
-        // End of added block of code for assessment 2
-
         boat_options = new Texture[num_specs];
         boat_option_sprites = new Sprite[num_specs];
-        // Added block of code for assessment 2
+
         boat_options_hovered = new Texture[num_specs];
 
         boat_options[0] = new Texture("boats/boat1.png");

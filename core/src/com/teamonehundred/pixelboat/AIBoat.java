@@ -26,63 +26,21 @@ class AIBoat extends Boat {
               CONSTRUCTORS
     // ################################### */
 
+    // Added block of code for assessment 2
     /**
-     * Construct a AIBoat object at point (x,y) with default size, texture and animation.
+     * Construct a AIBoat object at point (x,y) with default size.
      *
      * @param x int coordinate for the bottom left point of the boat
      * @param y int coordinate for the bottom left point of the boat
-     * @author James Frost
+     * @param texture_path internal path to the texture of the boat
+     * @author Dragos Stoican
      */
-    AIBoat(int x, int y) {
-        super(x, y);
-        initialise();
-    }
-
-    // Added block of code for assessment 2
     AIBoat(int x, int y, String texture_path) {
         super(x, y, texture_path);
 
         initialise();
     }
     // End of added block of code for assessment 2
-
-    /**
-     * Construct a AIBoat object with at point (x,y) with width and height and texture path
-     * with default stats (stamina usage, durability, etc).
-     *
-     * @param x            int coordinate for the bottom left point of the boat
-     * @param y            int coordinate for the bottom left point of the boat
-     * @param w            int width of the new boat
-     * @param h            int height of the new boat
-     * @param texture_path String relative path from the core/assets folder of the boats texture image
-     * @author James Frost
-     */
-    AIBoat(int x, int y, int w, int h, String texture_path) { // So this section will just initialise the AI boat, it doesn't need the intialise method of playerboat due to the fact it doesn't have any textures for durability / stamina
-        super(x, y, w, h, texture_path);
-
-        initialise();
-    }
-
-    /**
-     * Construct a AIBoat object with all parameters specified.
-     *
-     * @param x                  int coordinate for the bottom left point of the boat
-     * @param y                  int coordinate for the bottom left point of the boat
-     * @param w                  int width of the new boat
-     * @param h                  int height of the new boat
-     * @param texture_path       String relative path from the core/assets folder of the boats texture image
-     * @param durability_per_hit float percentage (0-1) of the max durability taken each hit
-     * @param name               String of the boat seen when the game ends
-     * @param stamina_regen      float percentage of stamina regenerated each frame (0-1)
-     * @param stamina_usage      float percentage of stamina used each frame when accelerating (0-1)
-     * @author James Frost
-     */
-    AIBoat(int x, int y, int w, int h, String texture_path, String name, float durability_per_hit, float stamina_usage, float stamina_regen) {
-        super(x, y, w, h, texture_path, name, durability_per_hit, stamina_usage, stamina_regen); // This should be the init that is used mostly (but the other one is needed incase someone messes up)
-
-        initialise();
-
-    }
 
     /**
      * Shared initialisation functionality among all constructors.

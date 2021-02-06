@@ -87,6 +87,14 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     }
 
     // Added block of code for assessment 2
+    /**
+     * Construct a Boat object at point (x,y) with default size, custom texture
+     *
+     * @param x int coordinate for the bottom left point of the boat
+     * @param y int coordinate for the bottom left point of the boat
+     * @param texture_path Internal path to the texture of the boat
+     * @author Dragos Stoican
+     */
     Boat(int x, int y, String texture_path) {
         super(x, y, 80, 100, texture_path, 4);
     }
@@ -106,8 +114,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     Boat(int x, int y, int w, int h, String texture_path) {
         super(x, y, w, h, texture_path, 4);
     }
-
-    //specify specs
 
     /**
      * Construct a Boat object with all parameters specified.
@@ -191,35 +197,21 @@ public abstract class Boat extends MovableObject implements CollisionObject {
                 durability_per_hit = 0f;
             }
         }
-//        if (boostType == 1 && boostTimeRemaining <= 0f) {
-//            speed = Math.max(10, speed);
-//            acceleration += .2f;
-//            max_speed += 5;
-//        }
-//
-//        if (boostTimeRemaining < 0f) {
-//            boostType = 0;
-//            acceleration -= .2f;
-//            max_speed -= 5;
-//            boostTimeRemaining = 0f;
-//        }
-//
-//        else if (boostTimeRemaining > 0f)
-//            boostTimeRemaining -= Gdx.graphics.getDeltaTime();
     }
     // End of added block of code for assessment 2
 
+    // Modified block of code for assessment 2
     /**
      * Function called when this boat collides with another object
      *
-     * @author William Walton
+     * @author William Walton, Dragos Stoican
      */
     public void hasCollided() {
-        // Modified block of code for assessment 2
+
         durability -= durability - durability_per_hit <= 0 ? 0 : durability_per_hit;
         speed = speed - 5f;
-        // End of modified block of code for assessment 2
     }
+    // End of modified block of code for assessment 2
 
     /**
      * Function called when the boat accelerates
@@ -259,8 +251,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         super.updatePosition();
         stamina = stamina + stamina_regen >= 1 ? 1.f : stamina + stamina_regen;
     }
-
-    // Getter and Setter methods for attributes
 
     public long getFramesRaced() {
         return frames_raced;

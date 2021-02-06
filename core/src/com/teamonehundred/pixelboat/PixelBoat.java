@@ -20,7 +20,6 @@ public class PixelBoat extends ApplicationAdapter {
     protected Scene[] all_scenes;  // stores all game scenes and their data
     protected SpriteBatch batch;  // thing that draws the sprites
 
-    // Added new scene id for assessment 2
     // id of current game state
     // 0 = start menu
     // 1 = game
@@ -28,7 +27,6 @@ public class PixelBoat extends ApplicationAdapter {
     // 3 = tutorial
     // 4 = results
     // 5 = boat selection
-    // 6 = loaded game
     protected int scene_id = 0;
 
     // Added block of code for assessment 2
@@ -173,17 +171,13 @@ public class PixelBoat extends ApplicationAdapter {
         pref = Gdx.app.getPreferences("save");
         // End of added block of code for assessment 2
 
-
-        // Modified block of code for assessment 2
-        all_scenes = new Scene[7];
+        all_scenes = new Scene[6];
         all_scenes[0] = new SceneStartScreen();
         all_scenes[1] = new SceneMainGame();
         all_scenes[2] = new SceneOptionsMenu();
         all_scenes[3] = new SceneTutorial();
         all_scenes[4] = new SceneResultsScreen();
         all_scenes[5] = new SceneBoatSelection();
-        all_scenes[6] = null;
-        // End of modified block of code for assessment 2
 
         // Added block of code for assessment 2
         // Mark if a save already exists from a previous session
@@ -249,6 +243,7 @@ public class PixelBoat extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         // Added block of code for assessment 2
+        // Using the flush method assures the persistence of the save file
         pref.flush();
         // End of added block of code for assessment 2
         Gdx.app.exit();
