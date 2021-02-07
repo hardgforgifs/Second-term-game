@@ -25,6 +25,7 @@ public class PlayerBoat extends Boat {
     protected OrthographicCamera camera;
 
     protected Texture stamina_texture;
+    protected Texture recovering_texture;
     protected Texture durability_texture;
 
     protected Sprite stamina_bar;
@@ -59,6 +60,7 @@ public class PlayerBoat extends Boat {
     protected void finalize() {
         stamina_texture.dispose();
         durability_texture.dispose();
+        recovering_texture.dispose();
     }
 
     /* ################################### //
@@ -75,6 +77,7 @@ public class PlayerBoat extends Boat {
     public void initialise() {
         stamina_texture = new Texture("stamina_texture.png");
         durability_texture = new Texture("durability_texture.png");
+        recovering_texture = new Texture("stamina_recovering.png");
 
         // Added block of code for assessment 2
         effect_textures = new Texture[5];
@@ -92,7 +95,6 @@ public class PlayerBoat extends Boat {
 
         stamina_bar.setSize(ui_bar_width, 10);
         durability_bar.setSize(ui_bar_width, 10);
-
 
         stamina_bar.setPosition(-ui_bar_width / 2, 5);
         durability_bar.setPosition(-ui_bar_width / 2, 20);
@@ -190,6 +192,12 @@ public class PlayerBoat extends Boat {
     private void updateUISprites() {
         stamina_bar.setPosition(-ui_bar_width / 2 + sprite.getX() + sprite.getWidth() / 2, -50 + sprite.getY());
         durability_bar.setPosition(-ui_bar_width / 2 + sprite.getX() + sprite.getWidth() / 2, -35 + sprite.getY());
+
+        if (recovering == true) {
+            stamina_bar.setTexture(recovering_texture);
+        } else {
+            stamina_bar.setTexture(stamina_texture);
+        }
 
         stamina_bar.setSize((int) (ui_bar_width * stamina), 10);
         durability_bar.setSize((int) (ui_bar_width * durability), 10);

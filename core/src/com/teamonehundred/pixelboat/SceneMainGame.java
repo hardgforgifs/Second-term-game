@@ -108,7 +108,6 @@ public class SceneMainGame implements Scene {
         bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
         race = new BoatRace(all_boats.subList(0, boats_per_race));
-        leg_number++;
     }
 
 

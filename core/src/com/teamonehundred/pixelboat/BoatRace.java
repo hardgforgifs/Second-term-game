@@ -25,6 +25,7 @@ public class BoatRace {
     protected Texture start_banner;
     protected Texture bleachers_l;
     protected Texture bleachers_r;
+    protected Texture waiting;
 
     protected List<CollisionObject> obstacles;
 
@@ -81,6 +82,9 @@ public class BoatRace {
         start_banner = new Texture("start_banner.png");
         bleachers_l = new Texture("bleachers_l.png");
         bleachers_r = new Texture("bleachers_r.png");
+        // Added new block of code for assessment 2
+        waiting = new Texture("WaitingGraphic.png");
+        // End of added block of code for assessment 2
 
         boats = new ArrayList<>();
         boats.addAll(race_boats);
@@ -179,6 +183,15 @@ public class BoatRace {
 
                 boat.setHasFinishedLeg(true);
             }
+            // Added block of code for assessment 2
+            // Check if any boats have broken
+            else if (!boat.hasFinishedLeg() && boat.durability <= 0) {
+                boat.setStartTime(0);
+                boat.setEndTime(300000);
+                boat.setLegTime();
+                boat.setHasFinishedLeg(true);
+            }
+            // End of added block of code for assessment 2
             // check if any boats have started
             else if (!boat.hasStartedLeg() && boat.getSprite().getY() > start_y) {
                 boat.setStartTime(System.currentTimeMillis());
@@ -263,6 +276,7 @@ public class BoatRace {
         return all_sprites;
     }
 
+
     /**
      * Calculates and displays the Time Elapsed Overlay for player boat from the start of a leg.
      * <p>
@@ -304,12 +318,15 @@ public class BoatRace {
     public void drawUI(SpriteBatch batch, PlayerBoat boat) {
         //Calculate time elapsed from the start in milliseconds
         long curTime = (long) ((1000.0 / 60.0) * boat.getFramesRaced());
-
-
         //Displays and updates the time elapsed overlay
         if (boat.has_started_leg)
-            drawTimeDisplay(batch, boat, "", curTime, (float)Gdx.graphics.getWidth()/2 - 50,
-                    0.9f * (float)Gdx.graphics.getHeight());
+            drawTimeDisplay(batch, boat, "", curTime, (float) Gdx.graphics.getWidth() / 2 - 50,
+                    0.9f * (float) Gdx.graphics.getHeight());
+
+
+        //Displays the graphic telling the player other boats are finishing once they have finished
+        if (boat.hasFinishedLeg())
+            batch.draw(waiting, (float) Gdx.graphics.getWidth() / 3, 0.5f * (float) Gdx.graphics.getHeight(), 500, 100);
 
         //Draws a leg time display on the screen when the given boat has completed a leg of the race.
         drawLegTimeDisplay(batch, boat);

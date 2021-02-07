@@ -83,13 +83,19 @@ public class AIBoat extends Boat {
         // TODO: Make this a method, and neaten it up
         // TODO: Link Acc w/ turning for better AI (that one may take a bit of time though)
         // TODO: Visible stamina for AI (maybe as debug option)
+        double start = 0;
         if (!regen) {
             this.accelerate();
-            if (stamina <= 0.1f) {
+            if (stamina <= 0.2) {
                 regen = true;
             }
         } else {
-            if (stamina >= 0.5f) {
+            //We calculate a random number here so that we can add some variety
+            //to the AI boat's behaviour
+            while (start <= 0.3 ) {
+                start = Math.random();
+            }
+            if (stamina >= start ) {
                 regen = false;
             }
         }
