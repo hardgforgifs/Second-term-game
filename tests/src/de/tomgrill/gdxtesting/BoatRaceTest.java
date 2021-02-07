@@ -75,8 +75,8 @@ public class BoatRaceTest extends TestCase {
 
     /** id: BoatRaceTest04
      *  description: tests if the boosts duration decreases, and if the boosts effects disappear after the 5s duration
-     *  input data: new instance of BoatRace, an effect with a very low remaining duration
-     *  expected outcome: boat shouldn't have any remaining effects after a boatRace step
+     *  input data: new instance of BoatRace, an new effect on the boat
+     *  expected outcome: boat's effect should be lower than the initial time or disappear completely
      *  requirements: UR_PICKUP_BOOSTS, FR_PICKUP_BOOSTS
      *  category: white box testing
      *  author: Dragos Stoican
@@ -85,7 +85,7 @@ public class BoatRaceTest extends TestCase {
     public void testBoostDurationDecreases() {
         // Add a speed boost to one of the boats boat
         // The speed boost should have a very low duration so we can test if it disappears after it's timer reaches 0
-        Float[] effect = new Float[] {1f, 1f};
+        Float[] effect = new Float[] {1f, 5f};
         testRace.getBoats().get(0).getEffects().add(effect);
 
         // Run a step of the race
@@ -96,6 +96,14 @@ public class BoatRaceTest extends TestCase {
                 testRace.getBoats().get(0).getEffects().get(0)[1] < 1f);
     }
 
+    /** id: BoatRaceTest05
+     *  description: tests if boosts disappear from boats when their timer is below 0
+     *  input data: new instance of BoatRace, an effect with a 0 seconds remaining
+     *  expected outcome: boat shouldn't have any remaining effects after a boatRace step
+     *  requirements: UR_PICKUP_BOOSTS, FR_PICKUP_BOOSTS
+     *  category: white box testing
+     *  author: Dragos Stoican
+     */
     @Test
     public void testBoostEnds() {
         // Add a speed boost to one of the boats boat
@@ -108,5 +116,88 @@ public class BoatRaceTest extends TestCase {
 
         // The boost should be removed since it's duration expired
         assertTrue(testRace.getBoats().get(0).getEffects().isEmpty());
+    }
+
+    /** id: BoatRaceTest06
+     *  description: tests if boats are marked to have started the leg when they pass the start line
+     *  input data: new instance of BoatRace with the position above the start line
+     *  expected outcome: boat should have the attribute has_started_leg true
+     *  requirements: UR_PICKUP_BOOSTS, FR_PICKUP_BOOSTS
+     *  category: white box testing
+     *  author: Dragos Stoican
+     */
+    @Test
+    public void testBoatsStartsLeg() {
+        // Set the position of each boat above the start line
+        for (Boat b: testRace.getBoats())
+            b.getSprite().setPosition(0f, testRace.getStart_y() + 100f);
+
+        // Run a step of the race so that status of boats is updated
+        testRace.runStep();
+
+        // All boats should be marked to have started the leg
+        for (Boat b : testRace.getBoats())
+            assertTrue(b.hasStartedLeg());
+    }
+
+    /** id: BoatRaceTest07
+     *  description: tests if boats are marked to have ended the leg when they pass the finish line
+     *  input data: new instance of BoatRace with the position above the finish line
+     *  expected outcome: boat should have the attribute has_finished_leg true
+     *  requirements: UR_PICKUP_BOOSTS, FR_PICKUP_BOOSTS
+     *  category: white box testing
+     *  author: Dragos Stoican
+     */
+    @Test
+    public void testBoatsEndsLeg() {
+        // Set the position of each boat above the finish line
+        for (Boat b: testRace.getBoats())
+            b.getSprite().setPosition(0f, testRace.getEnd_y() + 100);
+
+        // Run a step of the race so that status of boats is updated
+        testRace.runStep();
+
+        // All boats should be marked to have ended the leg and their leg times should be updated
+        for (Boat b : testRace.getBoats()) {
+            assertTrue(b.hasFinishedLeg());
+            assertFalse(b.getLegTimes().isEmpty());
+        }
+    }
+
+    /** id: BoatRaceTest07
+     *  description: tests if the race ends after too much time by disqualifying all boats
+     *  input data: new instance of BoatRace with the number of frames raced above the dnf time
+     *  expected outcome: boat should have the attribute has_finished_leg true
+     *  requirements: UR_PICKUP_BOOSTS, FR_PICKUP_BOOSTS
+     *  category: white box testing
+     *  author: Dragos Stoican
+     */
+    @Test
+    public void testDNFAfter2mins() {
+        // Set the total frames high enough to dnf all boats
+        testRace.setTotal_frames(testRace.getDnf_time() + 1);
+
+        // Run a step of the race
+        testRace.runStep();
+
+        assertTrue(testRace.isFinished());
+        // All boats should be marked to have ended the leg and their leg times should be updated
+        for (Boat b : testRace.getBoats()) {
+            assertTrue(b.hasFinishedLeg());
+            assertFalse(b.getLegTimes().isEmpty());
+        }
+    }
+
+    /** id: BoatRaceTest08
+     *  description: tests if the getSprites method returns a valid list
+     *  input data: new instance of BoatRace
+     *  expected outcome: the getSprite method shouldn't return an empty list
+     *  requirements: UR_OBSTACLE, FR_OBSTACLES
+     *  category: white box testing
+     *  author: Dragos Stoican
+     */
+    @Test
+    public void testGetSpritesReturnsNonEmpty() {
+        assertFalse(testRace.getSprites().isEmpty());
     }
 }

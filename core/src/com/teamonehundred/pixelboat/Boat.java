@@ -212,7 +212,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
      * @author William Walton, Dragos Stoican
      */
     public void hasCollided() {
-
         durability -= durability - durability_per_hit <= 0 ? 0 : durability_per_hit;
         speed = speed - 5f;
     }

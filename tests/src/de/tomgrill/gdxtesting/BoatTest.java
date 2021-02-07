@@ -370,6 +370,14 @@ public class BoatTest extends TestCase {
         assertTrue(test_boat.getEffects().isEmpty());
     }
 
+    /** id: BoatTest15
+     *  description: tests if the stats of the boat decrease after each leg
+     *  input data: new instance of a PlayerBoat
+     *  expected outcome: the stats of the boat should be lower after finishing a leg
+     *  requirements: UR_BOAT_SPEC
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
     @Test
     public void testIncreaseDifficultyPerLeg() {
         // Save the current stats of the boat
@@ -386,6 +394,14 @@ public class BoatTest extends TestCase {
         assertTrue(acceleration > test_boat.getAcceleration());
     }
 
+    /** id: BoatTest16
+     *  description: tests if the player boat is affected by the difficulty slection
+     *  input data: new instance of a PlayerBoat
+     *  expected outcome: the time to recover of the playerboat should differ based on the difficulty
+     *  requirements: UR_BOAT_SPEC
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
     @Test
     public void testDifficultySelection() {
         // Save the time to recover for each difficulty
@@ -400,8 +416,4 @@ public class BoatTest extends TestCase {
 
         assertTrue(recovery0 < recovery1 && recovery1 < recovery2);
     }
-//    @Test
-//    public void testBoatDifficulty() {
-//
-//    }
 }

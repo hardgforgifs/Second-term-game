@@ -14,7 +14,7 @@ import java.util.List;
  * @author William Walton
  * JavaDoc by Umer Fakher
  */
-class CollisionBounds {
+public class CollisionBounds {
 
     // Class attributes
     protected List<Shape2D> bounds;  // shapes that represent the area of the object
@@ -70,20 +70,6 @@ class CollisionBounds {
 
         return pr1;
     }
-
-    /**
-     * Returns the list of polygons
-     */
-    public List<Polygon> getPolygons() {
-        List<Polygon> ret = new ArrayList<>();
-
-        for (Shape2D my_bound : bounds)
-            ret.add(getPolygon((Rectangle) my_bound, rotation, origin));
-
-        return ret;
-    }
-
-
     /**
      * Gets the rotation attribute of the sprite.
      *
@@ -138,7 +124,6 @@ class CollisionBounds {
      * @return boolean if objects colliding
      */
     public boolean isColliding(CollisionBounds collider) {
-
         for (Shape2D my_bound : bounds) {
             for (Shape2D their_bound : collider.getShapes()) {
                 if (my_bound instanceof Rectangle && their_bound instanceof Rectangle) {

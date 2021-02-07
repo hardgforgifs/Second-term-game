@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
  * @author William Walton
  * JavaDoc by Umer Fakher
  */
-class ObstacleLaneWall extends Obstacle {
+public class ObstacleLaneWall extends Obstacle {
     // Class attributes shared by all instances
     public static int texture_height = 64;
 
@@ -22,8 +22,13 @@ class ObstacleLaneWall extends Obstacle {
      * @author James Frost
      * @author William Walton
      */
-    ObstacleLaneWall(int x, int y, Texture t) {
+    public ObstacleLaneWall(int x, int y, Texture t) {
         super(x, y, 32, texture_height, t, 2);
+        setAnimationFrame(0);
+    }
+
+    public ObstacleLaneWall(int x, int y) {
+        super(x, y, 32, texture_height, new Texture("lane_buoy.png"), 2);
         setAnimationFrame(0);
     }
 

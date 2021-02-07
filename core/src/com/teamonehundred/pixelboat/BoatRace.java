@@ -36,10 +36,22 @@ public class BoatRace {
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane
 
     protected boolean is_finished = false;
+
     protected long total_frames = 0;
 
+
+
     // Added block of code for assessment 2
+    protected long dnf_time;
+
     protected List<PowerUp> powerups;
+
+    public long getTotal_frames() { return total_frames; }
+
+    public long getDnf_time() { return dnf_time; }
+
+    public void setTotal_frames(long total_frames) { this.total_frames = total_frames; }
+    public int getStart_y() { return start_y; }
 
     public List<Boat> getBoats() { return boats; }
 
@@ -111,6 +123,8 @@ public class BoatRace {
         }
 
         // Added block of code for assessment 2
+        // Dnf after 2 mins
+        dnf_time = 60 * 60 * 2;
         // Add random powerups
         for (int i = 0; i < 100; i++)
             powerups.add(new PowerUp((int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
@@ -138,14 +152,16 @@ public class BoatRace {
      * @author Umer Fakher
      */
     public void runStep() {
-        // dnf after 5 mins
-        if (total_frames++ > 60 * 60 * 5) {
+        // dnf after 2 mins
+        if (total_frames++ > dnf_time) {
             is_finished = true;
             for (Boat b : boats) {
                 if (!b.hasFinishedLeg()) {
                     b.setStartTime(0);
                     b.setEndTime((long) (b.getStartTime(false) + ((1000.0 / 60.0) * b.getFramesRaced())));
                     b.setLegTime();
+
+                    b.setHasFinishedLeg(true);
                 }
             }
         }

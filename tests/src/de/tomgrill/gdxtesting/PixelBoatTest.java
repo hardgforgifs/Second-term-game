@@ -157,50 +157,6 @@ public class PixelBoatTest extends TestCase {
         assertTrue(loadedCameraX == cameraX && loadedCameraY == cameraY);
     }
 
-    /** id: PixelBoatTest04
-     *  description: tests if the race start time persists after save
-     *  input data: the current time given in milliseconds
-     *  expected outcome: the start time that is saved is the same as the one that is loaded
-     *  requirements: UR_SAVE_GAME, FR_SAVE_GAME
-     *  category: white box testing
-     *  @author: Dragos Stoican
-     */
-//    @Test
-//    public void testSaveRaceStartTime() {
-//        // Assign the start time based on System.currentTimeMillis
-//        testSceneMainGame.set_start_time(System.currentTimeMillis());
-//        long startTime = testSceneMainGame.get_start_time();
-//
-//        // Save and load the game state
-//        reload();
-//
-//        // The start time from the newly loaded game state should be the same as the one that was saved
-//        long loadedStartTime = testSceneMainGame.get_start_time();
-//        assertEquals(loadedStartTime, startTime);
-//    }
-
-    /** id: PixelBoatTest05
-     *  description: tests if the race duration persists after save
-     *  input data: a random race duration
-     *  expected outcome: the start duration that is saved is the same as the one that is loaded
-     *  requirements: UR_SAVE_GAME, FR_SAVE_GAME
-     *  category: white box testing
-     *  @author: Dragos Stoican
-     */
-//    @Test
-//    public void testSaveRaceDuration() {
-//        // Assign a random race duration
-//        long raceDuration = random.nextLong();
-//        testSceneMainGame.getRace().setTime(raceDuration);
-//
-//        // Save and load the game state
-//        reload();
-//
-//        // The race duration from the newly loaded game state should be the same as the one that was saved
-//        long loadedRaceDuration = testSceneMainGame.getRace().getTime();
-//        assertEquals(loadedRaceDuration, raceDuration);
-//    }
-
     /** id: PixelBoatTest06
      *  description: tests if the obstacles persists after save
      *  input data: no input other than the newly started game
@@ -570,22 +526,30 @@ public class PixelBoatTest extends TestCase {
         }
     }
 
-    @Test
-    public void testSaveDifficulty() {
-        // Assign a difficulty value for each boat
-        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
-            int difficulty = random.nextInt(3);
-//            testSceneMainGame.getPlayer().ge
-        }
-        // Save the boats so they can be compared later
-        List<Boat> boats = testSceneMainGame.getAllBoats();
-
-        // Save and load the game state
-        reload();
-
-        // The frames raced of each boat from the newly loaded game state should be the same as the one that was saved
-        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
-            assertEquals(testSceneMainGame.getAllBoats().get(i).getFramesRaced(), boats.get(i).getFramesRaced());
-        }
-    }
+    /** id: PixelBoatTest18
+     *  description: tests if the boats difficulty persists after save
+     *  input data: random leg times for each boat
+     *  expected outcome: the boats leg times that are saved are the same as the ones that are loaded
+     *  requirements: UR_SAVE_GAME, FR_SAVE_GAME
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+//    @Test
+//    public void testSaveDifficulty() {
+//        // Assign a difficulty value for each boat
+//        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
+//            int difficulty = random.nextInt(3);
+////            testSceneMainGame.getPlayer().ge
+//        }
+//        // Save the boats so they can be compared later
+//        List<Boat> boats = testSceneMainGame.getAllBoats();
+//
+//        // Save and load the game state
+//        reload();
+//
+//        // The frames raced of each boat from the newly loaded game state should be the same as the one that was saved
+//        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
+//            assertEquals(testSceneMainGame.getAllBoats().get(i).getFramesRaced(), boats.get(i).getFramesRaced());
+//        }
+//    }
 }

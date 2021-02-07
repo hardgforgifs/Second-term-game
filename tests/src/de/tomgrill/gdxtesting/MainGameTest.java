@@ -53,4 +53,41 @@ public class MainGameTest extends TestCase {
                     && testSceneMainGame.getAllBoats().get(i).getSprite().getY() == boats_locations.get(i)[1]);
         }
     }
+
+    /** id: SceneMainGame02
+     *  description: tests if the total frames raced increase when updating the scene. The number of frames raced
+     *      *               has to increase for the timer to increase
+     *  input data: new instance of a SceneMainGame
+     *  expected outcome: the number of frames raced should increase after updating the scene
+     *  requirements:
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testTotalFramesIncrease() {
+        // Call the update method
+        testSceneMainGame.update();
+
+        assertTrue(testSceneMainGame.getRace().getTotal_frames() > 0);
+    }
+
+    /** id: SceneMainGame03
+     *  description: tests if the total frames raced stop increasing when the game is pause. The number of frames raced
+     *               has to stop increasing for the timer to stop increase
+     *  input data: new instance of a SceneMainGame
+     *  expected outcome: the number of frames raced shouldn't increase after updating the scene
+     *  requirements:
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testPausedGameTimerStops() {
+        // Set the game to be pause
+        testSceneMainGame.setPaused(true);
+
+        // Call the update method
+        testSceneMainGame.update();
+
+        assertTrue(testSceneMainGame.getRace().getTotal_frames() == 0);
+    }
 }

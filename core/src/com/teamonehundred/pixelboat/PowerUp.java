@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class PowerUp extends GameObject implements CollisionObject{
 
-    PowerUp(int x, int y){ super(x, y, 60, 60, "PowerUp/PowerUp.png");}
+    public PowerUp(int x, int y){ super(x, y, 60, 60, "PowerUp/PowerUp.png");}
     PowerUp(int x, int y, int w, int h, String texture_path) {
         super(x, y, w, h, texture_path);
     }
