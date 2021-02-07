@@ -7,8 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.List;
-
 
 @RunWith(GdxTestRunner.class)
 public class BoatRaceTest extends TestCase {

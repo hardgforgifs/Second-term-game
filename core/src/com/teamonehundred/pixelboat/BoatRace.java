@@ -28,8 +28,6 @@ public class BoatRace {
 
     protected List<CollisionObject> obstacles;
 
-    protected List<PowerUp> powerups;
-
     protected int start_y = 200;
 
     protected int end_y = 40000;
@@ -41,6 +39,8 @@ public class BoatRace {
     protected long total_frames = 0;
 
     // Added block of code for assessment 2
+    protected List<PowerUp> powerups;
+
     public List<Boat> getBoats() { return boats; }
 
     public List<CollisionObject> getObstacles() { return obstacles; }
@@ -103,20 +103,19 @@ public class BoatRace {
             obstacles.add(new ObstacleDuck((int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
                     (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
 
-        // Added block of code for assessment 2
-        // Add random powerups
-        for (int i = 0; i < 100; i++)
-            powerups.add(new PowerUp((int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
-                    (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
-        // End of added block of code for assessment 2
-
-
         // add the lane separators
         for (int lane = 0; lane <= boats.size(); lane++) {
             for (int height = 0; height <= end_y; height += ObstacleLaneWall.texture_height) {
                 obstacles.add(new ObstacleLaneWall(getLaneCentre(lane) - lane_width / 2, height, lane_sep));
             }
         }
+
+        // Added block of code for assessment 2
+        // Add random powerups
+        for (int i = 0; i < 100; i++)
+            powerups.add(new PowerUp((int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
+                    (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
+        // End of added block of code for assessment 2
 
         // Initialise colour of Time Elapsed Overlay
         font = new BitmapFont();

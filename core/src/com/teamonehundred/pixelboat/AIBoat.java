@@ -11,7 +11,7 @@ import java.util.List;
  * @author James Frost
  * JavaDoc by Umer Fakher
  */
-class AIBoat extends Boat {
+public class AIBoat extends Boat {
     /* ################################### //
                    ATTRIBUTES
     // ################################### */
@@ -20,7 +20,14 @@ class AIBoat extends Boat {
     protected float ray_angle_range;
     protected float ray_range;
     protected float ray_step_size;
+
+    // Added block of code for assessment 2
     protected boolean regen;
+
+    public boolean isRegen() {return regen; }
+
+    public void setRegen(boolean regen) { this.regen = regen; }
+    // End of added block of code for assessment 2
 
     /* ################################### //
               CONSTRUCTORS
@@ -35,8 +42,14 @@ class AIBoat extends Boat {
      * @param texture_path internal path to the texture of the boat
      * @author Dragos Stoican
      */
-    AIBoat(int x, int y, String texture_path) {
+    public AIBoat(int x, int y, String texture_path) {
         super(x, y, texture_path);
+
+        initialise();
+    }
+
+    public AIBoat(int x, int y) {
+        super(x, y);
 
         initialise();
     }
@@ -72,11 +85,11 @@ class AIBoat extends Boat {
         // TODO: Visible stamina for AI (maybe as debug option)
         if (!regen) {
             this.accelerate();
-            if (stamina <= 0.1) {
+            if (stamina <= 0.1f) {
                 regen = true;
             }
         } else {
-            if (stamina >= 0.5) {
+            if (stamina >= 0.5f) {
                 regen = false;
             }
         }
@@ -177,9 +190,7 @@ class AIBoat extends Boat {
 
     //Added block of code for assessment 2
     @Override
-    public void reset() {
-        durability = 1f;
-        stamina = 1f;
+    public void increaseDifficulty() {
         max_speed -= 1;
         acceleration -= .02f;
         maneuverability -= 0.025f;
