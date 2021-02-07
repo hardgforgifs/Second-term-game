@@ -42,14 +42,17 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     protected int frames_to_animate = 0;
     protected int current_animation_frame = 0;
     protected int frames_elapsed = 0;
-    protected int stamina_delay = 0;
-    protected int time_to_recover= 100;
 
     protected boolean has_finished_leg = false;
     protected boolean has_started_leg = false;
-    protected boolean recovering = false;
 
     // Added block of code for assessment 2
+    protected boolean recovering = false;
+
+    protected int stamina_delay = 0;
+
+    protected int time_to_recover= 100;
+
     protected int spec_id;
 
     public int getTime_to_recover() { return time_to_recover; }
