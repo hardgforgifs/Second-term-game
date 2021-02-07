@@ -160,7 +160,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
      */
     public void hasCollided() {
         durability -= durability - durability_per_hit <= 0 ? durability : durability_per_hit;
-        speed = speed - 5f;
+        speed -= speed - 5f <= 0f ? speed : 5f;
     }
     // End of modified block of code for assessment 2
 
@@ -208,11 +208,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     @Override
     public void updatePosition() {
         //Modified block of code for assessment 2
-        double dy = Math.cos((Math.toRadians(sprite.getRotation()))) * speed;
-        double dx = Math.sin((Math.toRadians(sprite.getRotation()))) * speed;
-
-        sprite.translate((float) (-dx), (float) dy);
-        speed -= speed - drag < 4 ? 0 : drag;
+        super.updatePosition();
 
         if (stamina_delay >= time_to_recover) {
             //Boat recovers stamina with each frame if enough time has passed since it has used stamina
