@@ -47,9 +47,13 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     protected boolean has_started_leg = false;
 
     // Added block of code for assessment 2
+    protected int difficulty;
+
     protected int spec_id;
 
     protected int time_to_recover= 100;
+
+    public void setDifficulty(int difficulty) { this.difficulty = difficulty; }
 
     public int getTime_to_recover() { return time_to_recover; }
 
@@ -126,7 +130,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
      *
      * @param spec_id int for boat spec
      */
-    public void setSpec(int spec_id, int difficulty) {
+    public void setSpec(int spec_id) {
         this.spec_id = spec_id;
         setTexture("boats/Boat" + (spec_id + 1) + "/boat" + (spec_id + 1) + ".png",
                 80, 100);

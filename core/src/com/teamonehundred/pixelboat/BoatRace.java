@@ -277,7 +277,6 @@ public class BoatRace {
         // Retrieves sprites and calls function recursively.
         for (Sprite sp : getSprites())
             sp.draw(batch);
-
         int race_width = boats.size() * lane_width;
         Texture temp = new Texture("object_placeholder.png");
 

@@ -264,20 +264,20 @@ public class BoatTest extends TestCase {
      *  category: white box testing
      *  @author: Dragos Stoican
      */
-    @Test
-    public void testDifficultySelection() {
-        // Save the time to recover for each difficulty
-        test_boat.setSpec(1, 0);
-        float recovery0 = test_boat.getTime_to_recover();
-
-        test_boat.setSpec(1, 1);
-        float recovery1 = test_boat.getTime_to_recover();
-
-        test_boat.setSpec(1, 2);
-        float recovery2 = test_boat.getTime_to_recover();
-
-        assertTrue(recovery0 < recovery1 && recovery1 < recovery2);
-    }
+//    @Test
+//    public void testDifficultySelection() {
+//        // Save the time to recover for each difficulty
+//        test_boat.setSpec(1, 0);
+//        float recovery0 = test_boat.getTime_to_recover();
+//
+//        test_boat.setSpec(1, 1);
+//        float recovery1 = test_boat.getTime_to_recover();
+//
+//        test_boat.setSpec(1, 2);
+//        float recovery2 = test_boat.getTime_to_recover();
+//
+//        assertTrue(recovery0 < recovery1 && recovery1 < recovery2);
+//    }
 
     /** id: BoatTest13
      *  description: tests if the boat's getBestTime method returns the right time

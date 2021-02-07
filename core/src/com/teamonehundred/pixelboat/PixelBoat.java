@@ -145,9 +145,9 @@ public class PixelBoat extends ApplicationAdapter {
             float rotation = pref.getFloat("boat" + i + " rotation");
             int spec_id = pref.getInteger("boat" + i + " spec_id");
             if (game_state.all_boats.get(i) instanceof PlayerBoat) {
-                game_state.all_boats.get(i).setSpec(spec_id, player_diff);
+                game_state.all_boats.get(i).setSpec(spec_id);
             } else {
-                game_state.all_boats.get(i).setSpec(spec_id, 0);
+                game_state.all_boats.get(i).setSpec(spec_id);
             }
             game_state.all_boats.get(i).time_to_recover = pref.getInteger("boat" + i + "time_to_recover");
             game_state.all_boats.get(i).sprite.setPosition(x, y);
@@ -242,7 +242,8 @@ public class PixelBoat extends ApplicationAdapter {
                 // Added block of code for assessment 2
                 all_scenes[1] = new SceneMainGame();
                 // End of added block of code for assessment 2
-                ((SceneMainGame) all_scenes[1]).getPlayer().setSpec(((SceneBoatSelection) all_scenes[5]).getSpecID(), ((SceneBoatSelection) all_scenes[5]).getDifficulty_level());
+                ((SceneMainGame) all_scenes[1]).getPlayer().setDifficulty(((SceneBoatSelection) all_scenes[5]).getDifficulty_level());
+                ((SceneMainGame) all_scenes[1]).getPlayer().setSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
             }
 
             // Added block of code for assessment 2
