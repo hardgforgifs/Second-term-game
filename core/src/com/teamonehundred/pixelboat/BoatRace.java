@@ -142,6 +142,7 @@ public class BoatRace {
      *
      * @author William Walton
      * @author Umer Fakher
+     * @modifiedBy Samuel Plane
      */
     public void runStep() {
         // dnf after 5 mins
@@ -171,8 +172,17 @@ public class BoatRace {
                 boat.setStartTime(0);
                 boat.setEndTime((long) (boat.getStartTime(false) + ((1000.0 / 60.0) * boat.getFramesRaced())));
                 boat.setLegTime();
-
                 boat.setHasFinishedLeg(true);
+            }
+            //Check if any boats have broken down
+            else if (!boat.hasFinishedLeg() && boat.durability <= 0) {
+                //Added block of code for assessment 2
+                boat.setStartTime(0);
+                boat.setEndTime(300000);
+                boat.setLegTime();
+                boat.setHasFinishedLeg(true);
+                //End of added block of code for assessment 2
+
             }
             // check if any boats have started
             else if (!boat.hasStartedLeg() && boat.getSprite().getY() > start_y) {

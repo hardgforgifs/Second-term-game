@@ -46,6 +46,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     protected int current_animation_frame = 0;
     protected int frames_elapsed = 0;
     protected int stamina_delay = 0;
+    protected int time_to_recover= 100;
 
     protected boolean has_finished_leg = false;
     protected boolean has_started_leg = false;
@@ -53,8 +54,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
     // Added block of code for assessment 2
     protected int spec_id;
-
-    protected int time_to_recover= 100;
 
     protected List<Float[]> effects = new ArrayList<>();
 
@@ -195,7 +194,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
             }
 
             else if (effect[0] == 4 && effect[1] == 5f) {
-                System.out.println("stamina boost");
                 stamina += Math.min(.5f, 1f - stamina);
             }
 
@@ -216,14 +214,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     public void hasCollided() {
         durability -= durability - durability_per_hit <= 0 ? durability : durability_per_hit;
         speed = speed - 5f;
-
-        //Implements the functionality for boats losing all their durability
-        if (durability <= 0) {
-            this.setStartTime(0);
-            this.setEndTime(500000);
-            this.setHasFinishedLeg(true);
-            this.setLegTime();
-        }
     }
     // End of modified block of code for assessment 2
 
@@ -240,6 +230,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     public void accelerate() {
         //Ensures the player has enough stamina to continue to row
         if (stamina > stamina_usage & recovering == false) {
+            //Added block of code for assessment 2
             //Reduces the boat's stamina as they row
             stamina = stamina - stamina_usage <= 0 ? 0 : stamina - stamina_usage;
             super.accelerate();
@@ -252,6 +243,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
             //temporarily stopping the boat from recovering
             recovering = true;
         }
+        //End of added block of code for assessment 2
 
         if (frames_to_animate > 0) {
             setAnimationFrame(current_animation_frame);
@@ -279,12 +271,11 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         double dy = Math.cos((Math.toRadians(sprite.getRotation()))) * speed;
         double dx = Math.sin((Math.toRadians(sprite.getRotation()))) * speed;
 
+        //Added block of code for assessment 2
         sprite.translate((float) (-dx), (float) dy);
         speed -= speed - drag < 4 ? 0 : drag;
 
-        //super.updatePosition();
-
-        if (stamina_delay == 60) {
+        if (stamina_delay >= time_to_recover) {
             //Boat recovers stamina with each frame if enough time has passed since it has used stamina
             stamina = stamina + stamina_regen >= 1 ? 1.f : stamina + stamina_regen;
             //Boat leaves the recovering phase once they have enough stamina, allowing them to row again
@@ -295,6 +286,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
             //Decreases the time left until a boat can regain stamina
             stamina_delay += 1;
         }
+        //End of added block of code for assessment 2
     }
 
     public long getFramesRaced() {
