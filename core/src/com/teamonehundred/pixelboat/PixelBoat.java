@@ -236,8 +236,12 @@ public class PixelBoat extends ApplicationAdapter {
 
         if (scene_id != new_scene_id) {
             // special case updates
-            if (new_scene_id == 4)
+            if (new_scene_id == 4) {
                 ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
+                //Added block of code for assessment 2
+                ((SceneResultsScreen) all_scenes[4]).leg_no = ((SceneMainGame) all_scenes[1]).getLeg_number();
+            }
+                //End of added block of code for assessment 2
             else if (new_scene_id == 3 && scene_id == 5){
                 // Added block of code for assessment 2
                 all_scenes[1] = new SceneMainGame();

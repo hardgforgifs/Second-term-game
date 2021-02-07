@@ -30,8 +30,8 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     protected float durability_per_hit = .1f;
 
     protected float stamina = 1.f;  // from 0 to 1, percentage of stamina max
-    protected float stamina_usage = 0.005f;  //todo change this after testing
-    protected float stamina_regen = .002f;
+    protected float stamina_usage = .002f;  //todo change this after testing
+    protected float stamina_regen = .003f;
 
     protected List<Long> leg_times = new ArrayList<>();  // times for every previous leg
     protected long start_time = -1;
@@ -42,14 +42,15 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     protected int frames_to_animate = 0;
     protected int current_animation_frame = 0;
     protected int frames_elapsed = 0;
+    protected int stamina_delay = 0;
+    protected int time_to_recover= 100;
 
     protected boolean has_finished_leg = false;
     protected boolean has_started_leg = false;
+    protected boolean recovering = false;
 
     // Added block of code for assessment 2
     protected int spec_id;
-
-    protected int time_to_recover= 100;
 
     public int getTime_to_recover() { return time_to_recover; }
 
@@ -152,7 +153,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
      * @author William Walton, Dragos Stoican
      */
     public void hasCollided() {
-        durability -= durability - durability_per_hit <= 0 ? 0 : durability_per_hit;
+        durability -= durability - durability_per_hit <= 0 ? durability : durability_per_hit;
         speed = speed - 5f;
     }
     // End of modified block of code for assessment 2
@@ -164,11 +165,19 @@ public abstract class Boat extends MovableObject implements CollisionObject {
      */
     @Override
     public void accelerate() {
-        stamina = stamina - stamina_usage <= 0 ? 0 : stamina - stamina_usage;
-        if (stamina > 0) {
+        // Modified block of code for assessment 2
+        if (stamina > stamina_usage & recovering == false) {
+            stamina = stamina - stamina_usage <= 0 ? 0 : stamina - stamina_usage;
             super.accelerate();
             frames_to_animate += 1;
+            //Stamina being regained is delayedto stop players spamming w key to exploit stamina
+            stamina_delay = 0;
+        } else {
+            //Sets recovering variable to true if the boat has run out of stamina,
+            //temporarily stopping the boat from recovering
+            recovering = true;
         }
+        // End of modified block of code for assessment 2
 
         if (frames_to_animate > 0) {
             setAnimationFrame(current_animation_frame);
@@ -192,8 +201,25 @@ public abstract class Boat extends MovableObject implements CollisionObject {
      */
     @Override
     public void updatePosition() {
-        super.updatePosition();
-        stamina = stamina + stamina_regen >= 1 ? 1.f : stamina + stamina_regen;
+        //Modified block of code for assessment 2
+        double dy = Math.cos((Math.toRadians(sprite.getRotation()))) * speed;
+        double dx = Math.sin((Math.toRadians(sprite.getRotation()))) * speed;
+
+        sprite.translate((float) (-dx), (float) dy);
+        speed -= speed - drag < 4 ? 0 : drag;
+
+        if (stamina_delay >= time_to_recover) {
+            //Boat recovers stamina with each frame if enough time has passed since it has used stamina
+            stamina = stamina + stamina_regen >= 1 ? 1.f : stamina + stamina_regen;
+            //Boat leaves the recovering phase once they have enough stamina, allowing them to row again
+            if (stamina > 0.4) {
+                recovering = false;
+            }
+        } else {
+            //Decreases the time left until a boat can regain stamina
+            stamina_delay += 1;
+        }
+        //End of modified block of code for assessment 2
     }
 
     public long getFramesRaced() {
