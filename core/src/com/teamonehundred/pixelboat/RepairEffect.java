@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class RepairEffect extends Effect{
 
     public RepairEffect() {
-        this.isActive = true;
-        this.duration = 0f;
         this.texture = new Texture("Buffs/Repair.png");
         this.sprite = new Sprite(texture);
     }
@@ -18,7 +16,8 @@ public class RepairEffect extends Effect{
 
     @Override
     public void applyEffect(Boat boat) {
-        boat.durability += Math.min(.2f, 1f - boat.durability);
+        if (duration == 5f)
+            boat.durability += Math.min(.2f, 1f - boat.durability);
 
         super.applyEffect(boat);
     }

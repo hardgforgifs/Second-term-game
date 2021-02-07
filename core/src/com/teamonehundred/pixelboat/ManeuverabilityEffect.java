@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class ManeuverabilityEffect extends Effect{
 
     public ManeuverabilityEffect() {
-        this.isActive = true;
-        this.duration = 5f;
         this.texture = new Texture("Buffs/Maneuverability.png");
         this.sprite = new Sprite(texture);
     }

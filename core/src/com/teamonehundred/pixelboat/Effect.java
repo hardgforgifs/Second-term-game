@@ -13,9 +13,15 @@ public abstract class Effect {
 
     public boolean isActive() { return isActive; }
 
+    public Effect() {
+        this.isActive = true;
+        this.duration = 5f;
+    }
+
     public void applyEffect(Boat boat){
         duration -= Gdx.graphics.getDeltaTime();
         if (duration < 0f) {
+            boat.setStats(0);
             isActive = false;
         }
     }

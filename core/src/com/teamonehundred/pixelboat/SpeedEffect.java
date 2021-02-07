@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class SpeedEffect extends Effect{
 
     public SpeedEffect() {
-        this.isActive = true;
-        this.duration = 5f;
         this.texture = new Texture("Buffs/Speed.png");
         this.sprite = new Sprite(texture);
     }
