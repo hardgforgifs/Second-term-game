@@ -508,7 +508,7 @@ public class PixelBoatTest extends TestCase {
         for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
             // Generate 3 random effects
             for (int k = 0; k < 3; k++) {
-                Float[] random_effect = new Float[]{random.nextFloat(), random.nextFloat()};
+                Effect random_effect = new PowerUp(0, 0).getRandomEffect();
                 testSceneMainGame.getAllBoats().get(i).getEffects().add(random_effect);
             }
 
@@ -519,10 +519,11 @@ public class PixelBoatTest extends TestCase {
         // Save and load the game state
         reload();
 
-        // The current effects of each boat from the newly loaded game state should be the same as the one that was saved
+        // The current effects of each boat from the newly loaded game state should be the same
+        // as the one that was saved
         for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
             for (int j = 0; j < boats.get(i).getEffects().size(); j++)
-                assertArrayEquals(testSceneMainGame.getAllBoats().get(i).getEffects().get(j), boats.get(i).getEffects().get(j));
+                assertTrue(testSceneMainGame.getAllBoats().get(i).getEffects().get(j).equals(boats.get(i).getEffects().get(j)));
         }
     }
 

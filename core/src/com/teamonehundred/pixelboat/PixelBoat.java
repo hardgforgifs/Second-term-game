@@ -51,17 +51,21 @@ public class PixelBoat extends ApplicationAdapter {
         pref.putFloat("camera_y", game_state.player.getCamera().position.y);
         for (int k = 0; k < game_state.race.obstacles.size(); k++) {
             // Don't save the lane walls
-            if (!((Obstacle) game_state.race.obstacles.get(k)).getClass().getName().equals("com.teamonehundred.pixelboat.ObstacleLaneWall")) {
-                pref.putFloat("obstacle" + k + " x", ((Obstacle)game_state.race.obstacles.get(k)).getSprite().getX());
-                pref.putFloat("obstacle" + k + " y", ((Obstacle)game_state.race.obstacles.get(k)).getSprite().getY());
-                pref.putString("obstacle" + k + " class", ((Obstacle)game_state.race.obstacles.get(k)).getClass().getName());
+            Obstacle obstacle = (Obstacle) game_state.race.obstacles.get(k);
+            if (!obstacle.getClass().getName().equals("com.teamonehundred.pixelboat.ObstacleLaneWall")) {
+                pref.putFloat("obstacle" + k + " x", obstacle.getSprite().getX());
+                pref.putFloat("obstacle" + k + " y", obstacle.getSprite().getY());
+                pref.putString("obstacle" + k + " class", obstacle.getClass().getName());
+                pref.putBoolean("obstacle" + k + " is_shown", obstacle.isShown());
             }
 
         }
 
         for (int k = 0; k < game_state.race.powerups.size(); k++) {
-            pref.putFloat("powerup" + k + " x", game_state.race.powerups.get(k).getSprite().getX());
-            pref.putFloat("powerup" + k + " y", game_state.race.powerups.get(k).getSprite().getY());
+            PowerUp powerUp = game_state.race.powerups.get(k);
+            pref.putFloat("powerup" + k + " x", powerUp.getSprite().getX());
+            pref.putFloat("powerup" + k + " y", powerUp.getSprite().getY());
+            pref.putBoolean("powerup" + k + " is_shown", powerUp.isShown());
         }
 
 
@@ -107,12 +111,14 @@ public class PixelBoat extends ApplicationAdapter {
         while (x_obstacle != -1) {
             float y_obstacle = pref.getFloat("obstacle" + k + " y");
             String className = pref.getString("obstacle" + k + " class");
+            boolean is_shown = pref.getBoolean("obstacle" + k + " is_shown");
             if (className.equals("com.teamonehundred.pixelboat.ObstacleBranch"))
                 game_state.race.obstacles.set(k, new ObstacleBranch((int) x_obstacle, (int) y_obstacle));
             else if (className.equals("com.teamonehundred.pixelboat.ObstacleDuck"))
                 game_state.race.obstacles.set(k, new ObstacleDuck((int) x_obstacle, (int) y_obstacle));
             else if (className.equals("com.teamonehundred.pixelboat.ObstacleFloatingBranch"))
                 game_state.race.obstacles.set(k, new ObstacleFloatingBranch((int) x_obstacle, (int) y_obstacle));
+            ((Obstacle)game_state.race.obstacles.get(k)).is_shown = is_shown;
             k++;
             x_obstacle = pref.getFloat("obstacle" + k + " x", -1);
         }
@@ -121,7 +127,10 @@ public class PixelBoat extends ApplicationAdapter {
         float x_powerup = pref.getFloat("powerup" + k + " x", -1);
         while (x_powerup != -1) {
             float y_powerup = pref.getFloat("powerup" + k + " y");
-            game_state.race.powerups.set(k++, new PowerUp((int) x_powerup, (int) y_powerup));
+            boolean is_shown = pref.getBoolean("powerup" + k + " is_shown");
+            game_state.race.powerups.set(k, new PowerUp((int) x_powerup, (int) y_powerup));
+            game_state.race.powerups.get(k).is_shown = is_shown;
+            k++;
             x_powerup = pref.getFloat("powerup" + k + " x", -1);
         }
 

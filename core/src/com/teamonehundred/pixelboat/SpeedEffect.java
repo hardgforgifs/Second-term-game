@@ -11,6 +11,7 @@ public class SpeedEffect extends Effect{
     }
 
     public SpeedEffect(float duration) {
+        this();
         this.duration = duration;
     }
 

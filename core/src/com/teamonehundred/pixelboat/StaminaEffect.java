@@ -11,6 +11,7 @@ public class StaminaEffect extends Effect{
     }
 
     public StaminaEffect(float duration) {
+        this();
         this.duration = duration;
     }
 

@@ -5,11 +5,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public abstract class Effect {
+
     protected float duration;
     protected Texture texture;
     protected Sprite sprite;
 
     protected boolean isActive;
+
+    public void setDuration(float duration) { this.duration = duration; }
+
+    public float getDuration() { return duration; }
 
     public boolean isActive() { return isActive; }
 
@@ -31,5 +36,19 @@ public abstract class Effect {
                 boat.sprite.getY() - 100);
         sprite.setSize(40, 40);
         return sprite;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Effect))
+            return false;
+        else {
+            Effect e = (Effect) o;
+            if (this.isActive == e.isActive &&
+                this.duration == e.duration &&
+                this.getClass() == e.getClass())
+                return true;
+            return false;
+        }
     }
 }

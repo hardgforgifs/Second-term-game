@@ -11,6 +11,7 @@ public class ManeuverabilityEffect extends Effect{
     }
 
     public ManeuverabilityEffect(float duration) {
+        this();
         this.duration = duration;
     }
 

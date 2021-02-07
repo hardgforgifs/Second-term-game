@@ -11,6 +11,7 @@ public class RepairEffect extends Effect{
     }
 
     public RepairEffect(float duration) {
+        this();
         this.duration = duration;
     }
 

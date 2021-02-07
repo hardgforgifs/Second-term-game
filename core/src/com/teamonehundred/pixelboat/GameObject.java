@@ -37,6 +37,12 @@ abstract class GameObject {
      */
     protected Boolean is_shown;
 
+    // Added block of code for assessment 2
+    public void setIsShown(boolean value) {
+        this.is_shown = value;
+    }
+    // End of added block of code for assessment 2
+
     // set to null if not animated
     /**
      * The array of frames used for animations, stored as TextureRegion s

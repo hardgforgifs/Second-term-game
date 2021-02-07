@@ -72,52 +72,6 @@ public class BoatRaceTest extends TestCase {
         assertTrue(testRace.getBoats().get(1).getTimeToAdd() == 0);
     }
 
-
-    /** id: BoatRaceTest04
-     *  description: tests if the boosts duration decreases, and if the boosts effects disappear after the 5s duration
-     *  input data: new instance of BoatRace, an new effect on the boat
-     *  expected outcome: boat's effect should be lower than the initial time or disappear completely
-     *  requirements: UR_PICKUP_BOOSTS, FR_PICKUP_BOOSTS
-     *  category: white box testing
-     *  author: Dragos Stoican
-     */
-    @Test
-    public void testBoostDurationDecreases() {
-        // Add a speed boost to one of the boats boat
-        // The speed boost should have a very low duration so we can test if it disappears after it's timer reaches 0
-        Float[] effect = new Float[] {1f, 5f};
-        testRace.getBoats().get(0).getEffects().add(effect);
-
-        // Run a step of the race
-        testRace.runStep();
-
-        // The boost's duration should have decreased, it could also have decreased below 0
-        assertTrue(testRace.getBoats().get(0).getEffects().isEmpty() ||
-                testRace.getBoats().get(0).getEffects().get(0)[1] < 1f);
-    }
-
-    /** id: BoatRaceTest05
-     *  description: tests if boosts disappear from boats when their timer is below 0
-     *  input data: new instance of BoatRace, an effect with a 0 seconds remaining
-     *  expected outcome: boat shouldn't have any remaining effects after a boatRace step
-     *  requirements: UR_PICKUP_BOOSTS, FR_PICKUP_BOOSTS
-     *  category: white box testing
-     *  author: Dragos Stoican
-     */
-    @Test
-    public void testBoostEnds() {
-        // Add a speed boost to one of the boats boat
-        // The speed boost should have a very low duration so we can test if it disappears after it's timer reaches 0
-        Float[] effect = new Float[] {1f, 0f};
-        testRace.getBoats().get(0).getEffects().add(effect);
-
-        // Run a step of the race
-        testRace.runStep();
-
-        // The boost should be removed since it's duration expired
-        assertTrue(testRace.getBoats().get(0).getEffects().isEmpty());
-    }
-
     /** id: BoatRaceTest06
      *  description: tests if boats are marked to have started the leg when they pass the start line
      *  input data: new instance of BoatRace with the position above the start line

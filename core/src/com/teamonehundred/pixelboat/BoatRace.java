@@ -115,12 +115,7 @@ public class BoatRace {
             obstacles.add(new ObstacleDuck((int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
                     (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
 
-        // add the lane separators
-        for (int lane = 0; lane <= boats.size(); lane++) {
-            for (int height = 0; height <= end_y; height += ObstacleLaneWall.texture_height) {
-                obstacles.add(new ObstacleLaneWall(getLaneCentre(lane) - lane_width / 2, height, lane_sep));
-            }
-        }
+        addLaneSeparators();
 
         // Added block of code for assessment 2
         // Dnf after 2 mins
@@ -298,6 +293,15 @@ public class BoatRace {
     }
 
     // Added block of code for assessment 2
+    public void addLaneSeparators() {
+        // add the lane separators
+        for (int lane = 0; lane <= boats.size(); lane++) {
+            for (int height = 0; height <= end_y; height += ObstacleLaneWall.texture_height) {
+                obstacles.add(new ObstacleLaneWall(getLaneCentre(lane) - lane_width / 2, height, lane_sep));
+            }
+        }
+    }
+
     public void drawUI(SpriteBatch batch, PlayerBoat boat) {
         //Calculate time elapsed from the start in milliseconds
         long curTime = (long) ((1000.0 / 60.0) * boat.getFramesRaced());
