@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.teamonehundred.pixelboat.Boat;
 import com.teamonehundred.pixelboat.PlayerBoat;
+import com.teamonehundred.pixelboat.SpeedEffect;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -280,5 +281,23 @@ public class BoatTest extends TestCase {
         float recovery2 = test_boat.getTime_to_recover();
 
         assertTrue(recovery0 < recovery1 && recovery1 < recovery2);
+    }
+
+    /** id: BoatTest13
+     *  description: tests if the boat's getBestTime method returns the right time
+     *  input data: new instance of a PlayerBoat, new values for leg times
+     *  expected outcome: the ethod should return the greatest leg time
+     *  requirements:
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testGetBestLeg() {
+        // Add leg times to the boat's list of leg times
+        test_boat.getLegTimes().add(100L);
+        test_boat.getLegTimes().add(200L);
+        test_boat.getLegTimes().add(50L);
+
+        assertEquals(200L, test_boat.getBestTime());
     }
 }

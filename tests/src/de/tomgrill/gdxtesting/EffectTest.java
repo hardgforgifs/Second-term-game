@@ -182,23 +182,85 @@ public class EffectTest extends TestCase {
         assertEquals(test_boat.getDurability_per_hit(), 0f);
     }
 
-//    /** id: EffectTest08
-//     *  description: tests if the effects of a boat is correctly reset
-//     *  input data: new instance of a PlayerBoat
-//     *  expected outcome: there should be no effects on the boat after resetting
-//     *  requirements: UR_BOAT_SPEC
-//     *  category: white box testing
-//     *  @author: Dragos Stoican
-//     */
-//    @Test
-//    public void testBoatResetEffects() {
-//        // Add an effect
-//        test_boat.getEffects().add(new Float[] {1f, 5f});
-//
-//        // Reset the boat
-//        test_boat.reset();
-//
-//        // There should be no effects after reseting
-//        assertTrue(test_boat.getEffects().isEmpty());
-//    }
+    //TODO consider difficulty
+    /** id: EffectTest08
+     *  description: tests if the stats of a boat are correctly reset after the end of each effect
+     *  input data: new instance of a PlayerBoat, new effects
+     *  expected outcome: there stats of the boat should return to normal after a boost ends
+     *  requirements: UR_PICKUP_BOOST, FR_PICKUP_BOOST
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testResetBoatAfterEffects() {
+        // Set the duration of each boost to 0
+        test_speed.setDuration(0f);
+        test_repair.setDuration(0f);
+        test_maneuverability.setDuration(0f);
+        test_stamina.setDuration(0f);
+        test_invulnerability.setDuration(0f);
+
+        // Save the stats of the boat
+        test_boat.setStats(0);
+        float maneuverability = test_boat.getManeuverability();
+        float max_speed = test_boat.getMax_speed();
+        float acceleration = test_boat.getAcceleration();
+
+        // Apply a each effect and test if the boat is still affected even thought the effect has ended
+        test_speed.applyEffect(test_boat);
+        assertEquals(test_boat.getMax_speed(), max_speed);
+        assertEquals(test_boat.getAcceleration(), acceleration);
+
+        test_maneuverability.applyEffect(test_boat);
+        assertEquals(test_boat.getManeuverability(), maneuverability);
+
+        test_invulnerability.applyEffect(test_boat);
+        assertTrue(test_boat.getMax_speed() > 0f);
+    }
+
+    /** id: EffectTest09
+     *  description: tests if the boat is affected only active effects
+     *  input data: new instance of a PlayerBoat, new effects
+     *  expected outcome: only the active effects should affect the boat
+     *  requirements: UR_PICKUP_BOOST, FR_PICKUP_BOOST
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testOnlyActiveEffectsApply() {
+        // Add two effects to the boat, one of which i inactive
+        test_invulnerability.setActive(false);
+        test_boat.getEffects().add(test_maneuverability);
+        test_boat.getEffects().add(test_invulnerability);
+
+        float old_maneuverability = test_boat.getManeuverability();
+
+        // Update the effects
+        test_boat.updateEffects();
+
+        // Only the maneuverability effect should be applied
+        assertTrue(test_boat.getManeuverability() > old_maneuverability);
+        assertTrue(test_boat.getDurability_per_hit() > 0f);
+    }
+
+    /** id: EffectTest09
+     *  description: tests if the effects on a boat get removed from the list after they become inactive
+     *  input data: new instance of a PlayerBoat, new effects
+     *  expected outcome: only the active effects should affect the boat
+     *  requirements: UR_PICKUP_BOOST, FR_PICKUP_BOOST
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testEffectsGetRemoved() {
+        // Add an inactive effect to the boat
+        test_invulnerability.setActive(false);
+        test_boat.getEffects().add(test_invulnerability);
+
+        // Update the effects
+        test_boat.updateEffects();
+
+        // The list of effects should be empty
+        assertTrue(test_boat.getEffects().isEmpty());
+    }
 }

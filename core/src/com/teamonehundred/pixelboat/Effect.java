@@ -12,6 +12,8 @@ public abstract class Effect {
 
     protected boolean isActive;
 
+    public void setActive(boolean active) { isActive = active; }
+
     public void setDuration(float duration) { this.duration = duration; }
 
     public float getDuration() { return duration; }
@@ -23,6 +25,7 @@ public abstract class Effect {
         this.duration = 5f;
     }
 
+    // TODO consider difficulty
     public void applyEffect(Boat boat){
         duration -= Gdx.graphics.getDeltaTime();
         if (duration < 0f) {

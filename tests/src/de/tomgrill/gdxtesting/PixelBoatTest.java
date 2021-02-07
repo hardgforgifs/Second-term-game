@@ -489,7 +489,6 @@ public class PixelBoatTest extends TestCase {
         // For every powerup, the x and y position should be the same as the one that was saved
         for (int k = 0; k < powerups.size(); k++) {
             assertEquals(powerups.get(0).getSprite().getX(), loadedPowerups.get(0).getSprite().getX());
-
             assertEquals(powerups.get(0).getSprite().getY(), loadedPowerups.get(0).getSprite().getY());
         }
     }

@@ -67,7 +67,7 @@ public class CollisionsTest extends TestCase {
     }
 
     /** id: CollisionsTest03
-     *  description: tests if a lane wall powerup collides properly with a boat
+     *  description: tests if a powerup collides properly with a boat
      *  input data: new instance of a PlayerBoat, new instance of powerup
      *  expected outcome: the bounds if the two objects should collide
      *  requirements:

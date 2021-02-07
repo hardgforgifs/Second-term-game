@@ -134,7 +134,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     }
 
 
-    public void updateBoostEffect() {
+    public void updateEffects() {
         for (int i = 0; i < effects.size(); i++) {
             Effect effect = effects.get(i);
             if (effect.isActive())

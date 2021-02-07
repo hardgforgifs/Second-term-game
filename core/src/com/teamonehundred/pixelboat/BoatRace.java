@@ -218,7 +218,7 @@ public class BoatRace {
             }
 
             // Apply the effect of the current boost
-            boats.get(i).updateBoostEffect();
+            boats.get(i).updateEffects();
             // End of added block of code for assessment 2
 
             // check if out of lane
