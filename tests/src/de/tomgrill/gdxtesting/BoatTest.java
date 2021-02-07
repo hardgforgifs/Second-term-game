@@ -1,16 +1,12 @@
 package de.tomgrill.gdxtesting;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.teamonehundred.pixelboat.Boat;
 import com.teamonehundred.pixelboat.PlayerBoat;
-import com.teamonehundred.pixelboat.SpeedEffect;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.Vector;
 
 @RunWith(GdxTestRunner.class)
 public class BoatTest extends TestCase {
