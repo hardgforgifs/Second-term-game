@@ -156,12 +156,7 @@ public class PlayerBoat extends Boat {
         ret.add(durability_bar);
         // Added block of code for assessment 2
         for (int i = 0; i < effects.size(); i++) {
-            Float[] effect = effects.get(i);
-            Sprite effect_sprite = new Sprite(effect_textures[(int)(effect[0] - 1)]);
-            effect_sprite.setPosition(sprite.getX() - ui_bar_width / 2  + sprite.getWidth() / 2 + i * 50,
-                    sprite.getY() - 100);
-            effect_sprite.setSize(40, 40);
-            ret.add(effect_sprite);
+            ret.add(effects.get(i).getSprite(this, i));
         }
         // End of added block of code for assessment 2
         return ret;

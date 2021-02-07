@@ -33,8 +33,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     protected float stamina_usage = 0.005f;  //todo change this after testing
     protected float stamina_regen = .002f;
 
-//    protected float maneuverability = 1f;
-
     protected List<Long> leg_times = new ArrayList<>();  // times for every previous leg
     protected long start_time = -1;
     protected long end_time = -1;  // ms since epoch when starting and finishing current leg
@@ -55,9 +53,9 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
     public int getTime_to_recover() { return time_to_recover; }
 
-    protected List<Float[]> effects = new ArrayList<>();
+    protected List<Effect> effects = new ArrayList<>();
 
-    public List<Float[]> getEffects() { return effects; }
+    public List<Effect> getEffects() { return effects; }
 
     public float getStamina() { return stamina; }
 
@@ -104,45 +102,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     }
     // End of added block of code for assessment 2
 
-    /**
-     * Construct a Boat object with at point (x,y) with width and height and texture path
-     * with default stats (stamina usage, durability, etc).
-     *
-     * @param x            int coordinate for the bottom left point of the boat
-     * @param y            int coordinate for the bottom left point of the boat
-     * @param w            int width of the new boat
-     * @param h            int height of the new boat
-     * @param texture_path String relative path from the core/assets folder of the boats texture image
-     * @author William Walton
-     */
-    Boat(int x, int y, int w, int h, String texture_path) {
-        super(x, y, w, h, texture_path, 4);
-    }
-
-    /**
-     * Construct a Boat object with all parameters specified.
-     *
-     * @param x                  int coordinate for the bottom left point of the boat
-     * @param y                  int coordinate for the bottom left point of the boat
-     * @param w                  int width of the new boat
-     * @param h                  int height of the new boat
-     * @param texture_path       String relative path from the core/assets folder of the boats texture image
-     * @param durability_per_hit float percentage (0-1) of the max durability taken each hit
-     * @param name               String of the boat seen when the game ends
-     * @param stamina_regen      float percentage of stamina regenerated each frame (0-1)
-     * @param stamina_usage      float percentage of stamina used each frame when accelerating (0-1)
-     * @author William Walton
-     */
-    Boat(int x, int y, int w, int h, String texture_path, String name,
-         float durability_per_hit, float stamina_usage, float stamina_regen) {
-        super(x, y, w, h, texture_path, 4);
-
-        this.name = name;
-        this.durability_per_hit = durability_per_hit;
-        this.stamina_usage = stamina_usage;
-        this.stamina_regen = stamina_regen;
-    }
-
     /* ################################### //
                     METHODS
     // ################################### */
@@ -177,30 +136,11 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
     public void updateBoostEffect() {
         for (int i = 0; i < effects.size(); i++) {
-            Float[] effect = effects.get(i);
-            // Apply speed boost effect
-            if (effect[0] == 1) {
-                speed = Math.max(10, speed);
-                acceleration = .4f;
-                max_speed = 25;
-            }
-
-            else if (effect[0] == 2 && effect[1] == 5f) {
-                durability += Math.min(.2f, 1f - durability);
-            }
-
-            else if (effect[0] == 3) {
-                maneuverability = 4f;
-            }
-
-            else if (effect[0] == 4 && effect[1] == 5f) {
-                System.out.println("stamina boost");
-                stamina += Math.min(.5f, 1f - stamina);
-            }
-
-            else if (effect[0] == 5) {
-                durability_per_hit = 0f;
-            }
+            Effect effect = effects.get(i);
+            if (effect.isActive())
+                effect.applyEffect(this);
+            else
+                effects.remove(effect);
         }
     }
     // End of added block of code for assessment 2
@@ -390,15 +330,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         if (this.getBounds().isColliding(object.getBounds())) {
             // Added block of code for assessment 2
             if (object instanceof PowerUp) {
-                // 0 = no boost
-                // 1 = speed boost
-                // 2 = robustness boost
-                // 3 = maneuverability boost
-                // 4 = stamina boost
-                // 5 = invulnerability boost
-                float boostType = ((PowerUp) object).getRandomEffect();
-                // Add the effect to the list of ongoing boosts
-                effects.add(new Float[]{boostType, 5f});
+                effects.add(((PowerUp) object).getRandomEffect());
             }
             // End of added block of code for assessment 2
             else if (!(object instanceof ObstacleLaneWall))

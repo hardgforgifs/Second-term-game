@@ -193,18 +193,6 @@ public class BoatRace {
                 // if not start or end, must be racing
                 boat.addFrameRaced();
             }
-
-            // Added block of code for assessment 2
-            // Reduce the timer for the boat's effects from powerups
-            for (int i = 0; i < boat.effects.size(); i++) {
-                Float[] effect = boat.effects.get(i);
-                effect[1] -= Gdx.graphics.getDeltaTime();
-                if (effect[1] <= 0f) {
-                    boat.setStats(0);
-                    boat.effects.remove(i);
-                }
-            }
-            // End of added block of code for assessment 2
         }
 
         boolean not_finished = false;

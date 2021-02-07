@@ -85,9 +85,9 @@ public class PixelBoat extends ApplicationAdapter {
 
             // Save the list of effects
             for (int k = 0; k < game_state.getAllBoats().get(i).effects.size(); k++) {
-                Float[] effect = game_state.getAllBoats().get(i).effects.get(k);
-                pref.putFloat("effect" + i + k + " type", effect[0]);
-                pref.putFloat("effect" + i + k + " time", effect[1]);
+                Effect effect = game_state.getAllBoats().get(i).effects.get(k);
+                pref.putString("effect" + i + k + " type", effect.getClass().getName());
+                pref.putFloat("effect" + i + k + " time", effect.duration);
             }
             for (int j = 0; j < game_state.all_boats.get(i).leg_times.size(); j++) {
                 pref.putLong("leg_time" + i + j, game_state.all_boats.get(i).leg_times.get(j));
@@ -161,12 +161,21 @@ public class PixelBoat extends ApplicationAdapter {
 
             // Load the current effects of powerups
             j = 0;
-            float type = pref.getFloat("effect" + i + j + " type", -1);
-            while(type != -1) {
+            String type = pref.getString("effect" + i + j + " type", "none");
+            while(type != "none") {
                 float time  = pref.getFloat("effect" + i + j + " time");
-                game_state.getAllBoats().get(i).effects.add(new Float[]{type, time});
+                if (type == "com.teamonehundred.pixelboat.SpeedEffect")
+                    game_state.getAllBoats().get(i).effects.add(new SpeedEffect(time));
+                if (type == "com.teamonehundred.pixelboat.RepairEffect")
+                    game_state.getAllBoats().get(i).effects.add(new RepairEffect(time));
+                if (type == "com.teamonehundred.pixelboat.ManeuverabilityEffect")
+                    game_state.getAllBoats().get(i).effects.add(new ManeuverabilityEffect(time));
+                if (type == "com.teamonehundred.pixelboat.StaminaEffect")
+                    game_state.getAllBoats().get(i).effects.add(new StaminaEffect(time));
+                if (type == "com.teamonehundred.pixelboat.InvulnerabilityEffect")
+                    game_state.getAllBoats().get(i).effects.add(new InvulnerabilityEffect(time));
                 j++;
-                type = pref.getFloat("effect" + i + j + " type", -1);
+                type = pref.getString("effect" + i + j + " type", "none");
             }
         }
         return game_state;
