@@ -53,6 +53,7 @@ public class BoatTest extends TestCase {
     public void testStaminaRegen() {
         // Set the boat's stamina to 0
         test_boat.setStamina(0f);
+        test_boat.setStamina_delay(test_boat.getTime_to_recover() + 10);
 
         // Update the position and the stamina of the boat
         test_boat.updatePosition();

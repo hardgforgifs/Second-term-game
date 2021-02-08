@@ -58,6 +58,10 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
     public void setDifficulty(int difficulty) { this.difficulty = difficulty; }
 
+    public int getStamina_delay() { return stamina_delay; }
+
+    public void setStamina_delay(int stamina_delay) { this.stamina_delay = stamina_delay; }
+
     public int getTime_to_recover() { return time_to_recover; }
 
     protected List<Effect> effects = new ArrayList<>();
