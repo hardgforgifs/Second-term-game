@@ -37,7 +37,7 @@ public class PlayerBoat extends Boat {
 
     // Added block of code for assessment 2
     protected Texture[] effect_textures;
-    private Sound collisionsound;
+    public Sound collisionsound;
     // End of added block of code for assessment 2
 
 

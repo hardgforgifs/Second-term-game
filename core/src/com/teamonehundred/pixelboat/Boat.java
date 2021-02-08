@@ -372,7 +372,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
                 final Preferences prefs = Gdx.app.getPreferences("setting\\gamesetting");
                 float soundvolume = prefs.getFloat("SoundVolume",0.5f);
                 float mastervolume = prefs.getFloat("MasterVolume",0.5f);
-                collisionsound.play(soundvolume*mastervolume);
+                ((PlayerBoat)this).collisionsound.play(soundvolume*mastervolume);
             }
             if (object instanceof PowerUp) {
                 effects.add(((PowerUp) object).getRandomEffect());
