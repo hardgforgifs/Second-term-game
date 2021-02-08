@@ -68,10 +68,13 @@ public class SceneSettings implements Scene{
 		
 	}
 
+	@Override
+	public void dispose() {
 
-	
-    
-    public SceneSettings( Music[] music) {
+	}
+
+
+	public SceneSettings( Music[] music) {
     	
     	
     	this.musics = music;

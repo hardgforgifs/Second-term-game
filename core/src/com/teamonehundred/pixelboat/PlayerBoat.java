@@ -53,9 +53,9 @@ public class PlayerBoat extends Boat {
      * @param y int coordinate for the bottom left point of the boat
      * @author William Walton
      */
-    public PlayerBoat(int x, int y, Sound collisionsound) {
+    public PlayerBoat(int x, int y) {
         super(x, y);
-        this.collisionsound = collisionsound;
+        this.collisionsound = Gdx.audio.newSound(Gdx.files.internal("sounds/wood_hit.mp3"));;
         initialise();
     }
 

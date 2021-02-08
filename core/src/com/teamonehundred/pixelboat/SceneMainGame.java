@@ -70,10 +70,9 @@ public class SceneMainGame implements Scene {
      * Initialises a BoatRace, player's boat, AI boats and scene textures.
      *
      * @author William Walton
-     * @param collisionsound
      */
-    SceneMainGame(Sound collisionsound) {
-        player = new PlayerBoat(-15, 0,collisionsound );
+    SceneMainGame() {
+        player = new PlayerBoat(-15, 0);
         player.setName("Player");
         all_boats = new ArrayList<>();
 

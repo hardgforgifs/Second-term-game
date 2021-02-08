@@ -218,7 +218,7 @@ public class PixelBoat extends ApplicationAdapter {
          
         all_scenes = new Scene[6];
         all_scenes[0] = new SceneStartScreen();
-        all_scenes[1] = new SceneMainGame(collisionsound);
+        all_scenes[1] = new SceneMainGame();
         all_scenes[2] = new SceneSettings(musics);
         all_scenes[3] = new SceneTutorial();
         all_scenes[4] = new SceneResultsScreen();
@@ -273,7 +273,7 @@ public class PixelBoat extends ApplicationAdapter {
             }
 
             else if (new_scene_id == 0) {
-                stopMusic();
+//                stopMusic();
                 setMusicVol(startmusic);
                 startmusic.play();
             }
@@ -299,6 +299,9 @@ public class PixelBoat extends ApplicationAdapter {
                 new_scene_id = 1;
             }
             else if (new_scene_id == 7) {
+                stopMusic();
+                setMusicVol(startmusic);
+                startmusic.play();
                 saveGame((SceneMainGame) all_scenes[1]);
                 // Mark that a save file now exists so we can load it from the main menu
                 ((SceneStartScreen)all_scenes[0]).is_saved_game = true;
