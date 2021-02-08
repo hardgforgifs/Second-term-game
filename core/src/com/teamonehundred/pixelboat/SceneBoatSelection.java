@@ -133,7 +133,7 @@ public class SceneBoatSelection implements Scene {
         easy_sprite.setSize(512 / 4, 128 / 4);
         easy_sprite.setPosition((13 * (fill_camera.viewportWidth / 16)) - (easy_sprite.getWidth() / 2), (fill_camera.viewportHeight / 8) - (easy_sprite.getHeight() / 2));
 
-        normal_sprite = new Sprite(normal);
+        normal_sprite = new Sprite(normal_hovered);
         normal_sprite.setSize(512 / 4, 128 / 4);
         normal_sprite.setPosition((13 * (fill_camera.viewportWidth / 16)) - (normal_sprite.getWidth() / 2), (2 * (fill_camera.viewportHeight / 8)) - (normal_sprite.getHeight() / 2));
 
@@ -195,13 +195,13 @@ public class SceneBoatSelection implements Scene {
         for (int i = 0; i < num_specs; i++) {
             // Added block of code for assessment 2
             if (boat_option_sprites[i].getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
-                boat_option_sprites[i].setTexture(boat_options_hovered[i]);
-                stats_bg_sprite[i].setTexture(stats_boats[i]);
                 if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && is_new_click) {
+                    boat_option_sprites[i].setTexture(boat_options_hovered[i]);
+                    stats_bg_sprite[i].setTexture(stats_boats[i]);
                     spec_id = i;
                     return scene_id;
                 }
-            } else {
+            } else if (spec_id != i){
                 boat_option_sprites[i].setTexture(boat_options[i]);
                 stats_bg_sprite[i].setTexture(stats_bg);
             }
@@ -218,31 +218,31 @@ public class SceneBoatSelection implements Scene {
             back_sprite.setTexture(back);
 
         if (easy_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
-            easy_sprite.setTexture(easy_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                easy_sprite.setTexture(easy_hovered);
                 is_new_click = false;
                 difficulty_level = 0;
             }
-        } else
+        } else if (difficulty_level != 1)
             easy_sprite.setTexture(easy);
 
         if (normal_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
-            normal_sprite.setTexture(normal_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                normal_sprite.setTexture(normal_hovered);
                 is_new_click = false;
                 difficulty_level = 1;
             }
-        } else
+        } else if (difficulty_level != 1)
             normal_sprite.setTexture(normal);
 
         if (hard_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
-            hard_sprite.setTexture(hard_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                hard_sprite.setTexture(hard_hovered);
                 is_new_click = false;
                 difficulty_level = 2;
 
             }
-        } else
+        } else if (difficulty_level != 2)
             hard_sprite.setTexture(hard);
 
         if (cont_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {

@@ -136,7 +136,7 @@ public class SceneStartScreen implements Scene {
 
         if (play_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             play_sprite.setTexture(play_hovered);
-            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 return 5;
             }
         } else
@@ -144,7 +144,7 @@ public class SceneStartScreen implements Scene {
 
         if (options_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             options_sprite.setTexture(options_hovered);
-            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 // todo enable options when implemented
                 return 2;
             }
@@ -154,7 +154,7 @@ public class SceneStartScreen implements Scene {
         // Added block of code for assessment 2
         if (exit_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             exit_sprite.setTexture(exit_hovered);
-            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 Gdx.app.exit();;
             }
         } else
@@ -163,7 +163,7 @@ public class SceneStartScreen implements Scene {
         if (load_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             if (is_saved_game) {
                 load_sprite.setTexture(load_hovered);
-                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                     return 6;
                 }
             }
