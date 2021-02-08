@@ -31,7 +31,7 @@ public class BoatRace {
 
     protected int start_y = 200;
 
-    protected int end_y = 4000;
+    protected int end_y = 40000;
 
     protected int lane_width = 400;
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane

@@ -25,11 +25,10 @@ public abstract class Effect {
         this.duration = 5f;
     }
 
-    // TODO consider difficulty
     public void applyEffect(Boat boat){
         duration -= Gdx.graphics.getDeltaTime();
         if (duration < 0f) {
-            boat.setStats(0);
+            boat.setStats(boat.difficulty);
             isActive = false;
         }
     }

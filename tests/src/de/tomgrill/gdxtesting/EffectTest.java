@@ -182,7 +182,6 @@ public class EffectTest extends TestCase {
         assertEquals(test_boat.getDurability_per_hit(), 0f);
     }
 
-    //TODO consider difficulty
     /** id: EffectTest08
      *  description: tests if the stats of a boat are correctly reset after the end of each effect
      *  input data: new instance of a PlayerBoat, new effects
