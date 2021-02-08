@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -28,6 +29,11 @@ class SceneResultsScreen implements Scene {
     protected Viewport fill_viewport;
     protected OrthographicCamera fill_camera;
 
+    // Added block of code for assessment 2
+    protected Texture bg;
+    protected Texture resultsTable;
+    // End of added block of code for assessment 2
+
     SceneResultsScreen() {
         fill_camera = new OrthographicCamera();
         fill_viewport = new FillViewport(1280, 720, fill_camera);
@@ -40,6 +46,12 @@ class SceneResultsScreen implements Scene {
         // Initialise colour of Text Display Overlay
         font = new BitmapFont();
         font.setColor(Color.WHITE);
+
+        // Added block of code for assessment 2
+        bg = new Texture("water_background.png");
+        bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        resultsTable = new Texture("ResultScreen.png");
+        // End of added block of code for assessment 2
     }
 
     /**
@@ -99,50 +111,77 @@ class SceneResultsScreen implements Scene {
         // Begin a sprite batch drawing
         batch.begin();
 
+        //Added block of code for assessment 2
+        batch.draw(bg, -10000, -2000, 0, 0, 1000000, 10000000);
+        //End of added block of code for assessment 2
+
+
+
+        // End a sprite batch drawing
+        batch.end();
+
+    }
+
+    //Added block of code for assessment 2
+    public void drawStatic(SpriteBatch batch) {
+        batch.begin();
+
         // Draw text instructions at the top of the screen
         font.setColor(Color.ORANGE);
         font.draw(batch, "Results Screen! Click on the screen to skip and start the next leg!",
-                -thePlayerBoat.ui_bar_width / 2, 540 + thePlayerBoat.getSprite().getY());
+                fill_camera.viewportWidth / 3, 15 * (fill_camera.viewportHeight / 16));
 
         // Draw text instructions for the timing format that will be displayed
         font.setColor(Color.YELLOW);
         font.draw(batch, "BoatName | Race Time in ms | Race penalty in ms",
-                -thePlayerBoat.ui_bar_width / 2, 520 + thePlayerBoat.getSprite().getY());
+                fill_camera.viewportWidth / 3, 14 * (fill_camera.viewportHeight / 16));
 
+        batch.draw(resultsTable, fill_camera.viewportWidth / 3,   fill_camera.viewportHeight / 8, 500, 450);
 
         String label_template = "%s | %d ms | %d ms";//"A boat (%s) ended race with time (ms) %d (%d ms was penalty)";
 
         // Initialise values for drawing times as table in order to allow dynamic wrapping
         int column_num = -1;
         int column_idx = -1;
-        for (Boat b : boats) {
-            if (b instanceof PlayerBoat) {
+        for (int top_boats = 0; top_boats <= 13; top_boats++) {
+            if (boats.get(top_boats) instanceof PlayerBoat) {
                 font.setColor(Color.RED); // Colour Player's time in red
             } else {
                 font.setColor(Color.WHITE); // All AI-boat times in white
             }
 
+            // Writes out the details of all the boats into the table
+            font.draw(batch, boats.get(top_boats).getName(), 5 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
+            font.draw(batch, Long.toString(boats.get(top_boats).getLegTimes().get(boats.get(top_boats).getLegTimes().size() - 1)), 6 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
+            font.draw(batch, Long.toString(boats.get(top_boats).getTimeToAdd()) , 7 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
+            font.draw(batch, Long.toString(boats.get(top_boats).getCalcTime()) , 8 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
+            /*
+
             // Shift to next column to allowing wrapping of times as table
-            if (boats.indexOf(b) % 21 == 0) {
+            if (boats.indexOf(boats.get(top_boats)) % 21 == 0) {
                 column_num++;
                 column_idx = 0;
             }
-            column_idx++;
+
 
             // Using label template format draw the name of boat, time of just completed leg, race penalty added
-            String label_text = String.format(label_template, b.getName(),
-                    b.getLegTimes().get(b.getLegTimes().size() - 1), b.getTimeToAdd());
+            String label_text = String.format(label_template, boats.get(top_boats).getName(),
+                    boats.get(top_boats).getLegTimes().get(boats.get(top_boats).getLegTimes().size() - 1), boats.get(top_boats).getTimeToAdd());
 
             // Draw to results display to screen using position of player's UI and draw for all boats this down the
             // and wraps across screen if needed into the next column
-            font.draw(batch, label_text, -thePlayerBoat.ui_bar_width / 2 + column_num * 210,
-                    500 - (column_idx * 20) + thePlayerBoat.getSprite().getY());
+            font.draw(batch, label_text, 5 * (fill_camera.viewportWidth / 12) + column_num * 210,
+                    11 * (fill_camera.viewportHeight / 16)  - (column_idx * 20));
+
+            column_idx++;
+            */
+
         }
 
         // End a sprite batch drawing
         batch.end();
-
     }
+    //End of added block of code for assessment 2
 
     /**
      * Temp resize method if needed for camera extension.
