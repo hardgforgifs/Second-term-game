@@ -26,6 +26,9 @@ public class AIBoatTest extends TestCase {
 
     @After
     public void dispose() {
+        test_ai.dispose();
+        test_ai = null;
+        obstacles = null;
     }
 
     /** id: AIBoatTest01

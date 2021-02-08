@@ -28,7 +28,7 @@ public class BoatRaceTest extends TestCase {
     @After
     public void dispose() {
         testSceneMainGame.dispose();
-        testRace.dispose();
+        testSceneMainGame = null;
     }
 
 

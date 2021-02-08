@@ -1,11 +1,11 @@
-
-
 apply plugin: "java"
 
+tasks.withType(JavaExec) {
+    maxHeapSize = "4096m"
+    jvmArgs "-XX:MaxPermSize=512m"
+}
 sourceCompatibility = 1.7
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-
-
 
 sourceSets {
 	test {

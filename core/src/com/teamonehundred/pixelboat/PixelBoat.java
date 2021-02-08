@@ -276,7 +276,6 @@ public class PixelBoat extends ApplicationAdapter {
      */
     @Override
     public void dispose() {
-        disposeScenes();
         batch.dispose();
         static_batch.dispose();
         // Added block of code for assessment 2
@@ -285,13 +284,6 @@ public class PixelBoat extends ApplicationAdapter {
         // End of added block of code for assessment 2
         Gdx.app.exit();
         System.exit(0);
-    }
-
-    public void disposeScenes() {
-        for (int i = 0; i < all_scenes.length; i++) {
-            if(all_scenes[i] != null)
-                all_scenes[i].dispose();
-        }
     }
 
     /**

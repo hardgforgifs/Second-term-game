@@ -35,6 +35,12 @@ public class CollisionsTest extends TestCase {
         duck.dispose();
         lane_wall.dispose();
         power_up.dispose();
+
+        test_boat = null;
+        obstacle = null;
+        duck = null;
+        lane_wall = null;
+        power_up = null;
     }
 
     /** id: CollisionsTest01

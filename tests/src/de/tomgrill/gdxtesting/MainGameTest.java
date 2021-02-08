@@ -24,7 +24,10 @@ public class MainGameTest extends TestCase {
     }
 
     @After
-    public void dispose() { testSceneMainGame.dispose(); }
+    public void dispose() {
+        testSceneMainGame.dispose();
+        testSceneMainGame = null;
+    }
 
     /** id: SceneMainGame01
      *  description: tests if boats stop moving when the game is paused

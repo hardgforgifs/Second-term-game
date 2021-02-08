@@ -23,7 +23,10 @@ public class BoatTest extends TestCase {
     }
 
     @After
-    public void dispose() { test_boat.dispose(); }
+    public void dispose() {
+        test_boat.dispose();
+        test_boat  = null;
+    }
 
     /** id: BoatTest01
      *  description: tests if boat's stamina decreases when it accelerates

@@ -34,6 +34,13 @@ public class EffectTest extends TestCase {
         test_stamina.dispose();
         test_invulnerability.dispose();
         test_boat.dispose();
+
+        test_speed = null;
+        test_repair = null;
+        test_maneuverability = null;
+        test_stamina = null;
+        test_invulnerability = null;
+        test_boat = null;
     }
 
 

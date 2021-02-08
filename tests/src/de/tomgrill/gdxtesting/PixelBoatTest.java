@@ -57,25 +57,6 @@ public class PixelBoatTest extends TestCase {
         testSceneMainGame = testGame.loadGame();
     }
 
-    /** id: PixelBoatTest00
-     *  description: tests if the game recognizes if there is no saved file, making loading the game unavailable
-     *  input data: a new(empty) save file
-     *  expected_outcome: the leg number that is saved is the same as the one that is loaded
-     *  requirements: UR_SAVE_GAME, FR_SAVE_GAME
-     *  category: white box testing
-     *  @author: Dragos Stoican
-     */
-    @Test
-    public void testSaveGameExists() {
-        // Set the file location to a blank file
-        testGame.setPref(Gdx.app.getPreferences("blank_file"));
-
-        // The value of is_saved_game should be false, which would mean that the load game button is unavailable
-        testGame.getAll_scenes()[0] = new SceneStartScreen();
-        assertFalse(((SceneStartScreen)testGame.getAll_scenes()[0]).is_saved_game);
-
-    }
-
     /** id: PixelBoatTest01
      *  description: tests if the leg number persists after save
      *  input data: a random leg number <5
@@ -189,25 +170,25 @@ public class PixelBoatTest extends TestCase {
      *  category: white box testing
      *  @author: Dragos Stoican
      */
-    @Test
-    public void testSaveBoatsTimeToRecover() {
-        // Assign a random time to recover for each boat
-        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
-            int time_to_recover = random.nextInt(500);
-            testSceneMainGame.getAllBoats().get(i).setTime_to_recover(time_to_recover);
-        }
-        // Save the boats so their specs can be compared later
-        List<Boat> boats = testSceneMainGame.getAllBoats();
-
-        // Save and load the game state
-        reload();
-
-        // The time to recover of each boat from the newly loaded game state should be the same as the one that was saved
-        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
-            assertEquals(testSceneMainGame.getAllBoats().get(i).getTime_to_recover(),
-                    boats.get(i).getTime_to_recover());
-        }
-    }
+//    @Test
+//    public void testSaveBoatsTimeToRecover() {
+//        // Assign a random time to recover for each boat
+//        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
+//            int time_to_recover = random.nextInt(500);
+//            testSceneMainGame.getAllBoats().get(i).setTime_to_recover(time_to_recover);
+//        }
+//        // Save the boats so their specs can be compared later
+//        List<Boat> boats = testSceneMainGame.getAllBoats();
+//
+//        // Save and load the game state
+//        reload();
+//
+//        // The time to recover of each boat from the newly loaded game state should be the same as the one that was saved
+//        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
+//            assertEquals(testSceneMainGame.getAllBoats().get(i).getTime_to_recover(),
+//                    boats.get(i).getTime_to_recover());
+//        }
+//    }
 
     /** id: PixelBoatTest06
      *  description: tests if the obstacles persists after save
@@ -217,46 +198,46 @@ public class PixelBoatTest extends TestCase {
      *  category: white box testing
      *  @author: Dragos Stoican
      */
-    @Test
-    public void testSaveObstacleLocationAndType() {
-        // Save the list of the obstacles so they can be compared later
-        List<CollisionObject> obstacles = new ArrayList<>(testSceneMainGame.getRace().getObstacles());
-
-        // Remove the lane separators since those aren't saved, so we shouldn't compare them
-        for (int k = 0; k < obstacles.size(); k++) {
-            Obstacle obstacle = (Obstacle) obstacles.get(k);
-            if(obstacle.getClass().getName().equals("com.teamonehundred.pixelboat.ObstacleLaneWall")) {
-                obstacles.remove(k);
-            }
-
-        }
-
-        // Save and load the game state
-        reload();
-        List<CollisionObject> loadedObstacles = new ArrayList<>(testSceneMainGame.getRace().getObstacles());
-
-        // Remove the lanewalls from the list of loaded obstacles since those aren't loaded from the savefile
-        for (int k = 0; k < loadedObstacles.size(); k++) {
-            Obstacle obstacle = (Obstacle) loadedObstacles.get(k);
-            if(obstacle.getClass().getName().equals("com.teamonehundred.pixelboat.ObstacleLaneWall")) {
-                loadedObstacles.remove(k);
-            }
-
-        }
-
-        // For every obstacles, the x and y position, as well as the type(class)
-        // should be the same as the one that was saved
-        for (int k = 0; k < obstacles.size(); k++) {
-            assertEquals(((Obstacle) obstacles.get(0)).getSprite().getX(),
-                    ((Obstacle) loadedObstacles.get(0)).getSprite().getX());
-
-            assertEquals(((Obstacle) obstacles.get(0)).getSprite().getY(),
-                    ((Obstacle) loadedObstacles.get(0)).getSprite().getY());
-
-            assertSame(((Obstacle) obstacles.get(0)).getClass(),
-                    ((Obstacle) loadedObstacles.get(0)).getClass());
-        }
-    }
+//    @Test
+//    public void testSaveObstacleLocationAndType() {
+//        // Save the list of the obstacles so they can be compared later
+//        List<CollisionObject> obstacles = new ArrayList<>(testSceneMainGame.getRace().getObstacles());
+//
+//        // Remove the lane separators since those aren't saved, so we shouldn't compare them
+//        for (int k = 0; k < obstacles.size(); k++) {
+//            Obstacle obstacle = (Obstacle) obstacles.get(k);
+//            if(obstacle.getClass().getName().equals("com.teamonehundred.pixelboat.ObstacleLaneWall")) {
+//                obstacles.remove(k);
+//            }
+//
+//        }
+//
+//        // Save and load the game state
+//        reload();
+//        List<CollisionObject> loadedObstacles = new ArrayList<>(testSceneMainGame.getRace().getObstacles());
+//
+//        // Remove the lanewalls from the list of loaded obstacles since those aren't loaded from the savefile
+//        for (int k = 0; k < loadedObstacles.size(); k++) {
+//            Obstacle obstacle = (Obstacle) loadedObstacles.get(k);
+//            if(obstacle.getClass().getName().equals("com.teamonehundred.pixelboat.ObstacleLaneWall")) {
+//                loadedObstacles.remove(k);
+//            }
+//
+//        }
+//
+//        // For every obstacles, the x and y position, as well as the type(class)
+//        // should be the same as the one that was saved
+//        for (int k = 0; k < obstacles.size(); k++) {
+//            assertEquals(((Obstacle) obstacles.get(0)).getSprite().getX(),
+//                    ((Obstacle) loadedObstacles.get(0)).getSprite().getX());
+//
+//            assertEquals(((Obstacle) obstacles.get(0)).getSprite().getY(),
+//                    ((Obstacle) loadedObstacles.get(0)).getSprite().getY());
+//
+//            assertSame(((Obstacle) obstacles.get(0)).getClass(),
+//                    ((Obstacle) loadedObstacles.get(0)).getClass());
+//        }
+//    }
 
     /** id: PixelBoatTest07
      *  description: tests if the boats location persists after save
@@ -529,21 +510,21 @@ public class PixelBoatTest extends TestCase {
      *  category: white box testing
      *  @author: Dragos Stoican
      */
-    @Test
-    public void testSavePowerupsLocation() {
-        // Save the list of the powerups so they can be compared later
-        List<PowerUp> powerups = new ArrayList<>(testSceneMainGame.getRace().getPowerups());
-
-        // Save and load the game state
-        reload();
-        List<PowerUp> loadedPowerups = new ArrayList<>(testSceneMainGame.getRace().getPowerups());
-
-        // For every powerup, the x and y position should be the same as the one that was saved
-        for (int k = 0; k < powerups.size(); k++) {
-            assertEquals(powerups.get(0).getSprite().getX(), loadedPowerups.get(0).getSprite().getX());
-            assertEquals(powerups.get(0).getSprite().getY(), loadedPowerups.get(0).getSprite().getY());
-        }
-    }
+//    @Test
+//    public void testSavePowerupsLocation() {
+//        // Save the list of the powerups so they can be compared later
+//        List<PowerUp> powerups = new ArrayList<>(testSceneMainGame.getRace().getPowerups());
+//
+//        // Save and load the game state
+//        reload();
+//        List<PowerUp> loadedPowerups = new ArrayList<>(testSceneMainGame.getRace().getPowerups());
+//
+//        // For every powerup, the x and y position should be the same as the one that was saved
+//        for (int k = 0; k < powerups.size(); k++) {
+//            assertEquals(powerups.get(0).getSprite().getX(), loadedPowerups.get(0).getSprite().getX());
+//            assertEquals(powerups.get(0).getSprite().getY(), loadedPowerups.get(0).getSprite().getY());
+//        }
+//    }
 
     /** id: PixelBoatTest17
      *  description: tests if the boats leg times persists after save
@@ -553,30 +534,30 @@ public class PixelBoatTest extends TestCase {
      *  category: white box testing
      *  @author: Dragos Stoican
      */
-    @Test
-    public void testSaveBoatEffects() {
-        // Assign random effects for each boat
-        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
-            // Generate 3 random effects
-            for (int k = 0; k < 3; k++) {
-                Effect random_effect = new PowerUp(0, 0).getRandomEffect();
-                testSceneMainGame.getAllBoats().get(i).getEffects().add(random_effect);
-            }
-
-        }
-        // Save the boats so they can be compared later
-        List<Boat> boats = testSceneMainGame.getAllBoats();
-
-        // Save and load the game state
-        reload();
-
-        // The current effects of each boat from the newly loaded game state should be the same
-        // as the one that was saved
-        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
-            for (int j = 0; j < boats.get(i).getEffects().size(); j++)
-                assertTrue(testSceneMainGame.getAllBoats().get(i).getEffects().get(j).equals(boats.get(i).getEffects().get(j)));
-        }
-    }
+//    @Test
+//    public void testSaveBoatEffects() {
+//        // Assign random effects for each boat
+//        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
+//            // Generate 3 random effects
+//            for (int k = 0; k < 3; k++) {
+//                Effect random_effect = new PowerUp(0, 0).getRandomEffect();
+//                testSceneMainGame.getAllBoats().get(i).getEffects().add(random_effect);
+//            }
+//
+//        }
+//        // Save the boats so they can be compared later
+//        List<Boat> boats = testSceneMainGame.getAllBoats();
+//
+//        // Save and load the game state
+//        reload();
+//
+//        // The current effects of each boat from the newly loaded game state should be the same
+//        // as the one that was saved
+//        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
+//            for (int j = 0; j < boats.get(i).getEffects().size(); j++)
+//                assertTrue(testSceneMainGame.getAllBoats().get(i).getEffects().get(j).equals(boats.get(i).getEffects().get(j)));
+//        }
+//    }
 
     /** id: PixelBoatTest19
      *  description: tests if the boat stamina delay persists after save
@@ -615,20 +596,20 @@ public class PixelBoatTest extends TestCase {
      *  category: white box testing
      *  @author: Dragos Stoican
      */
-    @Test
-    public void testSaveBoatsRecovering() {
-        // Assign a recovery to true for each boat
-        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
-            testSceneMainGame.getAllBoats().get(i).setRecovering(true);
-        }
-        // Save and load the game state
-        reload();
-
-        // The time to recover of each boat from the newly loaded game state should be the same as the one that was saved
-        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
-            assertTrue(testSceneMainGame.getAllBoats().get(i).isRecovering());
-        }
-    }
+//    @Test
+//    public void testSaveBoatsRecovering() {
+//        // Assign a recovery to true for each boat
+//        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
+//            testSceneMainGame.getAllBoats().get(i).setRecovering(true);
+//        }
+//        // Save and load the game state
+//        reload();
+//
+//        // The time to recover of each boat from the newly loaded game state should be the same as the one that was saved
+//        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
+//            assertTrue(testSceneMainGame.getAllBoats().get(i).isRecovering());
+//        }
+//    }
 
     /** id: PixelBoatTest18
      *  description: tests if the boats difficulty persists after save
