@@ -31,7 +31,7 @@ public class BoatRace {
 
     protected int start_y = 200;
 
-    protected int end_y = 40000;
+    protected int end_y = 4000;
 
     protected int lane_width = 400;
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane
@@ -46,6 +46,8 @@ public class BoatRace {
     protected long dnf_time;
 
     protected List<PowerUp> powerups;
+
+    public void setIs_finished(boolean is_finished) { this.is_finished = is_finished; }
 
     public long getTotal_frames() { return total_frames; }
 
@@ -306,6 +308,29 @@ public class BoatRace {
     }
 
     // Added block of code for assessment 2
+    /**
+     * Add extra obstacles based on the leg number, and increase their movement speed
+     */
+    public void setLegDifficulty(int leg_number) {
+        for (int i = 0; i < 20 * leg_number; i++) {
+            obstacles.add(new ObstacleBranch(
+                    (int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
+                    (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
+
+            obstacles.add(new ObstacleFloatingBranch((int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
+                    (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
+
+            obstacles.add(new ObstacleDuck((int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
+                    (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
+        }
+        for (CollisionObject object: obstacles) {
+            Obstacle obstacle = (Obstacle) object;
+            if (!obstacle.getClass().getName().equals("com.teamonehundred.pixelboat.ObstacleLaneWall")) {
+                obstacle.speed += .02f * leg_number;
+            }
+        }
+    }
+
     public void addLaneSeparators() {
         // add the lane separators
         for (int lane = 0; lane <= boats.size(); lane++) {
@@ -348,6 +373,11 @@ public class BoatRace {
         if (label_text.equals("")) {
             label_text = "Time (min:sec) = %02d:%02d";
         }
+        // Added block of text for assessment 2
+        if (b.getSprite().getX() > getLaneCentre(3) + lane_width / 2 ||
+                b.getSprite().getX() < getLaneCentre(3) - lane_width / 2)
+            label_text += "     Penalty added!!!";
+        // End of added block fo text for assessment 2
         font.draw(batch, String.format(label_text, time / 60000, time / 1000 % 60), x, y);
     }
 

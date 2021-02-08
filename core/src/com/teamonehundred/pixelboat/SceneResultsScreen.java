@@ -58,7 +58,7 @@ class SceneResultsScreen implements Scene {
             //Added block of code for assessment 2
             if (leg_no >= 4) {
                 // don't leave if this is the final results screen
-                return scene_id;
+                return 0;
             } else {
                 //otherwise we return to SceneMainGame for another leg
                 return 1;

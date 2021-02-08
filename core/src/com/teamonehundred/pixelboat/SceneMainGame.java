@@ -181,8 +181,11 @@ public class SceneMainGame implements Scene {
                 // only run 3 guaranteed legs
             else if (leg_number < 3) {
                 race = new BoatRace(all_boats.subList(0, boats_per_race));
-
                 leg_number++;
+
+                // Added block of code for assessment 2
+                race.setLegDifficulty(leg_number);
+                // End of added block of code for assessment 2
 
 
                 // generate some "realistic" times for all boats not shown
@@ -204,6 +207,7 @@ public class SceneMainGame implements Scene {
                 });
 
                 race = new BoatRace(all_boats.subList(0, boats_per_race));
+                race.setLegDifficulty(leg_number);
                 last_run = true;
                 leg_number++;
 
@@ -263,7 +267,6 @@ public class SceneMainGame implements Scene {
         for (Boat b : all_boats) {
             // Added block of code for assessment 2
             b.reset();
-            b.increaseDifficulty();
         }
     }
     // End of added block of code for assessment 2

@@ -475,15 +475,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         stamina = 1f;
         time_to_add = 0;
     }
-
-    /**
-     * This method deals with increasing the difficulty of the game as the leg progress
-     */
-    public void increaseDifficulty() {
-        max_speed -= 1;
-        acceleration -= .02f;
-        maneuverability -= 0.02f;
-    }
     // End of added block of code for assessment 2
 
 

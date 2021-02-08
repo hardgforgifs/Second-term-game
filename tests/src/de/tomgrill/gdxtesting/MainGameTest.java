@@ -1,8 +1,6 @@
 package de.tomgrill.gdxtesting;
 
-import com.teamonehundred.pixelboat.Boat;
-import com.teamonehundred.pixelboat.BoatRace;
-import com.teamonehundred.pixelboat.SceneMainGame;
+import com.teamonehundred.pixelboat.*;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Before;
@@ -89,5 +87,55 @@ public class MainGameTest extends TestCase {
         testSceneMainGame.update();
 
         assertTrue(testSceneMainGame.getRace().getTotal_frames() == 0);
+    }
+
+    /** id: SceneMainGame04
+     *  description: tests if the number of obstacles increases after each leg
+     *  input data: new instance of a SceneMainGame
+     *  expected outcome: the number of obstacles should increase after a leg
+     *  requirements:
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testNumberObstacleIncrease() {
+        // Save the current number of obstacles
+        int obstacles_nr = testSceneMainGame.getRace().getObstacles().size();
+
+        // Go to the next leg
+        testSceneMainGame.getRace().setIs_finished(true);
+        testSceneMainGame.update();
+
+        // The number of obstacles is larger than what it used to be
+        assertTrue(testSceneMainGame.getRace().getObstacles().size() > obstacles_nr);
+    }
+
+    /** id: SceneMainGame06
+     *  description: tests if the speed of obstacles increases after each leg
+     *  input data: new instance of a SceneMainGame
+     *  expected outcome: the speed of obstacles should increase after a leg
+     *  requirements:
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testObstacleSpeedIncreases() {
+        // Save the current obstacles
+        List<CollisionObject> obstacles = new ArrayList<>();
+        obstacles.addAll(testSceneMainGame.getRace().getObstacles());
+
+        // Go to the next leg
+        testSceneMainGame.getRace().setIs_finished(true);
+        testSceneMainGame.update();
+
+        // The speed of obstacles is larger than what it used to be
+        for (int i = 0; i < obstacles.size(); i++) {
+            if (obstacles instanceof ObstacleDuck)
+                assertTrue(((ObstacleDuck)obstacles.get(i)).getSpeed() >
+                        ((ObstacleDuck)testSceneMainGame.getRace().getObstacles().get(i)).getSpeed());
+            if (obstacles instanceof ObstacleFloatingBranch)
+                assertTrue(((ObstacleFloatingBranch)obstacles.get(i)).getSpeed() >
+                        ((ObstacleFloatingBranch)testSceneMainGame.getRace().getObstacles().get(i)).getSpeed());
+        }
     }
 }

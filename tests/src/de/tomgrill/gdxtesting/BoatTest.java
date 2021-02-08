@@ -233,30 +233,6 @@ public class BoatTest extends TestCase {
     }
 
     /** id: BoatTest11
-     *  description: tests if the stats of the boat decrease after each leg
-     *  input data: new instance of a PlayerBoat
-     *  expected outcome: the stats of the boat should be lower after finishing a leg
-     *  requirements: UR_BOAT_SPEC
-     *  category: white box testing
-     *  @author: Dragos Stoican
-     */
-    @Test
-    public void testIncreaseDifficultyPerLeg() {
-        // Save the current stats of the boat
-        float max_speed = test_boat.getMax_speed();
-        float maneuverability = test_boat.getManeuverability();
-        float acceleration = test_boat.getAcceleration();
-
-        // resetting a boat should affect
-        test_boat.increaseDifficulty();
-
-        // The stats should be lower after increasing the difficulty
-        assertTrue(max_speed > test_boat.getMax_speed());
-        assertTrue(maneuverability > test_boat.getManeuverability());
-        assertTrue(acceleration > test_boat.getAcceleration());
-    }
-
-    /** id: BoatTest12
      *  description: tests if the player boat is affected by the difficulty slection
      *  input data: new instance of a PlayerBoat
      *  expected outcome: the time to recover of the playerboat should differ based on the difficulty
@@ -279,7 +255,7 @@ public class BoatTest extends TestCase {
 //        assertTrue(recovery0 < recovery1 && recovery1 < recovery2);
 //    }
 
-    /** id: BoatTest13
+    /** id: BoatTest12
      *  description: tests if the boat's getBestTime method returns the right time
      *  input data: new instance of a PlayerBoat, new values for leg times
      *  expected outcome: the ethod should return the greatest leg time
