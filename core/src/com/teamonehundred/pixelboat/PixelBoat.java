@@ -227,6 +227,8 @@ public class PixelBoat extends ApplicationAdapter {
         all_scenes[scene_id].draw(batch);
         if (scene_id == 1) {
             ((SceneMainGame)all_scenes[scene_id]).drawStatic(static_batch);
+        } else if (scene_id == 4) {
+            ((SceneResultsScreen)all_scenes[scene_id]).drawStatic(static_batch);
         }
 
         if (scene_id != new_scene_id) {
