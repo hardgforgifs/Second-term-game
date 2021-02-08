@@ -173,4 +173,10 @@ public class SceneOptionsMenu implements Scene {
         fill_viewport.update(width, height);
         fill_camera.position.set(fill_camera.viewportWidth / 2, fill_camera.viewportHeight / 2, 0);
     }
+
+    // Added block of code for assessment 2
+    public void dispose() {
+
+    }
+    // End of added block of code for assessment 2
 }

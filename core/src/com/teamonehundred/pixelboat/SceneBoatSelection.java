@@ -195,9 +195,9 @@ public class SceneBoatSelection implements Scene {
         for (int i = 0; i < num_specs; i++) {
             // Added block of code for assessment 2
             if (boat_option_sprites[i].getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
-                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && is_new_click) {
-                    boat_option_sprites[i].setTexture(boat_options_hovered[i]);
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && is_new_click) {
                     stats_bg_sprite[i].setTexture(stats_boats[i]);
+                    boat_option_sprites[i].setTexture(boat_options_hovered[i]);
                     spec_id = i;
                     return scene_id;
                 }
@@ -223,7 +223,7 @@ public class SceneBoatSelection implements Scene {
                 is_new_click = false;
                 difficulty_level = 0;
             }
-        } else if (difficulty_level != 1)
+        } else if (difficulty_level != 0)
             easy_sprite.setTexture(easy);
 
         if (normal_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
@@ -314,4 +314,10 @@ public class SceneBoatSelection implements Scene {
     public int getDifficulty_level() {
         return difficulty_level;
     }
+
+    // Added block of code for assessment 2
+    public void dispose() {
+
+    }
+    // End of added block of code for assessment 2
 }

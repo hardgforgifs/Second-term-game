@@ -2,6 +2,7 @@ package de.tomgrill.gdxtesting;
 
 import com.teamonehundred.pixelboat.*;
 import junit.framework.TestCase;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +22,9 @@ public class MainGameTest extends TestCase {
     public void init() {
         testSceneMainGame = new SceneMainGame();
     }
+
+    @After
+    public void dispose() { testSceneMainGame.dispose(); }
 
     /** id: SceneMainGame01
      *  description: tests if boats stop moving when the game is paused

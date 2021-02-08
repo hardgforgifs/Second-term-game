@@ -197,4 +197,10 @@ abstract class GameObject {
         if (animation_regions != null)
             sprite.setRegion(animation_regions[i % animation_regions.length]);
     }
+
+    // Added block of code for assessment 2
+    public void dispose() {
+        texture.dispose();
+    }
+    // End of added block of code for assessment 2
 }

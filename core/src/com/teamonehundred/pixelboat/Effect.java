@@ -53,4 +53,8 @@ public abstract class Effect {
             return false;
         }
     }
+
+    public void dispose() {
+        texture.dispose();
+    }
 }

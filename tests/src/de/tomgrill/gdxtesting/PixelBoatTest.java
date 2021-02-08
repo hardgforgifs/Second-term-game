@@ -3,7 +3,9 @@ package de.tomgrill.gdxtesting;
 import com.badlogic.gdx.Gdx;
 import com.teamonehundred.pixelboat.*;
 import junit.framework.TestCase;
+import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
@@ -14,9 +16,16 @@ import java.util.Random;
 
 @RunWith(GdxTestRunner.class)
 public class PixelBoatTest extends TestCase {
-    PixelBoat testGame;
+    static PixelBoat testGame;
     SceneMainGame testSceneMainGame;
-    Random random;
+    static Random random;
+
+    @BeforeClass
+    public static void initialise() {
+        testGame = new PixelBoat();
+        testGame.setPref(Gdx.app.getPreferences("saveTest"));
+        random = new Random();
+    }
 
     /**
      * This method is called before each test to initialize a new game to be tested
@@ -24,25 +33,12 @@ public class PixelBoatTest extends TestCase {
     @Before
     public void init () {
         // Create a new instance of the game
-        testGame = createNewGame();
-        testSceneMainGame = (SceneMainGame) testGame.getAll_scenes()[1];
-        random = new Random();
+        testSceneMainGame = new SceneMainGame();
     }
 
-    /**
-     * This method is required to create a new instance of PixelBoat that we can then modify use to save and load
-     * data into
-     * @return new instance of PixelBoat
-     */
-    private PixelBoat createNewGame() {
-        PixelBoat testGame = new PixelBoat();
-        testGame.setAll_scenes(new Scene[7]);
-        testGame.setPref(Gdx.app.getPreferences("saveTest"));
-        testGame.getAll_scenes()[1] = new SceneMainGame();
-        testGame.getAll_scenes()[5] = new SceneBoatSelection();
-
-
-        return testGame;
+    @After
+    public void dispose() {
+        testSceneMainGame.dispose();
     }
 
     /**
@@ -54,8 +50,8 @@ public class PixelBoatTest extends TestCase {
         testGame.saveGame(testSceneMainGame);
 
         // Reset the game
-        testGame = createNewGame();
-        testSceneMainGame = (SceneMainGame) testGame.getAll_scenes()[1];
+        dispose();
+        testSceneMainGame = new SceneMainGame();
 
         // Load the game state that was saved
         testSceneMainGame = testGame.loadGame();
@@ -155,6 +151,62 @@ public class PixelBoatTest extends TestCase {
         float loadedCameraX = testSceneMainGame.getPlayer().getCamera().position.x;
         float loadedCameraY = testSceneMainGame.getPlayer().getCamera().position.y;
         assertTrue(loadedCameraX == cameraX && loadedCameraY == cameraY);
+    }
+
+    /** id: PixelBoatTest04
+     *  description: tests if the boat durability persists after save
+     *  input data: a random durability value to give to each boat
+     *  expected outcome: the durability that is saved is the same as the one that is loaded
+     *  requirements: UR_SAVE_GAME, FR_SAVE_GAME
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testSaveBoatsDurability() {
+        // Assign a random durability for each boat
+        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
+            float durability = random.nextFloat();
+            testSceneMainGame.getAllBoats().get(i).setDurability(durability);
+        }
+        // Save the boats so their specs can be compared later
+        List<Boat> boats = testSceneMainGame.getAllBoats();
+
+        // Save and load the game state
+        reload();
+
+        // The durability of each boat from the newly loaded game state should be the same as the one that was saved
+        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
+            assertEquals(testSceneMainGame.getAllBoats().get(i).getDurability(),
+                    boats.get(i).getDurability());
+        }
+    }
+
+    /** id: PixelBoatTest05
+     *  description: tests if the boat time to recover persists after save
+     *  input data: a random time to recover value to give to each boat
+     *  expected outcome: the time to recover that is saved is the same as the one that is loaded
+     *  requirements: UR_SAVE_GAME, FR_SAVE_GAME
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testSaveBoatsTimeToRecover() {
+        // Assign a random time to recover for each boat
+        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
+            int time_to_recover = random.nextInt(500);
+            testSceneMainGame.getAllBoats().get(i).setTime_to_recover(time_to_recover);
+        }
+        // Save the boats so their specs can be compared later
+        List<Boat> boats = testSceneMainGame.getAllBoats();
+
+        // Save and load the game state
+        reload();
+
+        // The time to recover of each boat from the newly loaded game state should be the same as the one that was saved
+        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
+            assertEquals(testSceneMainGame.getAllBoats().get(i).getTime_to_recover(),
+                    boats.get(i).getTime_to_recover());
+        }
     }
 
     /** id: PixelBoatTest06
@@ -526,6 +578,58 @@ public class PixelBoatTest extends TestCase {
         }
     }
 
+    /** id: PixelBoatTest19
+     *  description: tests if the boat stamina delay persists after save
+     *  input data: a random stamina delay value to give to each boat
+     *  expected outcome: the stamina delay that is saved is the same as the one that is loaded
+     *  requirements: UR_SAVE_GAME, FR_SAVE_GAME
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testSaveBoatsStaminaDelay() {
+        // Assign a random stamina delay for each boat
+        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
+            int stamina_delay = random.nextInt(500);
+            testSceneMainGame.getAllBoats().get(i).setStamina_delay(stamina_delay);
+        }
+
+        // Save the boats so their specs can be compared later
+        List<Boat> boats = testSceneMainGame.getAllBoats();
+
+        // Save and load the game state
+        reload();
+
+        // The time to recover of each boat from the newly loaded game state should be the same as the one that was saved
+        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
+            assertEquals(testSceneMainGame.getAllBoats().get(i).getStamina_delay(),
+                    boats.get(i).getStamina_delay());
+        }
+    }
+
+    /** id: PixelBoatTest20
+     *  description: tests if the boat recovery status delay persists after save
+     *  input data: recovery status is set to true, the non-default value
+     *  expected outcome: the recovery of all boats should be true after loading
+     *  requirements: UR_SAVE_GAME, FR_SAVE_GAME
+     *  category: white box testing
+     *  @author: Dragos Stoican
+     */
+    @Test
+    public void testSaveBoatsRecovering() {
+        // Assign a recovery to true for each boat
+        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
+            testSceneMainGame.getAllBoats().get(i).setRecovering(true);
+        }
+        // Save and load the game state
+        reload();
+
+        // The time to recover of each boat from the newly loaded game state should be the same as the one that was saved
+        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
+            assertTrue(testSceneMainGame.getAllBoats().get(i).isRecovering());
+        }
+    }
+
     /** id: PixelBoatTest18
      *  description: tests if the boats difficulty persists after save
      *  input data: random leg times for each boat
@@ -534,22 +638,17 @@ public class PixelBoatTest extends TestCase {
      *  category: white box testing
      *  @author: Dragos Stoican
      */
-//    @Test
-//    public void testSaveDifficulty() {
-//        // Assign a difficulty value for each boat
-//        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
-//            int difficulty = random.nextInt(3);
-////            testSceneMainGame.getPlayer().ge
-//        }
-//        // Save the boats so they can be compared later
-//        List<Boat> boats = testSceneMainGame.getAllBoats();
-//
-//        // Save and load the game state
-//        reload();
-//
-//        // The frames raced of each boat from the newly loaded game state should be the same as the one that was saved
-//        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
-//            assertEquals(testSceneMainGame.getAllBoats().get(i).getFramesRaced(), boats.get(i).getFramesRaced());
-//        }
-//    }
+    @Test
+    public void testSaveDifficulty() {
+        // Assign a difficulty value for the player boat boat
+        int difficulty = random.nextInt(3);
+        testSceneMainGame.getPlayer().setDifficulty(difficulty);
+
+        // Save and load the game state
+        reload();
+
+        // The difficulty of the player boat from the newly loaded game state
+        // should be the same as the one that was saved
+        assertEquals(testSceneMainGame.getPlayer().getDifficulty(), difficulty);
+    }
 }

@@ -2,6 +2,7 @@ package de.tomgrill.gdxtesting;
 
 import com.teamonehundred.pixelboat.*;
 import junit.framework.TestCase;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +24,16 @@ public class EffectTest extends TestCase {
         test_stamina = new StaminaEffect();
         test_invulnerability = new InvulnerabilityEffect();
         test_boat = new PlayerBoat(0, 0);
+    }
+
+    @After
+    public void dispose() {
+        test_speed.dispose();
+        test_repair.dispose();
+        test_maneuverability.dispose();
+        test_stamina.dispose();
+        test_invulnerability.dispose();
+        test_boat.dispose();
     }
 
 

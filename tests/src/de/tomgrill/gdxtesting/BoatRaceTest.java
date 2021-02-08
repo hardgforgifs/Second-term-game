@@ -3,6 +3,7 @@ package de.tomgrill.gdxtesting;
 
 import com.teamonehundred.pixelboat.*;
 import junit.framework.TestCase;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +22,13 @@ public class BoatRaceTest extends TestCase {
     @Before
     public void init() {
         testSceneMainGame = new SceneMainGame();
-        testRace = new BoatRace(testSceneMainGame.getAllBoats());
+        testRace = testSceneMainGame.getRace();
+    }
+
+    @After
+    public void dispose() {
+        testSceneMainGame.dispose();
+        testRace.dispose();
     }
 
 

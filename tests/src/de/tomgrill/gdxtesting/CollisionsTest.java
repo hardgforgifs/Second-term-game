@@ -3,6 +3,7 @@ package de.tomgrill.gdxtesting;
 import com.badlogic.gdx.graphics.Texture;
 import com.teamonehundred.pixelboat.*;
 import junit.framework.TestCase;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +26,15 @@ public class CollisionsTest extends TestCase {
         duck = new ObstacleDuck(0, 0);
         lane_wall = new ObstacleLaneWall(0, 0);
         power_up = new PowerUp(0, 0 );
+    }
+
+    @After
+    public void dispose() {
+        test_boat.dispose();
+        obstacle.dispose();
+        duck.dispose();
+        lane_wall.dispose();
+        power_up.dispose();
     }
 
     /** id: CollisionsTest01

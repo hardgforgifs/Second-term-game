@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.teamonehundred.pixelboat.Boat;
 import com.teamonehundred.pixelboat.PlayerBoat;
 import junit.framework.TestCase;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +21,9 @@ public class BoatTest extends TestCase {
     public void init() {
         test_boat = new PlayerBoat(0, 0);
     }
+
+    @After
+    public void dispose() { test_boat.dispose(); }
 
     /** id: BoatTest01
      *  description: tests if boat's stamina decreases when it accelerates

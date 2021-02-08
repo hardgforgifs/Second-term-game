@@ -265,45 +265,17 @@ public class SceneMainGame implements Scene {
     // Added block of code for assessment 2
     public void resetBoats() {
         for (Boat b : all_boats) {
-            // Added block of code for assessment 2
             b.reset();
         }
     }
-    // End of added block of code for assessment 2
 
-
-    /**
-     * RaceThread class for Multi-threading.
-     *
-     * @author William Walton
-     * JavaDoc by Umer Fakher
-     */
-    private class RaceThread extends Thread {
-        List<Boat> boats;
-        BoatRace race;
-
-        RaceThread(List<Boat> boats) {
-            this.boats = new ArrayList<>();
-            this.boats.addAll(boats);
-            race = new BoatRace(this.boats);
-        }
-
-        /**
-         * Main run method for RaceThread class.
-         * <p>
-         * Runs race until it has finished.
-         *
-         * @author William Walton
-         */
-        public void run() {
-            while (!race.isFinished()) race.runStep();
-
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
+    public void dispose() {
+        bg.dispose();
+        save_quit_button.dispose();
+        save_quit_hovered.dispose();
+        resume_button.dispose();
+        resume_hovered.dispose();
+        race.dispose();
     }
+    // End of added block of code for assessment 2
 }

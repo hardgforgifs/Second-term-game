@@ -25,7 +25,6 @@ public class BoatRace {
     protected Texture start_banner;
     protected Texture bleachers_l;
     protected Texture bleachers_r;
-    protected Texture waiting;
 
     protected List<CollisionObject> obstacles;
 
@@ -44,6 +43,8 @@ public class BoatRace {
 
     // Added block of code for assessment 2
     protected long dnf_time;
+
+    protected Texture waiting;
 
     protected List<PowerUp> powerups;
 
@@ -402,4 +403,14 @@ public class BoatRace {
 
         }
     }
+
+    // Added block of code for assessment 2
+    public void dispose() {
+        lane_sep.dispose();
+        start_banner.dispose();
+        bleachers_l.dispose();
+        bleachers_r.dispose();
+        waiting.dispose();
+    }
+    // End of added block of code for assessment 2
 }

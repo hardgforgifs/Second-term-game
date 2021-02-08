@@ -45,7 +45,7 @@ public class PixelBoat extends ApplicationAdapter {
         // Mark that a save exists in preferences
         pref.putString("save", "save exists");
         pref.putInteger("leg_number", game_state.leg_number);
-        pref.putInteger("player_difficulty", ((SceneBoatSelection)all_scenes[5]).getDifficulty_level());
+        pref.putInteger("player difficulty", game_state.getPlayer().getDifficulty());
         pref.putFloat("camera_x", game_state.player.getCamera().position.x);
         pref.putFloat("camera_y", game_state.player.getCamera().position.y);
         for (int k = 0; k < game_state.race.obstacles.size(); k++) {
@@ -132,7 +132,7 @@ public class PixelBoat extends ApplicationAdapter {
             x_powerup = pref.getFloat("powerup" + k + " x", -1);
         }
 
-//        int player_diff = pref.getInteger("player_difficulty");
+        game_state.getPlayer().setDifficulty(pref.getInteger("player difficulty"));
 
         float camera_x = pref.getFloat("camera_x");
         float camera_y = pref.getFloat("camera_y");
@@ -276,13 +276,22 @@ public class PixelBoat extends ApplicationAdapter {
      */
     @Override
     public void dispose() {
+        disposeScenes();
         batch.dispose();
+        static_batch.dispose();
         // Added block of code for assessment 2
         // Using the flush method assures the persistence of the save file
         pref.flush();
         // End of added block of code for assessment 2
         Gdx.app.exit();
         System.exit(0);
+    }
+
+    public void disposeScenes() {
+        for (int i = 0; i < all_scenes.length; i++) {
+            if(all_scenes[i] != null)
+                all_scenes[i].dispose();
+        }
     }
 
     /**

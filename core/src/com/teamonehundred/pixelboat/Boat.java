@@ -48,13 +48,19 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
     // Added block of code for assessment 2
     protected int difficulty;
-
     protected int spec_id;
+
     protected boolean recovering = false;
-
     protected int stamina_delay = 0;
-
     protected int time_to_recover= 100;
+
+    public int getDifficulty() { return difficulty; }
+
+    public boolean isRecovering() { return recovering; }
+
+    public void setRecovering(boolean recovering) { this.recovering = recovering; }
+
+    public void setTime_to_recover(int time_to_recover) { this.time_to_recover = time_to_recover; }
 
     public void setDifficulty(int difficulty) { this.difficulty = difficulty; }
 
@@ -435,7 +441,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
             case 2:
                 durability_per_hit = .1f;
                 max_speed = 18;
-                acceleration = .1f;
+                acceleration = .15f;
                 maneuverability = 1.5f;
                 break;
             case 3:

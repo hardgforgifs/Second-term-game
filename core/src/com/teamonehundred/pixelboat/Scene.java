@@ -30,4 +30,6 @@ public interface Scene {
      * @param height Integer height to be resized to
      */
     void resize(int width, int height);
+
+    void dispose();
 }

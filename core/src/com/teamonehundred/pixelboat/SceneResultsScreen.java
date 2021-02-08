@@ -165,4 +165,10 @@ class SceneResultsScreen implements Scene {
     public void setBoats(List<Boat> boats) {
         this.boats = boats;
     }
+
+    // Added block of code for assessment 2
+    public void dispose() {
+
+    }
+    // End of added block of code for assessment 2
 }
