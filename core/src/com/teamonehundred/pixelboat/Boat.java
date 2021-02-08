@@ -1,6 +1,7 @@
 package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -367,6 +368,12 @@ public abstract class Boat extends MovableObject implements CollisionObject {
             return;
         if (this.getBounds().isColliding(object.getBounds())) {
             // Added block of code for assessment 2
+            if (this instanceof PlayerBoat) {
+                final Preferences prefs = Gdx.app.getPreferences("setting\\gamesetting");
+                float soundvolume = prefs.getFloat("SoundVolume",0.5f);
+                float mastervolume = prefs.getFloat("MasterVolume",0.5f);
+                collisionsound.play(soundvolume*mastervolume);
+            }
             if (object instanceof PowerUp) {
                 effects.add(((PowerUp) object).getRandomEffect());
             }
