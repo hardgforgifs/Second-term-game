@@ -76,7 +76,7 @@ public class SceneSettings implements Scene{
     	
     	this.musics = music;
     	
-    	final Preferences prefs = Gdx.app.getPreferences("setting\\gamesetting");
+    	final Preferences prefs = Gdx.app.getPreferences("setting/gamesetting");
 		float mastervolume = prefs.getFloat("MasterVolume", 0.5f);
     	float musicvolume = prefs.getFloat("MusicVolume",0.5f);
     	float soundvolume = prefs.getFloat("SoundVolume",0.5f);
@@ -85,7 +85,7 @@ public class SceneSettings implements Scene{
 		Gdx.input.setInputProcessor(stage);
 		
 		Label.LabelStyle style = new Label.LabelStyle();
-		bitmapfont = new BitmapFont(Gdx.files.internal("setting\\setting.fnt"));
+		bitmapfont = new BitmapFont(Gdx.files.internal("setting/setting.fnt"));
 		
 		style.font = bitmapfont;
 		style.fontColor = new Color(0,0,0,1);
@@ -101,13 +101,13 @@ public class SceneSettings implements Scene{
 		label_sound_vol.setPosition(100,80);
 		label_sound_vol.setFontScale(0.6f);
 		
-		background_img = new Texture(Gdx.files.internal("setting\\bg_settings.png"));
+		background_img = new Texture(Gdx.files.internal("setting/bg_settings.png"));
 		bg_img = new Image(new TextureRegion(background_img));
 		bg_img.setSize(1280, 720);
 		bg_img.setZIndex(0);
 		
-		back = new Texture(Gdx.files.internal("setting\\back_clicked.png"));
-		back_clicked = new Texture(Gdx.files.internal("setting\\back.png"));
+		back = new Texture(Gdx.files.internal("setting/back_clicked.png"));
+		back_clicked = new Texture(Gdx.files.internal("setting/back.png"));
         Button.ButtonStyle style_1 = new Button.ButtonStyle();
 		style_1.up = new TextureRegionDrawable(new TextureRegion(back));
 		style_1.down = new TextureRegionDrawable(new TextureRegion(back_clicked));
@@ -121,8 +121,8 @@ public class SceneSettings implements Scene{
 		});
 		
 		
-		skin = new Skin(Gdx.files.internal("setting\\setting_slider/slider.json"));
-		atlas = new TextureAtlas("setting\\setting_slider/slider.atlas");
+		skin = new Skin(Gdx.files.internal("setting/setting_slider/slider.json"));
+		atlas = new TextureAtlas("setting/setting_slider/slider.atlas");
 		master_slider = new Slider(0 ,100 ,1 ,false ,skin);
 		master_slider.setSize(554,19);
 		master_slider.setPosition(350, 500);
