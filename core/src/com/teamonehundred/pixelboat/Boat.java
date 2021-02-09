@@ -516,13 +516,16 @@ public abstract class Boat extends MovableObject implements CollisionObject {
      * @return long time in milliseconds.
      */
     public long getBestTime() {
-        long current_best = -1;
+        long current_best = 500000;
+        System.out.println(name);
 
         for (long time : leg_times) {
-            if (time > current_best)
+            System.out.print(time);
+            if (time < current_best) {
+                System.out.println("swap");
                 current_best = time;
+            }
         }
-
         return current_best;
     }
 }

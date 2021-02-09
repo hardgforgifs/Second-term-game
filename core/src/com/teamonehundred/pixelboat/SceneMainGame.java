@@ -209,6 +209,7 @@ public class SceneMainGame implements Scene {
                 return 4;
 
             } else if (leg_number == 3) {
+                /*
                 // sort boats based on best time
                 Collections.sort(all_boats, new Comparator<Boat>() {
                     @Override
@@ -216,6 +217,8 @@ public class SceneMainGame implements Scene {
                         return (int) (b1.getBestTime() - b2.getBestTime());
                     }
                 });
+
+                 */
 
                 race = new BoatRace(all_boats.subList(0, boats_per_race));
                 race.setLegDifficulty(leg_number);

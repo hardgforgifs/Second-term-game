@@ -7,6 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 /**
  * Main class for the PixelBoat game.
  * <p>
@@ -284,21 +289,44 @@ public class PixelBoat extends ApplicationAdapter {
         // run the current scene
         int new_scene_id = all_scenes[scene_id].update();
         all_scenes[scene_id].draw(batch);
+        // Added block of code for assessment 2
         if (scene_id == 1) {
             ((SceneMainGame)all_scenes[scene_id]).drawStatic(static_batch);
         } else if (scene_id == 4) {
             ((SceneResultsScreen)all_scenes[scene_id]).drawStatic(static_batch);
         }
+        // End of added block of code for assessment 2
 
         if (scene_id != new_scene_id) {
             // special case updates
             if (new_scene_id == 4) {
-                ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
+                // Added block of code for assessment 2
+                int current_leg = ((SceneMainGame) all_scenes[1]).getLeg_number();
+                List<Boat> copy_boats = new ArrayList<>();
+                copy_boats.addAll(((SceneMainGame) all_scenes[1]).getAllBoats());
+                //Sorts boats based on their last leg or their best time, depending on the leg number
+                if (current_leg >= 4) {
+                    Collections.sort(copy_boats, new Comparator<Boat>() {
+                        @Override
+                        public int compare(Boat b1, Boat b2) {
+                            return (int) (b1.getBestTime() - b2.getBestTime());
+                        }
+                    });
+                } else {
+                    Collections.sort(copy_boats, new Comparator<Boat>() {
+                        @Override
+                        public int compare(Boat b1, Boat b2) {
+                            return (int) ((b1.getLegTimes().get(b1.getLegTimes().size() - 1)) - (b2.getLegTimes().get(b2.getLegTimes().size() - 1)));
+                        }
+                    });
+                }
+                // End of added block of code for assessment 2
+                ((SceneResultsScreen) all_scenes[4]).setBoats(copy_boats);
                 // Added block of code for assessment 2
                 stopMusic();
                 setMusicVol(resultmusic);
                 resultmusic.play();
-                ((SceneResultsScreen) all_scenes[4]).leg_no = ((SceneMainGame) all_scenes[1]).getLeg_number();
+                ((SceneResultsScreen) all_scenes[4]).leg_no = current_leg;
                 // End of added block of code for assessment 2
             }
 

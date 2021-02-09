@@ -116,8 +116,6 @@ class SceneResultsScreen implements Scene {
         batch.draw(bg, -10000, -2000, 0, 0, 1000000, 10000000);
         //End of added block of code for assessment 2
 
-
-
         // End a sprite batch drawing
         batch.end();
 
