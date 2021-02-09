@@ -164,7 +164,7 @@ class SceneResultsScreen implements Scene {
                 // Writes out the details of all the boats into the table
                 font.draw(batch, boats.get(top_boats).getName(), 5 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
                 String ttf = "%02d:%02d";
-                long total_time = boats.get(top_boats).getCalcTime();
+                long total_time = boats.get(top_boats).getBestTime();
                 font.draw(batch, String.format(ttf, total_time / 60000, total_time / 1000 % 60), 8 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
 
             }
