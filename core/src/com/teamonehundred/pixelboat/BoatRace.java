@@ -142,7 +142,7 @@ public class BoatRace {
     /**
      * Returns the center of te lane at index boat_index
      * @param boat_index index the a lane
-     * @return position of the cneter of the lane
+     * @return position of the center of the lane
      */
     private int getLaneCentre(int boat_index) {
         int race_width = boats.size() * lane_width;
@@ -162,7 +162,7 @@ public class BoatRace {
      * @author Samuel Plane
      */
     public void runStep() {
-        // dnf after 2 mins
+        // Any boat not finished after 2 minutes is automatically finished for the sake of pacing
         if (total_frames++ > dnf_time) {
             is_finished = true;
             for (Boat b : boats) {
@@ -170,12 +170,12 @@ public class BoatRace {
                     b.setStartTime(0);
                     b.setEndTime((long) (b.getStartTime(false) + ((1000.0 / 60.0) * b.getFramesRaced())));
                     b.setLegTime();
-
                     b.setHasFinishedLeg(true);
                 }
             }
         }
 
+        // Updates the positions of the collidable objects and resets their animation as necessary
         for (CollisionObject c : obstacles) {
             if (c instanceof Obstacle)
                 ((Obstacle) c).updatePosition();
@@ -195,7 +195,8 @@ public class BoatRace {
                 boat.setHasFinishedLeg(true);
             }
             // Added block of code for assessment 2
-            // Check if any boats have broken
+            // Check if any boats have broken, if so they are considered to be done with the leg
+            // and given a time penalty of 5 mins
             else if (!boat.hasFinishedLeg() && boat.durability <= 0) {
                 boat.setStartTime(0);
                 boat.setEndTime(300000);
@@ -203,7 +204,7 @@ public class BoatRace {
                 boat.setHasFinishedLeg(true);
             }
             // End of added block of code for assessment 2
-            // check if any boats have started
+            // check if any boats have started and set the start time accordingly
             else if (!boat.hasStartedLeg() && boat.getSprite().getY() > start_y) {
                 boat.setStartTime(System.currentTimeMillis());
                 boat.setHasStartedLeg(true);
@@ -309,12 +310,16 @@ public class BoatRace {
         int race_width = boats.size() * lane_width;
         Texture temp = new Texture("object_placeholder.png");
 
+        // Displays the bleachers at each side of the map from the start to the end of the race
         for (int i = -1000; i < end_y + 1000; i += 800)
             batch.draw(bleachers_r, race_width / 2 + 400, i, 400, 800);
         for (int i = -1000; i < end_y + 1000; i += 800)
             batch.draw(bleachers_l, -race_width / 2 - 800, i, 400, 800);
+
+        //Draws the start line across the width of the race area
         for (int i = 0; i < boats.size(); i++)
             batch.draw(start_banner, (getLaneCentre(i)) - (lane_width / 2), start_y, lane_width, lane_width / 2);
+        //Draws the finish line at the end of the race
         batch.draw(temp, -race_width / 2, end_y, race_width, 5);
 
         temp.dispose();
@@ -327,6 +332,8 @@ public class BoatRace {
      * @author Dragos Stoican
      */
     public void setLegDifficulty(int leg_number) {
+
+        // Adds additional obstacles of each kind multiple times based on the leg number
         for (int i = 0; i < 20 * leg_number; i++) {
             obstacles.add(new ObstacleBranch(
                     (int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
@@ -338,6 +345,8 @@ public class BoatRace {
             obstacles.add(new ObstacleDuck((int) (-(lane_width * boats.size() / 2) + Math.random() * (lane_width * boats.size())),
                     (int) (start_y + 50 + Math.random() * (end_y - start_y - 50))));
         }
+
+        // Increases the speed at which collidable objects move, with the exception of the lane walls
         for (CollisionObject object: obstacles) {
             Obstacle obstacle = (Obstacle) object;
             if (!obstacle.getClass().getName().equals("com.teamonehundred.pixelboat.ObstacleLaneWall")) {
@@ -381,8 +390,6 @@ public class BoatRace {
             // End of added block fo text for assessment 2
         }
 
-
-
         //Displays the graphic telling the player other boats are finishing once they have finished
         if (player_boat.hasFinishedLeg())
             batch.draw(waiting, (float) Gdx.graphics.getWidth() / 3, 0.5f * (float) Gdx.graphics.getHeight(), 500, 100);
@@ -404,9 +411,11 @@ public class BoatRace {
      */
     public void drawTimeDisplay(SpriteBatch batch, String label_text, long time, float x, float y) {
         // Modified block of code for assessment 2
+        // Ensures the penalty warning is not lost
         if (label_text.equals("     Penalty added!!!") || label_text.equals("")) {
             label_text = "Time (min:sec) = %02d:%02d" + label_text;
         }
+        // Displays the current time the player has taken on the leg
         font.draw(batch, String.format(label_text, time / 60000, time / 1000 % 60), x, y);
         // End of modified block of code for assessment 2
     }

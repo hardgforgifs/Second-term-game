@@ -125,18 +125,21 @@ public class PlayerBoat extends Boat {
      */
     @Override
     public void updatePosition() {
+        // Accelerates boat if 'w' key is pressed
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             this.accelerate();
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            // nothing atm
+            // Nothing implemented here
         }
 
+        // Turns boat based on input 'a' & 'd' keys
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             this.turn(1);
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             this.turn(-1);
         }
 
+        // Used to determine how the boat has moved, allowing camera to accurately follow
         float old_x = sprite.getX();
         float old_y = sprite.getY();
 
@@ -158,7 +161,7 @@ public class PlayerBoat extends Boat {
      * @return List of Sprites
      */
     public List<Sprite> getUISprites() {
-        updateUISprites();  // TODO: probably move this to only when they change rather than every frame
+        updateUISprites();
 
         List<Sprite> ret = new ArrayList<Sprite>();
         ret.add(stamina_bar);
@@ -197,15 +200,20 @@ public class PlayerBoat extends Boat {
      * based on the PlayerBoat attributes as they change.
      */
     private void updateUISprites() {
+
+        //Moves UI bars along with the boat
         stamina_bar.setPosition(-ui_bar_width / 2 + sprite.getX() + sprite.getWidth() / 2, -50 + sprite.getY());
         durability_bar.setPosition(-ui_bar_width / 2 + sprite.getX() + sprite.getWidth() / 2, -35 + sprite.getY());
 
+        // If the player is recovering, then use an orange texture to convey this to the user, otherwise
+        // use the default yellow
         if (recovering == true) {
             stamina_bar.setTexture(recovering_texture);
         } else {
             stamina_bar.setTexture(stamina_texture);
         }
 
+        // Changes the size of the bars to reflect the remaining durability and stamina
         stamina_bar.setSize((int) (ui_bar_width * stamina), 10);
         durability_bar.setSize((int) (ui_bar_width * durability), 10);
     }

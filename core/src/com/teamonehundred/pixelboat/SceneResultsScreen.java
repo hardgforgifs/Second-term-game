@@ -61,6 +61,7 @@ class SceneResultsScreen implements Scene {
      *
      * @return returns an integer which is either the scene_id or 1
      * @author Umer Fakher
+     * @author Samuel Plane
      */
     public int update() {
         //Testing code for outputting results after a leg to terminal
@@ -86,9 +87,8 @@ class SceneResultsScreen implements Scene {
     /**
      * Draw function for SceneResultsScreen.
      * <p>
-     * Draws ResultsScreen which includes the leg time for all boats (AI and player boats) that have just completed a
-     * leg. This table will wrap according to how many boat times need to be displayed. Using label template format it
-     * draws the name of boat, time of just completed leg, race penalty added for each boat that finished the leg.
+     *
+     * Displays the background texture to maintain the aesthetic already established in the game
      *
      * @param batch SpriteBatch used for drawing to screen.
      * @author Umer Fakher
@@ -98,16 +98,6 @@ class SceneResultsScreen implements Scene {
         //Initialise colouring
         Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        // todo draw using this camera
-        //batch.setProjectionMatrix(fill_camera.combined);
-
-        // Find player's boat in list of boats in order to use x and y axis
-        PlayerBoat thePlayerBoat = null;
-        for (Boat b : boats) {
-            if (b instanceof PlayerBoat) {
-                thePlayerBoat = (PlayerBoat) b;
-            }
-        }
 
         // Begin a sprite batch drawing
         batch.begin();
@@ -124,32 +114,27 @@ class SceneResultsScreen implements Scene {
     //Added block of code for assessment 2
 
     /**
-     * Draws on a static batch that is not projected onto the camera
+     * Draws the results table and the necessary times onto a static batch
+     * that is not projected onto the camera. The previous leg times are shown unless the final leg has been
+     * completed, in which case the best times of each boat are displayed.
+     *
      * @param batch batch to draw on
      * @author Samuel Plane
      */
     public void drawStatic(SpriteBatch batch) {
         batch.begin();
 
-        // Draw text instructions for the timing format that will be displayed
-        font.setColor(Color.YELLOW);
-        font.draw(batch, "BoatName | Race Time in ms | Race penalty in ms",
-                fill_camera.viewportWidth / 3, 14 * (fill_camera.viewportHeight / 16));
-
         int column_num;
         int column_idx;
-        String label_template;
 
         //Writes the best times to the screen if it's the final leg
         if (leg_no >= 4) {
-            // Draw text instructions at the top of the screen
+            // Explains to the user that they are viewing the day's best times
             font.setColor(Color.ORANGE);
             font.draw(batch, "Best times of the day! Hope you enjoyed your time at the races!",
                     fill_camera.viewportWidth / 3, 15 * (fill_camera.viewportHeight / 16));
 
             batch.draw(results_table, fill_camera.viewportWidth / 3, fill_camera.viewportHeight / 8, 500, 450);
-
-            label_template = "%s | %d ms | %d ms";//"A boat (%s) ended race with time (ms) %d (%d ms was penalty)";
 
             // Initialise values for drawing times as table in order to allow dynamic wrapping
             column_num = -1;
@@ -162,6 +147,7 @@ class SceneResultsScreen implements Scene {
                 }
 
                 // Writes out the details of all the boats into the table
+                // In this instance, we just display the total time, rather than displaying
                 font.draw(batch, boats.get(top_boats).getName(), 5 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
                 String ttf = "%02d:%02d";
                 long total_time = boats.get(top_boats).getBestTime();
@@ -169,15 +155,15 @@ class SceneResultsScreen implements Scene {
 
             }
 
-        } else {
+        } //Otherwise show all the times from the previous leg
+        else {
+
             // Draw text instructions at the top of the screen
             font.setColor(Color.ORANGE);
             font.draw(batch, "Results Screen! Click on the screen to skip and start the next leg!",
                     fill_camera.viewportWidth / 3, 15 * (fill_camera.viewportHeight / 16));
 
             batch.draw(results_table, fill_camera.viewportWidth / 3, fill_camera.viewportHeight / 8, 500, 450);
-
-            label_template = "%s | %d ms | %d ms";//"A boat (%s) ended race with time (ms) %d (%d ms was penalty)";
 
             // Initialise values for drawing times as table in order to allow dynamic wrapping
             column_num = -1;
