@@ -185,27 +185,12 @@ public class SceneMainGame implements Scene {
                 race.setLegDifficulty(leg_number);
                 // End of added block of code for assessment 2
 
-
                 // generate some "realistic" times for all boats not shown
                 for (int i = boats_per_race; i < all_boats.size(); i++) {
                     all_boats.get(i).setStartTime(0);
                     all_boats.get(i).setEndTime((long) (65000 + 10000 * Math.random()));
                     all_boats.get(i).setLegTime();
                 }
-
-                // Added block of code for assessment 2
-                // sort boats based on best time
-                /*
-                Collections.sort(all_boats, new Comparator<Boat>() {
-                    @Override
-                    public int compare(Boat b1, Boat b2) {
-                        return (int) (b1.getBestTime() - b2.getBestTime());
-                    }
-                });
-
-                 */
-                // End of added block of code for assessment 2
-
 
                 return 4;
 
