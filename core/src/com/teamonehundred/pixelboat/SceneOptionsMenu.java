@@ -43,35 +43,6 @@ public class SceneOptionsMenu implements Scene{
     private Texture back_clicked;
     private int scene_id = 2;
 	private final Music[] musics;
-    
-	
-
-    
-	@Override
-	public void draw(SpriteBatch batch) {
-    	if(scene_id == 0) {
-    		scene_id = 2;
-    	}
-    }
-	@Override
-	public int update() {
-//		Gdx.app.debug("TAG", scene_id+"");
-		stage.act();
-		stage.draw();
-		return scene_id;
-	}
-
-
-	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void dispose() {
-
-	}
-
 
 	/**
 	 * Creates the scene with the music objects
@@ -191,4 +162,28 @@ public class SceneOptionsMenu implements Scene{
 		stage.addActor(label_sound_vol);
 		stage.addActor(back_setting);
     }
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		if(scene_id == 0) {
+			scene_id = 2;
+		}
+	}
+	@Override
+	public int update() {
+//		Gdx.app.debug("TAG", scene_id+"");
+		stage.act();
+		stage.draw();
+		return scene_id;
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void dispose() {
+
+	}
 }

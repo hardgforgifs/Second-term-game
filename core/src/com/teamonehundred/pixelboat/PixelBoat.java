@@ -121,7 +121,7 @@ public class PixelBoat extends ApplicationAdapter {
         SceneMainGame game_state = new SceneMainGame();
 
         // Set the game to pause after loading
-        game_state.isPaused = true;
+        game_state.is_paused = true;
 
         game_state.leg_number = pref.getInteger("leg_number");
 
@@ -260,6 +260,7 @@ public class PixelBoat extends ApplicationAdapter {
      */
     @Override
     public void render() {
+        // Modified block of code for assessment 2
     	if (init) {
     		setMusicVol(startmusic);
         	startmusic.play();
@@ -278,29 +279,25 @@ public class PixelBoat extends ApplicationAdapter {
             // special case updates
             if (new_scene_id == 4) {
                 ((SceneResultsScreen) all_scenes[4]).setBoats(((SceneMainGame) all_scenes[1]).getAllBoats());
-                // Added block of code for assessment 2
                 stopMusic();
                 setMusicVol(resultmusic);
                 resultmusic.play();
                 ((SceneResultsScreen) all_scenes[4]).leg_no = ((SceneMainGame) all_scenes[1]).getLeg_number();
-                // End of added block of code for assessment 2
             }
 
             else if (new_scene_id == 0) {
-//                stopMusic();
+                if(scene_id != 2)
+                    stopMusic();
                 setMusicVol(startmusic);
                 startmusic.play();
             }
 
             else if (new_scene_id == 3 && scene_id == 5){
-                // Added block of code for assessment 2
                 all_scenes[1] = new SceneMainGame();
-                // End of added block of code for assessment 2
                 ((SceneMainGame) all_scenes[1]).getPlayer().setDifficulty(((SceneBoatSelection) all_scenes[5]).getDifficulty_level());
                 ((SceneMainGame) all_scenes[1]).getPlayer().setSpec(((SceneBoatSelection) all_scenes[5]).getSpecID());
             }
 
-            // Added block of code for assessment 2
             else if (new_scene_id == 1){
                 stopMusic();
                 setMusicVol(mainmusic);
@@ -324,7 +321,7 @@ public class PixelBoat extends ApplicationAdapter {
                 ((SceneStartScreen)all_scenes[0]).is_saved_game = true;
                 new_scene_id = 0;
             }
-            // End of added block of code for assessment 2
+            // End of modified block of code for assessment 2
 
             // check if we need to change scene
             scene_id = new_scene_id;

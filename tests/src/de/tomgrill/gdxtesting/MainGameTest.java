@@ -3,7 +3,6 @@ package de.tomgrill.gdxtesting;
 import com.teamonehundred.pixelboat.*;
 import junit.framework.TestCase;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +43,7 @@ public class MainGameTest extends TestCase {
             boats_locations.add(new Float[]{x, y});
         }
         // Set the game to be pause
-        testSceneMainGame.setPaused(true);
+        testSceneMainGame.setIs_paused(true);
 
         // Call the update method
         testSceneMainGame.update();
@@ -85,7 +84,7 @@ public class MainGameTest extends TestCase {
     @Test
     public void testPausedGameTimerStops() {
         // Set the game to be pause
-        testSceneMainGame.setPaused(true);
+        testSceneMainGame.setIs_paused(true);
 
         // Call the update method
         testSceneMainGame.update();

@@ -2,7 +2,6 @@ package com.teamonehundred.pixelboat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -44,9 +43,9 @@ public class SceneMainGame implements Scene {
     protected Texture resume_hovered;
     protected Sprite resume_sprite;
 
-    protected boolean isPaused = false;
+    protected boolean is_paused = false;
 
-    public void setPaused(boolean paused) { isPaused = paused; }
+    public void setIs_paused(boolean is_paused) { this.is_paused = is_paused; }
 
     public int getLeg_number() { return leg_number; }
 
@@ -140,8 +139,8 @@ public class SceneMainGame implements Scene {
      */
     public void drawStatic(SpriteBatch batch) {
         batch.begin();
-        race.drawUI(batch, player);
-        if (isPaused)
+        race.drawStatic(batch, player);
+        if (is_paused)
         {
             // Create a local bach and display the main menu button
             save_quit_sprite.draw(batch);
@@ -168,10 +167,10 @@ public class SceneMainGame implements Scene {
         // Check if the pause button is pressed
         if (Gdx.input.isKeyJustPressed(Input.Keys.P))
         {
-            isPaused = !isPaused;
+            is_paused = !is_paused;
         }
 
-        if (!isPaused) {
+        if (!is_paused) {
             if (player.hasFinishedLeg()) {
                 while (!race.isFinished()) race.runStep();
             }
@@ -226,7 +225,7 @@ public class SceneMainGame implements Scene {
             if(resume_sprite.getBoundingRectangle().contains(mouse_pos.x, Gdx.graphics.getHeight() - mouse_pos.y)){
                 resume_sprite.setTexture(resume_hovered);
                 if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-                    isPaused = false;
+                    is_paused = false;
                 }
             }
             else

@@ -388,7 +388,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
             }
             // Add a new random effect to the list of effects when colliding with a powerup
             if (object instanceof PowerUp) {
-                effects.add(((PowerUp) object).getRandomEffect());
+                effects.add(((PowerUp) object).effect);
             }
             // End of added block of code for assessment 2
             else if (!(object instanceof ObstacleLaneWall))
@@ -440,7 +440,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         this.has_started_leg = has_started_leg;
     }
 
-    // Modified block of code for assessment 2
+    // Added block of code for assessment 2
     /**
      * Sets the stats of the boat based on the spec_id that was allocated to it
      * @author Dragos Stoican
@@ -492,9 +492,6 @@ public abstract class Boat extends MovableObject implements CollisionObject {
                 break;
         }
     }
-    // End of modified block of code for assessment 2
-
-    // Added block of code for assessment 2
 
     /**
      * This method deals with resetting the boats after each leg

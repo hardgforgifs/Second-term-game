@@ -21,7 +21,6 @@ import java.util.List;
  */
 class SceneResultsScreen implements Scene {
     protected int scene_id = 4;
-    protected int leg_no;
 
     protected List<Boat> boats;
     protected BitmapFont font; // For Text Display
@@ -30,6 +29,7 @@ class SceneResultsScreen implements Scene {
     protected OrthographicCamera fill_camera;
 
     // Added block of code for assessment 2
+    protected int leg_no;
     protected Texture bg;
     protected Texture results_table;
     // End of added block of code for assessment 2

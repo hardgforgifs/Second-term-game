@@ -7,7 +7,13 @@ import java.util.Random;
 
 public class PowerUp extends GameObject implements CollisionObject{
 
-    public PowerUp(int x, int y){ super(x, y, 60, 60, "PowerUp/PowerUp.png");}
+    protected Effect effect;
+
+    public PowerUp(int x, int y) {
+        super(x, y, 60, 60, "PowerUp/PowerUp.png");
+        this.effect = getRandomEffect();
+
+    }
 
     @Override
     public void hasCollided() {

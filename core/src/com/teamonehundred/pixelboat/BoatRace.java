@@ -30,7 +30,7 @@ public class BoatRace {
 
     protected int start_y = 200;
 
-    protected int end_y = 40000;
+    protected int end_y = 4000;
 
     protected int lane_width = 400;
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane
@@ -66,8 +66,6 @@ public class BoatRace {
     public int getLane_width() {
         return lane_width;
     }
-
-    public List<PowerUp> getPowerups() { return powerups; }
     // End of added block of code for assessment 2
 
     /**
@@ -365,7 +363,7 @@ public class BoatRace {
      * @param player_boat the player's boat
      * @author Dragos Stoican
      */
-    public void drawUI(SpriteBatch batch, PlayerBoat player_boat) {
+    public void drawStatic(SpriteBatch batch, PlayerBoat player_boat) {
         //Calculate time elapsed from the start in milliseconds
         long curTime = (long) ((1000.0 / 60.0) * player_boat.getFramesRaced());
         //Displays and updates the time elapsed overlay
