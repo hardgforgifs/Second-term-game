@@ -444,7 +444,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     /**
      * Sets the stats of the boat based on the spec_id that was allocated to it
      * @author Dragos Stoican
-     * @modifiedby Samuel Plane
+     * @author Samuel Plane
      */
     public void setStats(int difficulty) {
         switch (spec_id) {
