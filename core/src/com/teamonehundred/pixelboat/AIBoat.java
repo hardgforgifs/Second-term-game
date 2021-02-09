@@ -90,8 +90,10 @@ public class AIBoat extends Boat {
      */
     public void updatePosition(List<CollisionObject> collidables) {
         double start = 0;
+        // If the boat does not need to regenerate stamina, then they accelerate
         if (!regen) {
             this.accelerate();
+            // When stamina gets low, regen is set to true, meaning the boat will regenerate stamina
             if (stamina <= 0.2) {
                 regen = true;
             }
@@ -105,7 +107,6 @@ public class AIBoat extends Boat {
                 regen = false;
             }
         }
-        // todo fix this, it takes too long
         this.check_turn(collidables);
         super.updatePosition();
 
@@ -156,16 +157,17 @@ public class AIBoat extends Boat {
         //Firing rays
 
         //select an area of 180 degrees (pi radians)
-        boolean cheeky_bit_of_coding = true; // this is a very cheeky way of solving the problem, but has a few benefits
+        boolean turn = true;
         Vector2 start_point = get_ray_fire_point();
         for (int ray = 0; ray <= number_of_rays; ray++) {
-            if (cheeky_bit_of_coding) {
+
+            if (turn) {
                 ray--;
                 float ray_angle = sprite.getRotation() + ((ray_angle_range / (number_of_rays / 2)) * ray);
-                cheeky_bit_of_coding = false;
+                turn = false;
             } else {
                 float ray_angle = sprite.getRotation() - ((ray_angle_range / (number_of_rays / 2)) * ray);
-                cheeky_bit_of_coding = true;
+                turn = true;
             }
 
             float ray_angle = ((ray_angle_range / number_of_rays) * ray) + sprite.getRotation();
@@ -176,7 +178,6 @@ public class AIBoat extends Boat {
                 double tempy = (Math.sin(Math.toRadians(ray_angle)) * dist) + (start_point.y);
                 //check if there is a collision hull (other than self) at (tempx, tempy)
                 for (CollisionObject collideable : collidables) {
-                    // very lazy way of optimising this code. will break if the collidable isn't an obstacle
                     if (collideable.isShown() &&
                             ((Obstacle) collideable).getSprite().getY() > sprite.getY() - 200 &&
                             ((Obstacle) collideable).getSprite().getY() < sprite.getY() + 200 &&
@@ -184,7 +185,8 @@ public class AIBoat extends Boat {
                             ((Obstacle) collideable).getSprite().getX() < sprite.getX() + 200)
                         for (Shape2D bound : collideable.getBounds().getShapes()) {
                             if (bound.contains((float) tempx, (float) tempy)) {
-                                if (cheeky_bit_of_coding) {
+                                //  Determines which side the ai should turn to
+                                if (turn) {
                                     turn(-1);
                                     return;
                                 } else {

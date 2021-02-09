@@ -285,6 +285,8 @@ public class PixelBoat extends ApplicationAdapter {
             if (new_scene_id == 4) {
                 // Added block of code for assessment 2
                 int current_leg = ((SceneMainGame) all_scenes[1]).getLeg_number();
+                // We use a copy of the boats as sorting the actual boats list would prevent the
+                // legs from being set up right
                 List<Boat> copy_boats = new ArrayList<>();
                 copy_boats.addAll(((SceneMainGame) all_scenes[1]).getAllBoats());
                 //Sorts boats based on their last leg or their best time, depending on the leg number

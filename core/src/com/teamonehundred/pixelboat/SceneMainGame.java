@@ -133,7 +133,8 @@ public class SceneMainGame implements Scene {
     // Added block of code for assessment 2
 
     /**
-     * Draws on a static batch that is not projected onto the camera
+     * Draws the buttons used in the pause menu on a static batch that is
+     * not projected onto the camera
      * @param batch batch to draw on
      * @author Dragos Stoican
      */
@@ -208,16 +209,6 @@ public class SceneMainGame implements Scene {
                 return 4;
 
             } else if (leg_number == 3) {
-                /*
-                // sort boats based on best time
-                Collections.sort(all_boats, new Comparator<Boat>() {
-                    @Override
-                    public int compare(Boat b1, Boat b2) {
-                        return (int) (b1.getBestTime() - b2.getBestTime());
-                    }
-                });
-
-                 */
 
                 race = new BoatRace(all_boats.subList(0, boats_per_race));
                 race.setLegDifficulty(leg_number);
@@ -229,6 +220,7 @@ public class SceneMainGame implements Scene {
         }
         else
         {
+            // Detects clicks on the save and quit button, and returns the integer required to trigger saveGame()
             Vector3 mouse_pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             if(save_quit_sprite.getBoundingRectangle().contains(mouse_pos.x, Gdx.graphics.getHeight() - mouse_pos.y)){
                 save_quit_sprite.setTexture(save_quit_hovered);
@@ -239,6 +231,7 @@ public class SceneMainGame implements Scene {
             else
                 save_quit_sprite.setTexture(save_quit_button);
 
+            // Detects clicks on the resume button and continues the game accordingly
             if(resume_sprite.getBoundingRectangle().contains(mouse_pos.x, Gdx.graphics.getHeight() - mouse_pos.y)){
                 resume_sprite.setTexture(resume_hovered);
                 if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {

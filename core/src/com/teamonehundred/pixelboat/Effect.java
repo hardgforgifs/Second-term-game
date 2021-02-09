@@ -35,8 +35,10 @@ public abstract class Effect {
      * @author Dragos Stoican
      */
     public void applyEffect(Boat boat){
+        // Reduces the remaining duration that the effect will have an impact on the boat
         duration -= Gdx.graphics.getDeltaTime();
         if (duration < 0f) {
+            // Disables the effect once it's remaining duration has been reduced to 0
             boat.setStats(boat.difficulty);
             is_active = false;
         }

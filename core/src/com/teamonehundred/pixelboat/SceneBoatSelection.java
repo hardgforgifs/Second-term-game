@@ -199,6 +199,9 @@ public class SceneBoatSelection implements Scene {
 
         Vector3 mouse_pos = fill_camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 
+        // Checks if user has clicked on one of the boats by checking the mouse position
+        // If so then the chosen spec_id is updated and the textures are reassigned to
+        // display this to the user
         for (int i = 0; i < num_specs; i++) {
 
             if (boat_option_sprites[i].getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
@@ -208,6 +211,7 @@ public class SceneBoatSelection implements Scene {
                     spec_id = i;
                     return scene_id;
                 }
+                //If the boat has not been clicked on then it is set to have it's default texture here
             } else if (spec_id != i){
                 boat_option_sprites[i].setTexture(boat_options[i]);
                 stats_bg_sprite[i].setTexture(stats_bg);
@@ -215,6 +219,7 @@ public class SceneBoatSelection implements Scene {
 
         }
 
+        // Detects if the user has clicked the back button and takes them back to the start screen
         if (back_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             back_sprite.setTexture(back_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
@@ -224,15 +229,19 @@ public class SceneBoatSelection implements Scene {
         } else
             back_sprite.setTexture(back);
 
+        // Checks if the user has clicked on the easy button, then we update the textures in response
+        // and set difficulty_level accordingly
         if (easy_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 easy_sprite.setTexture(easy_hovered);
                 is_new_click = false;
                 difficulty_level = 0;
             }
+            // Reset the texture to its default if the the button is not being clicked on
         } else if (difficulty_level != 0)
             easy_sprite.setTexture(easy);
 
+        // As above with the normal difficulty button
         if (normal_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 normal_sprite.setTexture(normal_hovered);
@@ -242,6 +251,7 @@ public class SceneBoatSelection implements Scene {
         } else if (difficulty_level != 1)
             normal_sprite.setTexture(normal);
 
+        // As above with the hard difficulty button
         if (hard_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 hard_sprite.setTexture(hard_hovered);
@@ -252,6 +262,7 @@ public class SceneBoatSelection implements Scene {
         } else if (difficulty_level != 2)
             hard_sprite.setTexture(hard);
 
+        // If clicked on the continue button will move the user on to the tutorial screen
         if (cont_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
             cont_sprite.setTexture(cont_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
@@ -260,7 +271,6 @@ public class SceneBoatSelection implements Scene {
             }
         } else
             cont_sprite.setTexture(cont);
-
 
         return scene_id;
     }
