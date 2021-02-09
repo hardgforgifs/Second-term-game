@@ -30,7 +30,7 @@ public class BoatRace {
 
     protected int start_y = 200;
 
-    protected int end_y = 40000;
+    protected int end_y = 4000;
 
     protected int lane_width = 400;
     protected int penalty_per_frame = 1; // ms to add per frame when over the lane
@@ -345,9 +345,18 @@ public class BoatRace {
         //Calculate time elapsed from the start in milliseconds
         long curTime = (long) ((1000.0 / 60.0) * boat.getFramesRaced());
         //Displays and updates the time elapsed overlay
-        if (boat.has_started_leg)
-            drawTimeDisplay(batch, boat, "", curTime, (float) Gdx.graphics.getWidth() / 2 - 50,
-                    0.9f * (float) Gdx.graphics.getHeight());
+        if (boat.has_started_leg) {
+            // Added block of text for assessment 2
+            if (boat.getSprite().getX() > getLaneCentre(boats.indexOf(boat)) + lane_width / 2 ||
+                    boat.getSprite().getX() < getLaneCentre(boats.indexOf(boat)) - lane_width / 2)
+                drawTimeDisplay(batch, boat, "     Penalty added!!!", curTime, (float) Gdx.graphics.getWidth() / 2 - 50,
+                        0.9f * (float) Gdx.graphics.getHeight());
+            else
+                drawTimeDisplay(batch, boat, "", curTime, (float) Gdx.graphics.getWidth() / 2 - 50,
+                        0.9f * (float) Gdx.graphics.getHeight());
+            // End of added block fo text for assessment 2
+        }
+
 
 
         //Displays the graphic telling the player other boats are finishing once they have finished
@@ -371,14 +380,9 @@ public class BoatRace {
      * @author Umer Fakher
      */
     public void drawTimeDisplay(SpriteBatch batch, Boat b, String label_text, long time, float x, float y) {
-        if (label_text.equals("")) {
-            label_text = "Time (min:sec) = %02d:%02d";
+        if (label_text.equals("     Penalty added!!!") || label_text.equals("")) {
+            label_text = "Time (min:sec) = %02d:%02d" + label_text;
         }
-        // Added block of text for assessment 2
-        if (b.getSprite().getX() > getLaneCentre(3) + lane_width / 2 ||
-                b.getSprite().getX() < getLaneCentre(3) - lane_width / 2)
-            label_text += "     Penalty added!!!";
-        // End of added block fo text for assessment 2
         font.draw(batch, String.format(label_text, time / 60000, time / 1000 % 60), x, y);
     }
 

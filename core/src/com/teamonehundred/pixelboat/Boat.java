@@ -368,8 +368,8 @@ public abstract class Boat extends MovableObject implements CollisionObject {
             return;
         if (this.getBounds().isColliding(object.getBounds())) {
             // Added block of code for assessment 2
-            if (this instanceof PlayerBoat) {
-                final Preferences prefs = Gdx.app.getPreferences("setting\\gamesetting");
+            if (this instanceof PlayerBoat && object instanceof Obstacle && !(object instanceof ObstacleLaneWall)) {
+                final Preferences prefs = Gdx.app.getPreferences("setting/gamesetting");
                 float soundvolume = prefs.getFloat("SoundVolume",0.5f);
                 float mastervolume = prefs.getFloat("MasterVolume",0.5f);
                 ((PlayerBoat)this).collisionsound.play(soundvolume*mastervolume);

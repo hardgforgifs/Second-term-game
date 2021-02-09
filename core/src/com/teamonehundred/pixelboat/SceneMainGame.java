@@ -71,7 +71,7 @@ public class SceneMainGame implements Scene {
      *
      * @author William Walton
      */
-    SceneMainGame() {
+    public SceneMainGame() {
         player = new PlayerBoat(-15, 0);
         player.setName("Player");
         all_boats = new ArrayList<>();
