@@ -444,6 +444,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     /**
      * Sets the stats of the boat based on the spec_id that was allocated to it
      * @author Dragos Stoican
+     * @modifiedby Samuel Plane
      */
     public void setStats(int difficulty) {
         switch (spec_id) {
@@ -513,13 +514,15 @@ public abstract class Boat extends MovableObject implements CollisionObject {
      * @return long time in milliseconds.
      */
     public long getBestTime() {
-        long current_best = -1;
+        // Modified block of code for assessment 2
+        long current_best = 500000;
 
         for (long time : leg_times) {
-            if (time > current_best)
+            if (time < current_best) {
                 current_best = time;
+            }
         }
-
+        // End of modified block of code for assessment 2
         return current_best;
     }
 }

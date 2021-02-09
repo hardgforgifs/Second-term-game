@@ -160,6 +160,20 @@ public class SceneMainGame implements Scene {
      * @author Dragos Stoican
      */
     public int update() {
+        // Added block of code for assessment 2
+        //Reduces stats for boats over time as paddlers get tired
+        for (int each_boat = 0; each_boat < all_boats.size(); each_boat++ ) {
+            if (all_boats.get(each_boat).max_speed > 8)
+                all_boats.get(each_boat).max_speed -= 0.000000001;
+
+            if (all_boats.get(each_boat).acceleration > 0.075f)
+                all_boats.get(each_boat).acceleration -= 0.00000000001f;
+
+            if (all_boats.get(each_boat).maneuverability > 0.075f)
+                all_boats.get(each_boat).maneuverability -= 0.00000000001;
+        }
+        // End of added block of code for assessment 2
+
         // Modified block of code for assessment 2
         // Stay in results after all legs done
         if (race.isFinished() && leg_number > 3) return 4;
@@ -194,6 +208,7 @@ public class SceneMainGame implements Scene {
                 return 4;
 
             } else if (leg_number == 3) {
+                /*
                 // sort boats based on best time
                 Collections.sort(all_boats, new Comparator<Boat>() {
                     @Override
@@ -201,6 +216,8 @@ public class SceneMainGame implements Scene {
                         return (int) (b1.getBestTime() - b2.getBestTime());
                     }
                 });
+
+                 */
 
                 race = new BoatRace(all_boats.subList(0, boats_per_race));
                 race.setLegDifficulty(leg_number);
