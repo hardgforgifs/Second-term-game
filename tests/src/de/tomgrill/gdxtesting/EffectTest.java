@@ -87,11 +87,11 @@ public class EffectTest extends TestCase {
         test_invulnerability.applyEffect(test_boat);
 
         // All boosts should now be inactive
-        assertFalse(test_speed.isActive());
-        assertFalse(test_repair.isActive());
-        assertFalse(test_maneuverability.isActive());
-        assertFalse(test_stamina.isActive());
-        assertFalse(test_invulnerability.isActive());
+        assertFalse(test_speed.isIs_active());
+        assertFalse(test_repair.isIs_active());
+        assertFalse(test_maneuverability.isIs_active());
+        assertFalse(test_stamina.isIs_active());
+        assertFalse(test_invulnerability.isIs_active());
     }
 
     /** id: EffectsTest03
@@ -239,7 +239,7 @@ public class EffectTest extends TestCase {
     @Test
     public void testOnlyActiveEffectsApply() {
         // Add two effects to the boat, one of which i inactive
-        test_invulnerability.setActive(false);
+        test_invulnerability.setIs_active(false);
         test_boat.getEffects().add(test_maneuverability);
         test_boat.getEffects().add(test_invulnerability);
 
@@ -264,7 +264,7 @@ public class EffectTest extends TestCase {
     @Test
     public void testEffectsGetRemoved() {
         // Add an inactive effect to the boat
-        test_invulnerability.setActive(false);
+        test_invulnerability.setIs_active(false);
         test_boat.getEffects().add(test_invulnerability);
 
         // Update the effects

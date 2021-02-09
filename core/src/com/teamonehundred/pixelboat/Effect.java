@@ -10,22 +10,22 @@ public abstract class Effect {
     protected Texture texture;
     protected Sprite sprite;
 
-    protected boolean isActive;
+    protected boolean is_active;
 
-    public void setActive(boolean active) { isActive = active; }
+    public void setIs_active(boolean is_active) { this.is_active = is_active; }
 
     public void setDuration(float duration) { this.duration = duration; }
 
     public float getDuration() { return duration; }
 
-    public boolean isActive() { return isActive; }
+    public boolean isIs_active() { return is_active; }
 
     /**
      * Creates a new default effect with duration 5
      * @author Dragos Stoican
      */
     public Effect() {
-        this.isActive = true;
+        this.is_active = true;
         this.duration = 5f;
     }
 
@@ -38,7 +38,7 @@ public abstract class Effect {
         duration -= Gdx.graphics.getDeltaTime();
         if (duration < 0f) {
             boat.setStats(boat.difficulty);
-            isActive = false;
+            is_active = false;
         }
     }
 
@@ -68,7 +68,7 @@ public abstract class Effect {
             return false;
         else {
             Effect e = (Effect) o;
-            if (this.isActive == e.isActive &&
+            if (this.is_active == e.is_active &&
                 this.duration == e.duration &&
                 this.getClass() == e.getClass())
                 return true;

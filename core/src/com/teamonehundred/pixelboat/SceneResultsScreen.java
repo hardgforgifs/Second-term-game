@@ -31,7 +31,7 @@ class SceneResultsScreen implements Scene {
 
     // Added block of code for assessment 2
     protected Texture bg;
-    protected Texture resultsTable;
+    protected Texture results_table;
     // End of added block of code for assessment 2
 
     SceneResultsScreen() {
@@ -50,7 +50,7 @@ class SceneResultsScreen implements Scene {
         // Added block of code for assessment 2
         bg = new Texture("water_background.png");
         bg.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        resultsTable = new Texture("ResultScreen.png");
+        results_table = new Texture("ResultScreen.png");
         // End of added block of code for assessment 2
     }
 
@@ -143,7 +143,7 @@ class SceneResultsScreen implements Scene {
         font.draw(batch, "BoatName | Race Time in ms | Race penalty in ms",
                 fill_camera.viewportWidth / 3, 14 * (fill_camera.viewportHeight / 16));
 
-        batch.draw(resultsTable, fill_camera.viewportWidth / 3,   fill_camera.viewportHeight / 8, 500, 450);
+        batch.draw(results_table, fill_camera.viewportWidth / 3,   fill_camera.viewportHeight / 8, 500, 450);
 
         String label_template = "%s | %d ms | %d ms";//"A boat (%s) ended race with time (ms) %d (%d ms was penalty)";
 
@@ -218,7 +218,7 @@ class SceneResultsScreen implements Scene {
      */
     public void dispose() {
         bg.dispose();
-        resultsTable.dispose();
+        results_table.dispose();
     }
     // End of added block of code for assessment 2
 }
