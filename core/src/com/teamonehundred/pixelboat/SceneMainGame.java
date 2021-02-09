@@ -195,12 +195,15 @@ public class SceneMainGame implements Scene {
 
                 // Added block of code for assessment 2
                 // sort boats based on best time
+                /*
                 Collections.sort(all_boats, new Comparator<Boat>() {
                     @Override
                     public int compare(Boat b1, Boat b2) {
                         return (int) (b1.getBestTime() - b2.getBestTime());
                     }
                 });
+
+                 */
                 // End of added block of code for assessment 2
 
 
