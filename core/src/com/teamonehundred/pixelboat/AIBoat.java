@@ -86,7 +86,7 @@ public class AIBoat extends Boat {
      *
      * @param collidables List of Collision Objects
      * @author James Frost
-     * @ModifiedBy Samuel Plane
+     * @author Samuel Plane
      */
     public void updatePosition(List<CollisionObject> collidables) {
         double start = 0;
