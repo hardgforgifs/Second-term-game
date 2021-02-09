@@ -379,12 +379,14 @@ public abstract class Boat extends MovableObject implements CollisionObject {
             return;
         if (this.getBounds().isColliding(object.getBounds())) {
             // Added block of code for assessment 2
+            // Play sounds if colliding with an obstacle that is not a lane seprator
             if (this instanceof PlayerBoat && object instanceof Obstacle && !(object instanceof ObstacleLaneWall)) {
                 final Preferences prefs = Gdx.app.getPreferences("setting/gamesetting");
                 float soundvolume = prefs.getFloat("SoundVolume",0.5f);
                 float mastervolume = prefs.getFloat("MasterVolume",0.5f);
                 ((PlayerBoat)this).collisionsound.play(soundvolume*mastervolume);
             }
+            // Add a new random effect to the list of effects when colliding with a powerup
             if (object instanceof PowerUp) {
                 effects.add(((PowerUp) object).getRandomEffect());
             }
