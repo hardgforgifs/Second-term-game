@@ -22,7 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-//added block of code for assessment 2
+
 public class SceneSettings implements Scene{
 	
 	
@@ -68,16 +68,17 @@ public class SceneSettings implements Scene{
 		
 	}
 
-	@Override
 	public void dispose() {
 
 	}
 
 
+	/**
+	 * Creates the scene with the music objects
+	 * @param music list of music objects
+	 */
 	public SceneSettings( Music[] music) {
-    	
-    	
-    	this.musics = music;
+		this.musics = music;
     	
     	final Preferences prefs = Gdx.app.getPreferences("setting/gamesetting");
 		float mastervolume = prefs.getFloat("MasterVolume", 0.5f);
@@ -191,4 +192,3 @@ public class SceneSettings implements Scene{
 		stage.addActor(back_setting);
     }
 }
-//added block of code for assessment 2

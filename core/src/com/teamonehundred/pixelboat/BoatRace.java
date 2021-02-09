@@ -78,7 +78,8 @@ public class BoatRace {
      * @param race_boats List of Boat A list of ai boats and the player boat.
      * @author William Walton
      * @author Umer Fakher
-     * JavaDoc by Umer Fakher
+     * @author Dragos Stoican
+     * @author Samuel Plane
      */
     public BoatRace(List<Boat> race_boats) {
         lane_sep = new Texture("lane_buoy.png");
@@ -138,6 +139,11 @@ public class BoatRace {
         font.setColor(Color.RED);
     }
 
+    /**
+     * Returns the center of te lane at index boat_index
+     * @param boat_index index the a lane
+     * @return position of the cneter of the lane
+     */
     private int getLaneCentre(int boat_index) {
         int race_width = boats.size() * lane_width;
         return (-race_width / 2) + (lane_width * (boat_index + 1)) - (lane_width / 2);
@@ -152,6 +158,8 @@ public class BoatRace {
      *
      * @author William Walton
      * @author Umer Fakher
+     * @author Dragos Stoican
+     * @author Samuel Plane
      */
     public void runStep() {
         // dnf after 2 mins
@@ -255,6 +263,7 @@ public class BoatRace {
      * @return List of Sprites A list of all sprites in the PixelBoat game.
      * @author William Walton
      * @author Umer Fakher
+     * @author Dragos Stoican
      */
     public List<Sprite> getSprites() {
         List<Sprite> all_sprites = new ArrayList<>();
@@ -265,10 +274,12 @@ public class BoatRace {
                 all_sprites.add(((Obstacle) obs).getSprite());
         }
 
+        // Added block of code for assessment 2
         for (PowerUp powerup : powerups) {
             if (powerup.is_shown)
                 all_sprites.add(powerup.getSprite());
         }
+        // End of added block of code for assessment 2
 
         for (Boat b : boats) {
             all_sprites.add(b.getSprite());
@@ -291,6 +302,7 @@ public class BoatRace {
      */
     public void draw(SpriteBatch batch) {
 
+        // Modified block of code for assessment 2
         // Retrieves sprites and calls function recursively.
         for (Sprite sp : getSprites())
             sp.draw(batch);
@@ -306,11 +318,13 @@ public class BoatRace {
         batch.draw(temp, -race_width / 2, end_y, race_width, 5);
 
         temp.dispose();
+        // End of modified block of code for assessment 2
     }
 
     // Added block of code for assessment 2
     /**
      * Add extra obstacles based on the leg number, and increase their movement speed
+     * @author Dragos Stoican
      */
     public void setLegDifficulty(int leg_number) {
         for (int i = 0; i < 20 * leg_number; i++) {
@@ -332,6 +346,10 @@ public class BoatRace {
         }
     }
 
+    /**
+     * Adds the lane separators objects on the map
+     * @author Dragos Stoican
+     */
     public void addLaneSeparators() {
         // add the lane separators
         for (int lane = 0; lane <= boats.size(); lane++) {
@@ -341,21 +359,36 @@ public class BoatRace {
         }
     }
 
-    public void drawUI(SpriteBatch batch, PlayerBoat boat) {
+    /**
+     * Draws UI elements on the static batch that is not projected on the camera
+     * @param batch batch to draw on
+     * @param player_boat the player's boat
+     * @author Dragos Stoican
+     */
+    public void drawUI(SpriteBatch batch, PlayerBoat player_boat) {
         //Calculate time elapsed from the start in milliseconds
-        long curTime = (long) ((1000.0 / 60.0) * boat.getFramesRaced());
+        long curTime = (long) ((1000.0 / 60.0) * player_boat.getFramesRaced());
         //Displays and updates the time elapsed overlay
-        if (boat.has_started_leg)
-            drawTimeDisplay(batch, boat, "", curTime, (float) Gdx.graphics.getWidth() / 2 - 50,
-                    0.9f * (float) Gdx.graphics.getHeight());
+        if (player_boat.has_started_leg) {
+            // Added block of text for assessment 2
+            if (player_boat.getSprite().getX() > getLaneCentre(boats.indexOf(player_boat)) + lane_width / 2 ||
+                    player_boat.getSprite().getX() < getLaneCentre(boats.indexOf(player_boat)) - lane_width / 2)
+                drawTimeDisplay(batch, "     Penalty added!!!", curTime, (float) Gdx.graphics.getWidth() / 2 - 50,
+                        0.9f * (float) Gdx.graphics.getHeight());
+            else
+                drawTimeDisplay(batch, "", curTime, (float) Gdx.graphics.getWidth() / 2 - 50,
+                        0.9f * (float) Gdx.graphics.getHeight());
+            // End of added block fo text for assessment 2
+        }
+
 
 
         //Displays the graphic telling the player other boats are finishing once they have finished
-        if (boat.hasFinishedLeg())
+        if (player_boat.hasFinishedLeg())
             batch.draw(waiting, (float) Gdx.graphics.getWidth() / 3, 0.5f * (float) Gdx.graphics.getHeight(), 500, 100);
 
         //Draws a leg time display on the screen when the given boat has completed a leg of the race.
-        drawLegTimeDisplay(batch, boat);
+        drawLegTimeDisplay(batch, player_boat);
     }
     // End of added block of code for assessment 2
 
@@ -363,23 +396,19 @@ public class BoatRace {
      * Draws the a time display on the screen.
      *
      * @param batch      SpriteBatch instance
-     * @param b          Boat instance
      * @param label_text label for text. If "" empty string passed in then default time display shown.
      * @param time       time to be shown in milliseconds
      * @param x          horizontal position of display
      * @param y          vertical position of display
-     * @author Umer Fakher
+     * @author Umer Fakher, Dragos Stoinca
      */
-    public void drawTimeDisplay(SpriteBatch batch, Boat b, String label_text, long time, float x, float y) {
-        if (label_text.equals("")) {
-            label_text = "Time (min:sec) = %02d:%02d";
+    public void drawTimeDisplay(SpriteBatch batch, String label_text, long time, float x, float y) {
+        // Modified block of code for assessment 2
+        if (label_text.equals("     Penalty added!!!") || label_text.equals("")) {
+            label_text = "Time (min:sec) = %02d:%02d" + label_text;
         }
-        // Added block of text for assessment 2
-        if (b.getSprite().getX() > getLaneCentre(3) + lane_width / 2 ||
-                b.getSprite().getX() < getLaneCentre(3) - lane_width / 2)
-            label_text += "     Penalty added!!!";
-        // End of added block fo text for assessment 2
         font.draw(batch, String.format(label_text, time / 60000, time / 1000 % 60), x, y);
+        // End of modified block of code for assessment 2
     }
 
     /**
@@ -397,7 +426,7 @@ public class BoatRace {
         if (b.getEndTime(false) != -1) {
             for (long l : b.getLegTimes()) {
                 String label = String.format("Leg Time %d (min:sec) = ", b.getLegTimes().indexOf(l) + 1) + "%02d:%02d";
-                drawTimeDisplay(batch, b, label, l, (float)Gdx.graphics.getWidth()/2 - 50,
+                drawTimeDisplay(batch, label, l, (float)Gdx.graphics.getWidth()/2 - 50,
                         0.9f * (float)Gdx.graphics.getHeight() - ((b.getLegTimes().indexOf(l) + 1) * 20));
             }
 

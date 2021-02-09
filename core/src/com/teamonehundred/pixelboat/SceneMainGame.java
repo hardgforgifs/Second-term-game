@@ -71,7 +71,7 @@ public class SceneMainGame implements Scene {
      *
      * @author William Walton
      */
-    SceneMainGame() {
+    public SceneMainGame() {
         player = new PlayerBoat(-15, 0);
         player.setName("Player");
         all_boats = new ArrayList<>();
@@ -110,15 +110,6 @@ public class SceneMainGame implements Scene {
         race = new BoatRace(all_boats.subList(0, boats_per_race));
     }
 
-
-    /**
-     * Destructor disposes of this texture once it is no longer referenced.
-     */
-    protected void finalize() {
-        bg.dispose();
-    }
-
-
     /**
      * Draws SpriteBatch on display along with updating player camera and player overlay Using BoatRace.
      *
@@ -141,6 +132,12 @@ public class SceneMainGame implements Scene {
     }
 
     // Added block of code for assessment 2
+
+    /**
+     * Draws on a static batch that is not projected onto the camera
+     * @param batch batch to draw on
+     * @author Dragos Stoican
+     */
     public void drawStatic(SpriteBatch batch) {
         batch.begin();
         race.drawUI(batch, player);
@@ -161,6 +158,7 @@ public class SceneMainGame implements Scene {
      * the movements for player boat and AI boats obstacles as well as checking for collisions.
      *
      * @author William Walton
+     * @author Dragos Stoican
      */
     public int update() {
         // Modified block of code for assessment 2
@@ -274,12 +272,19 @@ public class SceneMainGame implements Scene {
     }
 
     // Added block of code for assessment 2
+
+    /**
+     * Method called after each leg to reset the boats to their original stats and stop them from moving
+     */
     public void resetBoats() {
         for (Boat b : all_boats) {
             b.reset();
         }
     }
 
+    /**
+     * Destructor disposes of textures once it is no longer referenced.
+     */
     public void dispose() {
         bg.dispose();
         save_quit_button.dispose();

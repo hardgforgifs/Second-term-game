@@ -27,7 +27,6 @@ public class PlayerBoat extends Boat {
     protected OrthographicCamera camera;
 
     protected Texture stamina_texture;
-    protected Texture recovering_texture;
     protected Texture durability_texture;
 
     protected Sprite stamina_bar;
@@ -36,6 +35,7 @@ public class PlayerBoat extends Boat {
     protected int ui_bar_width = 500;
 
     // Added block of code for assessment 2
+    protected Texture recovering_texture;
     protected Texture[] effect_textures;
     public Sound collisionsound;
     // End of added block of code for assessment 2
@@ -55,14 +55,16 @@ public class PlayerBoat extends Boat {
      */
     public PlayerBoat(int x, int y) {
         super(x, y);
-        this.collisionsound = Gdx.audio.newSound(Gdx.files.internal("sounds/wood_hit.mp3"));;
+        // Added block of code for assessment 2
+        this.collisionsound = Gdx.audio.newSound(Gdx.files.internal("sounds/wood_hit.mp3"));
+        // End of added block of code for assessment 2
         initialise();
     }
 
     /**
      * Destructor disposes of this texture once it is no longer referenced.
      */
-    protected void finalize() {
+    public void finalize() {
         stamina_texture.dispose();
         durability_texture.dispose();
         recovering_texture.dispose();

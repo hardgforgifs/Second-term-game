@@ -31,7 +31,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     protected float durability_per_hit = .1f;
 
     protected float stamina = 1.f;  // from 0 to 1, percentage of stamina max
-    protected float stamina_usage = .002f;  //todo change this after testing
+    protected float stamina_usage = .002f;
     protected float stamina_regen = .003f;
 
     protected List<Long> leg_times = new ArrayList<>();  // times for every previous leg
@@ -126,6 +126,14 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
     // Added block of code for assessment 2
 
+    /**
+     * Sets the texture of an existing boat, updating animations as necessary
+     *
+     * @param texture_path
+     * @param w
+     * @param h
+     * @author Dragos Stoican
+     */
     public void setTexture(String texture_path, float w, float h) {
         this.texture = new Texture(texture_path);
         animation_regions = new TextureRegion[4];
@@ -139,10 +147,11 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         sprite.setOriginCenter();
     }
     /**
-     * Sets the spec type of boat.
+     * Sets the spec id of boat.
      * <p>
      *
      * @param spec_id int for boat spec
+     * @author Dragos Stoican
      */
     public void setSpec(int spec_id) {
         this.spec_id = spec_id;
@@ -151,7 +160,9 @@ public abstract class Boat extends MovableObject implements CollisionObject {
         setStats(difficulty);
     }
 
-
+    /**
+     * Applies the effects from the list of effects to the boat
+     */
     public void updateEffects() {
         for (int i = 0; i < effects.size(); i++) {
             Effect effect = effects.get(i);
@@ -178,7 +189,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     /**
      * Function called when the boat accelerates
      *
-     * @author William Walton
+     * @author William Walton, Samuel Plane
      */
     @Override
     public void accelerate() {
@@ -214,7 +225,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     /**
      * Function called every frame when the game updates all objects positions
      *
-     * @author William Walton
+     * @author William Walton, Samuel Plane
      */
     @Override
     public void updatePosition() {
@@ -357,7 +368,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
      * Checks to see if the this boat has collided with the other CollisionObject object passed.
      *
      * @param object The CollisionObject that will be checked to see if it has hit this boat.
-     * @author Umer Fakher
+     * @author Umer Fakher, Dragos Stoican, Bowen Lyu
      */
     public void checkCollisions(CollisionObject object) {
         if (object instanceof Obstacle && !(
@@ -368,8 +379,8 @@ public abstract class Boat extends MovableObject implements CollisionObject {
             return;
         if (this.getBounds().isColliding(object.getBounds())) {
             // Added block of code for assessment 2
-            if (this instanceof PlayerBoat) {
-                final Preferences prefs = Gdx.app.getPreferences("setting\\gamesetting");
+            if (this instanceof PlayerBoat && object instanceof Obstacle && !(object instanceof ObstacleLaneWall)) {
+                final Preferences prefs = Gdx.app.getPreferences("setting/gamesetting");
                 float soundvolume = prefs.getFloat("SoundVolume",0.5f);
                 float mastervolume = prefs.getFloat("MasterVolume",0.5f);
                 ((PlayerBoat)this).collisionsound.play(soundvolume*mastervolume);
@@ -430,6 +441,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
     // Modified block of code for assessment 2
     /**
      * Sets the stats of the boat based on the spec_id that was allocated to it
+     * @author Dragos Stoican
      */
     public void setStats(int difficulty) {
         switch (spec_id) {
@@ -484,6 +496,7 @@ public abstract class Boat extends MovableObject implements CollisionObject {
 
     /**
      * This method deals with resetting the boats after each leg
+     * @author Dragos Stoican
      */
     public void reset() {
         speed = 0f;

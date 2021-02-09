@@ -47,13 +47,6 @@ public class SceneTutorial implements Scene {
     }
 
     /**
-     * Destructor disposes of this texture once it is no longer referenced.
-     */
-    protected void finalize() {
-        bg.dispose();
-    }
-
-    /**
      * Draw function for SceneTutorial.
      * <p>
      * Draws SceneTutorial for the PixelBoat game.
@@ -100,8 +93,11 @@ public class SceneTutorial implements Scene {
     }
 
     // Added block of code for assessment 2
+    /**
+     * Destructor disposes of this texture once it is no longer referenced.
+     */
     public void dispose() {
-
+        bg.dispose();
     }
     // End of added block of code for assessment 2
 }

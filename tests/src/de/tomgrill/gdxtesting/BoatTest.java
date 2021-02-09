@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 @RunWith(GdxTestRunner.class)
 public class BoatTest extends TestCase {
 
-    Boat test_boat;
+    PlayerBoat test_boat;
 
     /**
      * This method is called before each test to create a new boat to apply the tests to
@@ -23,7 +23,7 @@ public class BoatTest extends TestCase {
     }
 
     @After
-    public void dispose() { test_boat.dispose(); }
+    public void dispose() { test_boat.finalize(); }
 
     /** id: BoatTest01
      *  description: tests if boat's stamina decreases when it accelerates

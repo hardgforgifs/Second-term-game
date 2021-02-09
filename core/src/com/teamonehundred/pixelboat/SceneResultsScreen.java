@@ -92,6 +92,7 @@ class SceneResultsScreen implements Scene {
      *
      * @param batch SpriteBatch used for drawing to screen.
      * @author Umer Fakher
+     * @author Samuel Plane
      */
     public void draw(SpriteBatch batch) {
         //Initialise colouring
@@ -123,6 +124,12 @@ class SceneResultsScreen implements Scene {
     }
 
     //Added block of code for assessment 2
+
+    /**
+     * Draws on a static batch that is not projected onto the camera
+     * @param batch batch to draw on
+     * @author Samuel Plane
+     */
     public void drawStatic(SpriteBatch batch) {
         batch.begin();
 
@@ -206,8 +213,12 @@ class SceneResultsScreen implements Scene {
     }
 
     // Added block of code for assessment 2
+    /**
+     * Destructor disposes of textures once it is no longer referenced.
+     */
     public void dispose() {
-
+        bg.dispose();
+        resultsTable.dispose();
     }
     // End of added block of code for assessment 2
 }

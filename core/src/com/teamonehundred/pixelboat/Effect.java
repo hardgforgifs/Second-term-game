@@ -20,11 +20,20 @@ public abstract class Effect {
 
     public boolean isActive() { return isActive; }
 
+    /**
+     * Creates a new default effect with duration 5
+     * @author Dragos Stoican
+     */
     public Effect() {
         this.isActive = true;
         this.duration = 5f;
     }
 
+    /**
+     * Applies the effect to a boat and reduces the duration of the effect
+     * @param boat The boat to apply the effect to
+     * @author Dragos Stoican
+     */
     public void applyEffect(Boat boat){
         duration -= Gdx.graphics.getDeltaTime();
         if (duration < 0f) {
@@ -33,6 +42,13 @@ public abstract class Effect {
         }
     }
 
+    /**
+     * Sets the position and size of the sprite to match the location of the boat, then returns the sprite
+     * @param boat Boat to adjust position to
+     * @param count Number of effects that affect the same boat
+     * @return Adjusted sprite
+     * @author Dragos Stoican
+     */
     public Sprite getSprite(PlayerBoat boat, int count) {
         sprite.setPosition(boat.sprite.getX() - boat.ui_bar_width / 2  + boat.sprite.getWidth() / 2 + count * 50,
                 boat.sprite.getY() - 100);
@@ -40,6 +56,12 @@ public abstract class Effect {
         return sprite;
     }
 
+    /**
+     * Checks if two effects are equal based on their duration active status and class
+     * @param o another effect
+     * @return true if the effects are equal, false otherwise
+     * @author Dragos Stoican
+     */
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Effect))
