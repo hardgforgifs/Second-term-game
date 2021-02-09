@@ -159,29 +159,13 @@ class SceneResultsScreen implements Scene {
 
             // Writes out the details of all the boats into the table
             font.draw(batch, boats.get(top_boats).getName(), 5 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
-            font.draw(batch, Long.toString(boats.get(top_boats).getLegTimes().get(boats.get(top_boats).getLegTimes().size() - 1)), 6 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
-            font.draw(batch, Long.toString(boats.get(top_boats).getTimeToAdd()) , 7 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
-            font.draw(batch, Long.toString(boats.get(top_boats).getCalcTime()) , 8 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
-            /*
-
-            // Shift to next column to allowing wrapping of times as table
-            if (boats.indexOf(boats.get(top_boats)) % 21 == 0) {
-                column_num++;
-                column_idx = 0;
-            }
-
-
-            // Using label template format draw the name of boat, time of just completed leg, race penalty added
-            String label_text = String.format(label_template, boats.get(top_boats).getName(),
-                    boats.get(top_boats).getLegTimes().get(boats.get(top_boats).getLegTimes().size() - 1), boats.get(top_boats).getTimeToAdd());
-
-            // Draw to results display to screen using position of player's UI and draw for all boats this down the
-            // and wraps across screen if needed into the next column
-            font.draw(batch, label_text, 5 * (fill_camera.viewportWidth / 12) + column_num * 210,
-                    11 * (fill_camera.viewportHeight / 16)  - (column_idx * 20));
-
-            column_idx++;
-            */
+            long time_to_finish = boats.get(top_boats).getLegTimes().get(boats.get(top_boats).getLegTimes().size() - 1);
+            String ttf = "%02d:%02d";
+            font.draw(batch, String.format(ttf, time_to_finish / 60000, time_to_finish / 1000 % 60) , 6 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
+            long added_time = boats.get(top_boats).getTimeToAdd();
+            font.draw(batch, String.format(ttf, added_time / 60000, added_time / 1000 % 60) , 7 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
+            long total_time = boats.get(top_boats).getCalcTime();
+            font.draw(batch, String.format(ttf, total_time / 60000, total_time / 1000 % 60) , 8 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
 
         }
 
