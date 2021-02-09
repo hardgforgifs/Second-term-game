@@ -33,9 +33,9 @@ public class AIBoat extends Boat {
               CONSTRUCTORS
     // ################################### */
 
-    // Added block of code for assessment 2
+    // Modified block of code for assessment 2
     /**
-     * Construct a AIBoat object at point (x,y) with default size.
+     * Construct a AIBoat object at point (x,y) with default size and a custom texture.
      *
      * @param x int coordinate for the bottom left point of the boat
      * @param y int coordinate for the bottom left point of the boat
@@ -48,12 +48,19 @@ public class AIBoat extends Boat {
         initialise();
     }
 
+    /**
+     * Construct a AIBoat object at point (x,y) with default size and default texture.
+     *
+     * @param x int coordinate for the bottom left point of the boat
+     * @param y int coordinate for the bottom left point of the boat
+     * @author Dragos Stoican
+     */
     public AIBoat(int x, int y) {
         super(x, y);
 
         initialise();
     }
-    // End of added block of code for assessment 2
+    // End of modified block of code for assessment 2
 
     /**
      * Shared initialisation functionality among all constructors.
@@ -71,6 +78,7 @@ public class AIBoat extends Boat {
         regen = false;
     }
 
+    // Modified block of code for assessment 2
     /**
      * Updates position of objects AIBoat based on acceleration and stamina.
      * <p>
@@ -78,11 +86,9 @@ public class AIBoat extends Boat {
      *
      * @param collidables List of Collision Objects
      * @author James Frost
+     * @ModifiedBy Samuel Plane
      */
     public void updatePosition(List<CollisionObject> collidables) {
-        // TODO: Make this a method, and neaten it up
-        // TODO: Link Acc w/ turning for better AI (that one may take a bit of time though)
-        // TODO: Visible stamina for AI (maybe as debug option)
         double start = 0;
         if (!regen) {
             this.accelerate();
@@ -104,6 +110,7 @@ public class AIBoat extends Boat {
         super.updatePosition();
 
     }
+    // End of modified block of code for assessment 2
 
     /**
      * Returns true if AIBoat should exist on the screen.
@@ -150,7 +157,6 @@ public class AIBoat extends Boat {
 
         //select an area of 180 degrees (pi radians)
         boolean cheeky_bit_of_coding = true; // this is a very cheeky way of solving the problem, but has a few benefits
-        //TODO: Explain the cheeky_bit_of_coding better
         Vector2 start_point = get_ray_fire_point();
         for (int ray = 0; ray <= number_of_rays; ray++) {
             if (cheeky_bit_of_coding) {

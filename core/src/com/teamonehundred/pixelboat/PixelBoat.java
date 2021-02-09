@@ -48,14 +48,22 @@ public class PixelBoat extends ApplicationAdapter {
 
     public void setPref(Preferences pref) { this.pref = pref; }
 
+    /**
+     * Saves the current game state in a preferences file
+     * @param game_state A SceneMainGame representing the game state
+     * @author Dragos Stoican
+     */
     public void saveGame(SceneMainGame game_state) {
         pref.clear();
         // Mark that a save exists in preferences
         pref.putString("save", "save exists");
+
         pref.putInteger("leg_number", game_state.leg_number);
         pref.putInteger("player difficulty", game_state.getPlayer().getDifficulty());
         pref.putFloat("camera_x", game_state.player.getCamera().position.x);
         pref.putFloat("camera_y", game_state.player.getCamera().position.y);
+
+        // Save the obstacles on the map
         for (int k = 0; k < game_state.race.obstacles.size(); k++) {
             // Don't save the lane walls
             Obstacle obstacle = (Obstacle) game_state.race.obstacles.get(k);
@@ -68,6 +76,7 @@ public class PixelBoat extends ApplicationAdapter {
 
         }
 
+        // Save the powerups on the map
         for (int k = 0; k < game_state.race.powerups.size(); k++) {
             PowerUp powerUp = game_state.race.powerups.get(k);
             pref.putFloat("powerup" + k + " x", powerUp.getSprite().getX());
@@ -75,7 +84,7 @@ public class PixelBoat extends ApplicationAdapter {
             pref.putBoolean("powerup" + k + " is_shown", powerUp.isShown());
         }
 
-
+        // Save information about the boats
         for (int i = 0; i < game_state.boats_per_race; i++) {
             pref.putFloat("boat" + i + " x", game_state.all_boats.get(i).sprite.getX());
             pref.putFloat("boat" + i + " y", game_state.all_boats.get(i).sprite.getY());
@@ -94,24 +103,33 @@ public class PixelBoat extends ApplicationAdapter {
             pref.putBoolean("boat" + i + " has_finished_leg", game_state.all_boats.get(i).has_finished_leg);
             pref.putBoolean("boat" + i + " recovering", game_state.all_boats.get(i).recovering);
 
-            // Save the list of effects
+            // Save the list of effects affecting the boat
             for (int k = 0; k < game_state.getAllBoats().get(i).effects.size(); k++) {
                 Effect effect = game_state.getAllBoats().get(i).effects.get(k);
                 pref.putString("effect" + i + k + " type", effect.getClass().getName());
                 pref.putFloat("effect" + i + k + " time", effect.duration);
             }
+
+            // Save the leg times of the boat
             for (int j = 0; j < game_state.all_boats.get(i).leg_times.size(); j++) {
                 pref.putLong("leg_time" + i + j, game_state.all_boats.get(i).leg_times.get(j));
             }
         }
     }
 
-
+    /**
+     * Load the game from the preference file
+     * @return SceneMainGame representing the loaded game state
+     */
     public SceneMainGame loadGame() {
         SceneMainGame game_state = new SceneMainGame();
+
+        // Set the game to pause after loading
         game_state.isPaused = true;
+
         game_state.leg_number = pref.getInteger("leg_number");
 
+        // Load the obstacles from the saved game state
         int k = 0;
         float x_obstacle = pref.getFloat("obstacle" + k + " x", -1);
         while (x_obstacle != -1) {
@@ -129,6 +147,7 @@ public class PixelBoat extends ApplicationAdapter {
             x_obstacle = pref.getFloat("obstacle" + k + " x", -1);
         }
 
+        // Load the powerups from the saved game state
         k = 0;
         float x_powerup = pref.getFloat("powerup" + k + " x", -1);
         while (x_powerup != -1) {
@@ -142,9 +161,12 @@ public class PixelBoat extends ApplicationAdapter {
 
         game_state.getPlayer().setDifficulty(pref.getInteger("player difficulty"));
 
+        // Set the position of the camera
         float camera_x = pref.getFloat("camera_x");
         float camera_y = pref.getFloat("camera_y");
         game_state.player.camera.position.set(camera_x, camera_y, 0);
+
+        // Load the information for each boat
         for (int i = 0; i < game_state.boats_per_race; i++) {
             float x = pref.getFloat("boat" + i + " x");
             float y = pref.getFloat("boat" + i + " y");
@@ -165,6 +187,8 @@ public class PixelBoat extends ApplicationAdapter {
             game_state.all_boats.get(i).has_started_leg = pref.getBoolean("boat" + i + " has_started_leg");
             game_state.all_boats.get(i).has_finished_leg = pref.getBoolean("boat" + i + " has_finished_leg");
             game_state.all_boats.get(i).recovering = pref.getBoolean("boat" + i + " recovering");
+
+            // Load the leg times
             int j = 0;
             while (pref.getLong("leg_time" + i + j, -1) != -1) {
                 game_state.all_boats.get(i).leg_times.add(pref.getLong("leg_time" + i + j));
@@ -203,18 +227,17 @@ public class PixelBoat extends ApplicationAdapter {
     public void create() {
         // Added block of code for assessment 2
         pref = Gdx.app.getPreferences("save");
-        // End of added block of code for assessment 2
 
-    	 startmusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/Funky_Full.mp3"));
-         mainmusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/Beyond The Win.mp3"));
-         resultmusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/victory_fireworks.mp3"));
-         collisionsound = Gdx.audio.newSound(Gdx.files.internal("sounds/wood_hit.mp3"));
-         startmusic.setLooping(true);
-         mainmusic.setLooping(true);
-         resultmusic.setLooping(true);
-         
-         
+        startmusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/Funky_Full.mp3"));
+        mainmusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/Beyond The Win.mp3"));
+        resultmusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/victory_fireworks.mp3"));
+        collisionsound = Gdx.audio.newSound(Gdx.files.internal("sounds/wood_hit.mp3"));
+        startmusic.setLooping(true);
+        mainmusic.setLooping(true);
+        resultmusic.setLooping(true);
+
         musics = new Music[]{startmusic,mainmusic,resultmusic};
+        // End of added block of code for assessment 2
          
         all_scenes = new Scene[6];
         all_scenes[0] = new SceneStartScreen();
@@ -234,11 +257,18 @@ public class PixelBoat extends ApplicationAdapter {
         // End of added block of code for assessment 2
     }
 
+    // Added block of code for assessment 2
+
+    /**
+     * Stops the music from playing
+     * @author Bowen Lyu
+     */
     private void stopMusic() {
     	for(Music music:musics) {
 			music.stop();
-		};
+		}
     }
+    // End of added block of code for assessment 2
     /**
      * Render function runs every frame.
      * <p>
@@ -314,8 +344,12 @@ public class PixelBoat extends ApplicationAdapter {
         }
     }
 
+    /**
+     * Modifies the volume of the music
+     * @param music Music to modify the volume to
+     */
     private void setMusicVol(Music music) {
-    	final Preferences prefs = Gdx.app.getPreferences("setting\\gamesetting");
+    	final Preferences prefs = Gdx.app.getPreferences("setting/gamesetting");
     	float mastervolume = prefs.getFloat("MasterVolume", 0.5f);
     	float musicvolume = prefs.getFloat("MusicVolume",0.5f);
     	float r_musicvolume = mastervolume*musicvolume;
@@ -331,6 +365,7 @@ public class PixelBoat extends ApplicationAdapter {
     public void dispose() {
         disposeScenes();
         batch.dispose();
+        // Added block of code for assessment 2
         if (startmusic != null) {
         	startmusic.dispose();
         }
@@ -340,6 +375,8 @@ public class PixelBoat extends ApplicationAdapter {
         if (collisionsound != null) {
         	collisionsound.dispose();
         }
+        pref.flush();
+        // End of added block of code for assessment 2
         Gdx.app.exit();
         System.exit(0);
     }

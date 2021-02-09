@@ -54,6 +54,8 @@ public class SceneStartScreen implements Scene {
      * When options are hovered over they will change texture indicating what the user is about to select.
      *
      * @author William Walton
+     * @author Quentin Rothman
+     * @author Dragos Stoican
      */
     public SceneStartScreen() {
         fill_camera = new OrthographicCamera();
@@ -94,19 +96,13 @@ public class SceneStartScreen implements Scene {
     }
 
     /**
-     * Destructor disposes of this texture once it is no longer referenced.
-     */
-    protected void finalize() {
-        bg.dispose();
-    }
-
-    /**
      * Draw function for SceneStartScreen.
      * <p>
      * Draws StartScreen for the PixelBoat game.
      *
      * @param batch SpriteBatch used for drawing to screen.
      * @author William Walton
+     * @author Dragos Stoican
      */
     public void draw(SpriteBatch batch) {
         Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
@@ -131,6 +127,8 @@ public class SceneStartScreen implements Scene {
      *
      * @return returns an integer which is the scene_id of which screen is next (either this screen still or another)
      * @author William Walton
+     * @author Quentin Rothman
+     * @author Dragos Stoican
      */
     public int update() {
         Vector3 mouse_pos = fill_camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
@@ -193,6 +191,9 @@ public class SceneStartScreen implements Scene {
     }
 
     // Added block of code for assessment 2
+    /**
+     * Destructor disposes of this texture once it is no longer referenced.
+     */
     public void dispose() {
         bg.dispose();
         play.dispose();

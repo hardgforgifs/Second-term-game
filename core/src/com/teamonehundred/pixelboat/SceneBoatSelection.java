@@ -48,7 +48,7 @@ public class SceneBoatSelection implements Scene {
     protected Texture hard;
     protected Texture hard_hovered;
     protected Texture cont;
-    protected Texture cont_covered;
+    protected Texture cont_hovered;
 
     protected Sprite easy_sprite;
     protected Sprite normal_sprite;
@@ -66,6 +66,9 @@ public class SceneBoatSelection implements Scene {
      * Initialises a Scene textures for Boat Selection and camera.
      *
      * @author William Walton
+     * @author Quenthin Rothman
+     * @author Samuel Plane
+     * @author Dragos Stoican
      */
     public SceneBoatSelection() {
         fill_camera = new OrthographicCamera();
@@ -123,7 +126,7 @@ public class SceneBoatSelection implements Scene {
         hard = new Texture("Hard.png");
         hard_hovered = new Texture("HardSelected.png");
         cont = new Texture("ContinueSelected.png");
-        cont_covered = new Texture("ContinueUnselected.png");
+        cont_hovered = new Texture("ContinueUnselected.png");
 
         back_sprite = new Sprite(back);
         back_sprite.setSize(512 / 2, 128 / 2);
@@ -178,6 +181,7 @@ public class SceneBoatSelection implements Scene {
     }
 
 
+    // Modified block of code for assessment 2
     /**
      * Update function for SceneBoatSelection. Ends SceneBoatSelection based on user input otherwise stays in scene.
      * <p>
@@ -185,6 +189,9 @@ public class SceneBoatSelection implements Scene {
      *
      * @return returns an integer which is the scene_id of which screen is next (either this screen still or another)
      * @author William Walton
+     * @author Quenthin Rothman
+     * @author Samuel Plane
+     * @author Dragos Stoican
      */
     public int update() {
         if (!Gdx.input.isButtonPressed(Input.Buttons.LEFT))
@@ -193,7 +200,7 @@ public class SceneBoatSelection implements Scene {
         Vector3 mouse_pos = fill_camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 
         for (int i = 0; i < num_specs; i++) {
-            // Added block of code for assessment 2
+
             if (boat_option_sprites[i].getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && is_new_click) {
                     stats_bg_sprite[i].setTexture(stats_boats[i]);
@@ -246,17 +253,19 @@ public class SceneBoatSelection implements Scene {
             hard_sprite.setTexture(hard);
 
         if (cont_sprite.getBoundingRectangle().contains(mouse_pos.x, mouse_pos.y)) {
-            cont_sprite.setTexture(cont_covered);
+            cont_sprite.setTexture(cont_hovered);
             if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 is_new_click = false;
                 return 3;
             }
         } else
             cont_sprite.setTexture(cont);
-        // End of added block of code for assessment 2
+
 
         return scene_id;
     }
+
+    // End of modified block of code for assessment 2
 
 
     /**
@@ -266,6 +275,7 @@ public class SceneBoatSelection implements Scene {
      *
      * @param batch SpriteBatch used for drawing to screen.
      * @author William Walton
+     * @author Samuel Plane
      */
     public void draw(SpriteBatch batch) {
         Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
@@ -316,8 +326,22 @@ public class SceneBoatSelection implements Scene {
     }
 
     // Added block of code for assessment 2
+    /**
+     * Destructor disposes of textures once it is no longer referenced.
+     */
     public void dispose() {
-
+        bg.dispose();
+        stats_bg.dispose();
+        back.dispose();
+        back_hovered.dispose();
+        easy.dispose();
+        easy_hovered.dispose();
+        normal.dispose();
+        normal_hovered.dispose();
+        hard.dispose();
+        hard_hovered.dispose();
+        cont.dispose();
+        cont_hovered.dispose();
     }
     // End of added block of code for assessment 2
 }
