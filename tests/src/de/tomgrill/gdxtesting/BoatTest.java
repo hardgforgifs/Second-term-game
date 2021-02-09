@@ -255,6 +255,6 @@ public class BoatTest extends TestCase {
         test_boat.getLegTimes().add(200L);
         test_boat.getLegTimes().add(50L);
 
-        assertEquals(200L, test_boat.getBestTime());
+        assertEquals(50L, test_boat.getBestTime());
     }
 }

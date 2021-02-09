@@ -195,7 +195,6 @@ class SceneResultsScreen implements Scene {
                 String ttf = "%02d:%02d";
                 font.draw(batch, String.format(ttf, time_to_finish / 60000, time_to_finish / 1000 % 60), 6 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
                 long added_time = boats.get(top_boats).getTimeToAdd();
-                System.out.println(added_time);
                 font.draw(batch, String.format(ttf, added_time / 60000, added_time / 1000 % 60), 7 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
                 long total_time = boats.get(top_boats).getCalcTime();
                 font.draw(batch, String.format(ttf, total_time / 60000, total_time / 1000 % 60), 8 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));

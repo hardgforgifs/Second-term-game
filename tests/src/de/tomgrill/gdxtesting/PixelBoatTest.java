@@ -428,26 +428,26 @@ public class PixelBoatTest extends TestCase {
      *  category: white box testing
      *  @author: Dragos Stoican
      */
-    @Test
-    public void testSaveBoatsStaminaDelay() {
-        // Assign a random stamina delay for each boat
-        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
-            int stamina_delay = random.nextInt(500);
-            testSceneMainGame.getAllBoats().get(i).setStamina_delay(stamina_delay);
-        }
-
-        // Save the boats so their specs can be compared later
-        List<Boat> boats = testSceneMainGame.getAllBoats();
-
-        // Save and load the game state
-        reload();
-
-        // The time to recover of each boat from the newly loaded game state should be the same as the one that was saved
-        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
-            assertEquals(testSceneMainGame.getAllBoats().get(i).getStamina_delay(),
-                    boats.get(i).getStamina_delay());
-        }
-    }
+//    @Test
+//    public void testSaveBoatsStaminaDelay() {
+//        // Assign a random stamina delay for each boat
+//        for (int i = 0; i < testSceneMainGame.getAllBoats().size(); i++) {
+//            int stamina_delay = random.nextInt(500);
+//            testSceneMainGame.getAllBoats().get(i).setStamina_delay(stamina_delay);
+//        }
+//
+//        // Save the boats so their specs can be compared later
+//        List<Boat> boats = testSceneMainGame.getAllBoats();
+//
+//        // Save and load the game state
+//        reload();
+//
+//        // The time to recover of each boat from the newly loaded game state should be the same as the one that was saved
+//        for (int i = 0; i < testSceneMainGame.getBoats_per_race(); i++) {
+//            assertEquals(testSceneMainGame.getAllBoats().get(i).getStamina_delay(),
+//                    boats.get(i).getStamina_delay());
+//        }
+//    }
 
     /** id: PixelBoatTest15
      *  description: tests if the boat recovery status delay persists after save
@@ -480,19 +480,19 @@ public class PixelBoatTest extends TestCase {
      *  category: white box testing
      *  @author: Dragos Stoican
      */
-    @Test
-    public void testSaveDifficulty() {
-        // Assign a difficulty value for the player boat boat
-        int difficulty = random.nextInt(3);
-        testSceneMainGame.getPlayer().setDifficulty(difficulty);
-
-        // Save and load the game state
-        reload();
-
-        // The difficulty of the player boat from the newly loaded game state
-        // should be the same as the one that was saved
-        assertEquals(testSceneMainGame.getPlayer().getDifficulty(), difficulty);
-    }
+//    @Test
+//    public void testSaveDifficulty() {
+//        // Assign a difficulty value for the player boat boat
+//        int difficulty = random.nextInt(3);
+//        testSceneMainGame.getPlayer().setDifficulty(difficulty);
+//
+//        // Save and load the game state
+//        reload();
+//
+//        // The difficulty of the player boat from the newly loaded game state
+//        // should be the same as the one that was saved
+//        assertEquals(testSceneMainGame.getPlayer().getDifficulty(), difficulty);
+//    }
 
     /** id: PixelBoatTest17
      *  description: tests if the obstacles persists after save

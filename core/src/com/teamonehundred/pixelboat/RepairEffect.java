@@ -31,7 +31,7 @@ public class RepairEffect extends Effect{
     @Override
     public void applyEffect(Boat boat) {
         if (duration == 5f)
-            boat.durability += Math.min(.2f, 1f - boat.durability);
+            boat.durability += 1f - boat.durability;
 
         super.applyEffect(boat);
     }

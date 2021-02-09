@@ -31,7 +31,7 @@ public class StaminaEffect extends Effect{
     @Override
     public void applyEffect(Boat boat) {
         if (duration == 5f)
-            boat.stamina += Math.min(.5f, 1f - boat.stamina);
+            boat.stamina += 1f - boat.stamina;
 
         super.applyEffect(boat);
     }
