@@ -23,7 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class SceneSettings implements Scene{
+public class SceneOptionsMenu implements Scene{
 	
 	
 	private Stage stage;
@@ -77,7 +77,7 @@ public class SceneSettings implements Scene{
 	 * Creates the scene with the music objects
 	 * @param music list of music objects
 	 */
-	public SceneSettings( Music[] music) {
+	public SceneOptionsMenu(Music[] music) {
 		this.musics = music;
     	
     	final Preferences prefs = Gdx.app.getPreferences("setting/gamesetting");

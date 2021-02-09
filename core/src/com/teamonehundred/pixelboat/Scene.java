@@ -31,5 +31,7 @@ public interface Scene {
      */
     void resize(int width, int height);
 
+    // Added block of code for assessment 2
     void dispose();
+    // End of added block of code for assessment 2
 }

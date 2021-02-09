@@ -20,10 +20,6 @@ import com.badlogic.gdx.audio.Sound;
 public class PixelBoat extends ApplicationAdapter {
     protected Scene[] all_scenes;  // stores all game scenes and their data
     protected SpriteBatch batch;  // thing that draws the sprites
-    private Music startmusic;
-    private Music mainmusic;
-    private Music resultmusic;
-    private Sound collisionsound;
 
     // id of current game state
     // 0 = start menu
@@ -33,18 +29,18 @@ public class PixelBoat extends ApplicationAdapter {
     // 4 = results
     // 5 = boat selection
     protected int scene_id = 0;
-    
-    protected boolean init = true;
-	private Music[] musics;
 
     // Added block of code for assessment 2
+    private Music startmusic;
+    private Music mainmusic;
+    private Music resultmusic;
+    private Sound collisionsound;
+
+    protected boolean init = true;
+
     protected Preferences pref;
 
     protected SpriteBatch static_batch;
-
-    public Scene[] getAll_scenes() { return all_scenes; }
-
-    public void setAll_scenes(Scene[] all_scenes) { this.all_scenes = all_scenes; }
 
     public void setPref(Preferences pref) { this.pref = pref; }
 
@@ -236,13 +232,13 @@ public class PixelBoat extends ApplicationAdapter {
         mainmusic.setLooping(true);
         resultmusic.setLooping(true);
 
-        musics = new Music[]{startmusic,mainmusic,resultmusic};
+        Music[] musics = new Music[]{startmusic,mainmusic,resultmusic};
         // End of added block of code for assessment 2
          
         all_scenes = new Scene[6];
         all_scenes[0] = new SceneStartScreen();
         all_scenes[1] = new SceneMainGame();
-        all_scenes[2] = new SceneSettings(musics);
+        all_scenes[2] = new SceneOptionsMenu(musics);
         all_scenes[3] = new SceneTutorial();
         all_scenes[4] = new SceneResultsScreen();
         all_scenes[5] = new SceneBoatSelection();
@@ -257,18 +253,6 @@ public class PixelBoat extends ApplicationAdapter {
         // End of added block of code for assessment 2
     }
 
-    // Added block of code for assessment 2
-
-    /**
-     * Stops the music from playing
-     * @author Bowen Lyu
-     */
-    private void stopMusic() {
-    	for(Music music:musics) {
-			music.stop();
-		}
-    }
-    // End of added block of code for assessment 2
     /**
      * Render function runs every frame.
      * <p>
@@ -347,6 +331,18 @@ public class PixelBoat extends ApplicationAdapter {
         }
     }
 
+    // Added block of code for assessment 2
+
+    /**
+     * Stops the music from playing
+     * @author Bowen Lyu
+     */
+    private void stopMusic() {
+        startmusic.stop();
+        mainmusic.stop();
+        resultmusic.stop();
+    }
+
     /**
      * Modifies the volume of the music
      * @param music Music to modify the volume to
@@ -359,6 +355,8 @@ public class PixelBoat extends ApplicationAdapter {
 		music.setVolume(r_musicvolume);
 	}
 
+    // End of added block of code for assessment 2
+
 	/**
      * Disposes unneeded SpriteBatch and exits application.
      * <p>
@@ -366,9 +364,12 @@ public class PixelBoat extends ApplicationAdapter {
      */
     @Override
     public void dispose() {
-        disposeScenes();
         batch.dispose();
         // Added block of code for assessment 2
+        for (Scene all_scene : all_scenes) {
+            if (all_scene != null)
+                all_scene.dispose();
+        }
         if (startmusic != null) {
         	startmusic.dispose();
         }
@@ -382,13 +383,6 @@ public class PixelBoat extends ApplicationAdapter {
         // End of added block of code for assessment 2
         Gdx.app.exit();
         System.exit(0);
-    }
-
-    public void disposeScenes() {
-        for (int i = 0; i < all_scenes.length; i++) {
-            if(all_scenes[i] != null)
-                all_scenes[i].dispose();
-        }
     }
 
     /**
