@@ -131,40 +131,76 @@ class SceneResultsScreen implements Scene {
     public void drawStatic(SpriteBatch batch) {
         batch.begin();
 
-        // Draw text instructions at the top of the screen
-        font.setColor(Color.ORANGE);
-        font.draw(batch, "Results Screen! Click on the screen to skip and start the next leg!",
-                fill_camera.viewportWidth / 3, 15 * (fill_camera.viewportHeight / 16));
-
         // Draw text instructions for the timing format that will be displayed
         font.setColor(Color.YELLOW);
         font.draw(batch, "BoatName | Race Time in ms | Race penalty in ms",
                 fill_camera.viewportWidth / 3, 14 * (fill_camera.viewportHeight / 16));
 
-        batch.draw(results_table, fill_camera.viewportWidth / 3,   fill_camera.viewportHeight / 8, 500, 450);
+        int column_num;
+        int column_idx;
+        String label_template;
 
-        String label_template = "%s | %d ms | %d ms";//"A boat (%s) ended race with time (ms) %d (%d ms was penalty)";
+        //Writes the best times to the screen if it's the final leg
+        if (leg_no >= 4) {
+            // Draw text instructions at the top of the screen
+            font.setColor(Color.ORANGE);
+            font.draw(batch, "Best times of the day! Hope you enjoyed your time at the races!",
+                    fill_camera.viewportWidth / 3, 15 * (fill_camera.viewportHeight / 16));
 
-        // Initialise values for drawing times as table in order to allow dynamic wrapping
-        int column_num = -1;
-        int column_idx = -1;
-        for (int top_boats = 0; top_boats <= 13; top_boats++) {
-            if (boats.get(top_boats) instanceof PlayerBoat) {
-                font.setColor(Color.RED); // Colour Player's time in red
-            } else {
-                font.setColor(Color.WHITE); // All AI-boat times in white
+            batch.draw(results_table, fill_camera.viewportWidth / 3, fill_camera.viewportHeight / 8, 500, 450);
+
+            label_template = "%s | %d ms | %d ms";//"A boat (%s) ended race with time (ms) %d (%d ms was penalty)";
+
+            // Initialise values for drawing times as table in order to allow dynamic wrapping
+            column_num = -1;
+            column_idx = -1;
+            for (int top_boats = 0; top_boats <= 13; top_boats++) {
+                if (boats.get(top_boats) instanceof PlayerBoat) {
+                    font.setColor(Color.RED); // Colour Player's time in red
+                } else {
+                    font.setColor(Color.WHITE); // All AI-boat times in white
+                }
+
+                // Writes out the details of all the boats into the table
+                font.draw(batch, boats.get(top_boats).getName(), 5 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
+                String ttf = "%02d:%02d";
+                long total_time = boats.get(top_boats).getCalcTime();
+                font.draw(batch, String.format(ttf, total_time / 60000, total_time / 1000 % 60), 8 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
+
             }
 
-            // Writes out the details of all the boats into the table
-            font.draw(batch, boats.get(top_boats).getName(), 5 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
-            long time_to_finish = boats.get(top_boats).getLegTimes().get(boats.get(top_boats).getLegTimes().size() - 1);
-            String ttf = "%02d:%02d";
-            font.draw(batch, String.format(ttf, time_to_finish / 60000, time_to_finish / 1000 % 60) , 6 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
-            long added_time = boats.get(top_boats).getTimeToAdd();
-            font.draw(batch, String.format(ttf, added_time / 60000, added_time / 1000 % 60) , 7 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
-            long total_time = boats.get(top_boats).getCalcTime();
-            font.draw(batch, String.format(ttf, total_time / 60000, total_time / 1000 % 60) , 8 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
+        } else {
+            // Draw text instructions at the top of the screen
+            font.setColor(Color.ORANGE);
+            font.draw(batch, "Results Screen! Click on the screen to skip and start the next leg!",
+                    fill_camera.viewportWidth / 3, 15 * (fill_camera.viewportHeight / 16));
 
+            batch.draw(results_table, fill_camera.viewportWidth / 3, fill_camera.viewportHeight / 8, 500, 450);
+
+            label_template = "%s | %d ms | %d ms";//"A boat (%s) ended race with time (ms) %d (%d ms was penalty)";
+
+            // Initialise values for drawing times as table in order to allow dynamic wrapping
+            column_num = -1;
+            column_idx = -1;
+            for (int top_boats = 0; top_boats <= 13; top_boats++) {
+                if (boats.get(top_boats) instanceof PlayerBoat) {
+                    font.setColor(Color.RED); // Colour Player's time in red
+                } else {
+                    font.setColor(Color.WHITE); // All AI-boat times in white
+                }
+
+                // Writes out the details of all the boats into the table
+                font.draw(batch, boats.get(top_boats).getName(), 5 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
+                long time_to_finish = boats.get(top_boats).getLegTimes().get(boats.get(top_boats).getLegTimes().size() - 1);
+                String ttf = "%02d:%02d";
+                font.draw(batch, String.format(ttf, time_to_finish / 60000, time_to_finish / 1000 % 60), 6 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
+                long added_time = boats.get(top_boats).getTimeToAdd();
+                System.out.println(added_time);
+                font.draw(batch, String.format(ttf, added_time / 60000, added_time / 1000 % 60), 7 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
+                long total_time = boats.get(top_boats).getCalcTime();
+                font.draw(batch, String.format(ttf, total_time / 60000, total_time / 1000 % 60), 8 * (fill_camera.viewportWidth / 12), (470 * (fill_camera.viewportHeight / 720)) - (27 * top_boats));
+
+            }
         }
 
         // End a sprite batch drawing
