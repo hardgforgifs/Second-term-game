@@ -111,4 +111,6 @@ Thumbs.db
 /ios/IOSLauncher.app.dSYM
 
 ## Testing output
-core/assets/reports/
+/core/assets/reports
+/core/assets/test-results
+/core/assets/tmp
