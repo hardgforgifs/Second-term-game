@@ -125,8 +125,8 @@ public class SceneBoatSelection implements Scene {
         normal_hovered = new Texture("MediumSelected.png");
         hard = new Texture("Hard.png");
         hard_hovered = new Texture("HardSelected.png");
-        cont = new Texture("ContinueSelected.png");
-        cont_hovered = new Texture("ContinueUnselected.png");
+        cont = new Texture("ContinueUnselected.png");
+        cont_hovered = new Texture("ContinueSelected.png");
 
         back_sprite = new Sprite(back);
         back_sprite.setSize(512 / 2, 128 / 2);
