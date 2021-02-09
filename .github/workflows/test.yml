@@ -28,4 +28,4 @@ jobs:
         folder: tests/build/reports/tests/test
         target-folder: tests/unit
         repository-name: hardgforgifs/assessment-2
-        token: ${{ secrets.SITE_TOKEN }}
+        ssh-key: ${{ secrets.SITE_TOKEN }}
