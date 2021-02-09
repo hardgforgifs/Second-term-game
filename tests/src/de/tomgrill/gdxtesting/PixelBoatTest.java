@@ -57,25 +57,6 @@ public class PixelBoatTest extends TestCase {
         testSceneMainGame = testGame.loadGame();
     }
 
-    /** id: PixelBoatTest00
-     *  description: tests if the game recognizes if there is no saved file, making loading the game unavailable
-     *  input data: a new(empty) save file
-     *  expected_outcome: the leg number that is saved is the same as the one that is loaded
-     *  requirements: UR_SAVE_GAME, FR_SAVE_GAME
-     *  category: white box testing
-     *  @author: Dragos Stoican
-     */
-    @Test
-    public void testSaveGameExists() {
-        // Set the file location to a blank file
-        testGame.setPref(Gdx.app.getPreferences("blank_file"));
-
-        // The value of is_saved_game should be false, which would mean that the load game button is unavailable
-        testGame.getAll_scenes()[0] = new SceneStartScreen();
-        assertFalse(((SceneStartScreen)testGame.getAll_scenes()[0]).is_saved_game);
-
-    }
-
     /** id: PixelBoatTest01
      *  description: tests if the leg number persists after save
      *  input data: a random leg number <5

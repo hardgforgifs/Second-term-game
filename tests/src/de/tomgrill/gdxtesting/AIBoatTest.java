@@ -24,6 +24,9 @@ public class AIBoatTest extends TestCase {
         test_ai = new AIBoat(0, 0);
     }
 
+    /**
+     * This method is called after each test to dispose of assets
+     */
     @After
     public void dispose() {
     }

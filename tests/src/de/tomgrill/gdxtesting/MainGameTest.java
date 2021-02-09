@@ -58,7 +58,7 @@ public class MainGameTest extends TestCase {
 
     /** id: SceneMainGame02
      *  description: tests if the total frames raced increase when updating the scene. The number of frames raced
-     *      *               has to increase for the timer to increase
+     *               has to increase for the timer to increase
      *  input data: new instance of a SceneMainGame
      *  expected outcome: the number of frames raced should increase after updating the scene
      *  requirements:
@@ -114,7 +114,7 @@ public class MainGameTest extends TestCase {
         assertTrue(testSceneMainGame.getRace().getObstacles().size() > obstacles_nr);
     }
 
-    /** id: SceneMainGame06
+    /** id: SceneMainGame05
      *  description: tests if the speed of obstacles increases after each leg
      *  input data: new instance of a SceneMainGame
      *  expected outcome: the speed of obstacles should increase after a leg

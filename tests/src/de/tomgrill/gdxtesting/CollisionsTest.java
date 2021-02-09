@@ -76,7 +76,7 @@ public class CollisionsTest extends TestCase {
         assertTrue(test_boat.getBounds().isColliding(lane_wall.getBounds()));
     }
 
-    /** id: CollisionsTest03
+    /** id: CollisionsTest04
      *  description: tests if a powerup collides properly with a boat
      *  input data: new instance of a PlayerBoat, new instance of powerup
      *  expected outcome: the bounds if the two objects should collide
@@ -89,7 +89,7 @@ public class CollisionsTest extends TestCase {
         assertTrue(test_boat.getBounds().isColliding(power_up.getBounds()));
     }
 
-    /** id: CollisionsTest03
+    /** id: CollisionsTest05
      *  description: tests if boat's speed is reduced when colliding with an obstacle
      *  input data: new instance of a PlayerBoat, new instance of branch obstacle
      *  expected outcome: the speed of the boat should be lower after colliding
@@ -109,7 +109,7 @@ public class CollisionsTest extends TestCase {
         assertTrue(test_boat.getSpeed() < 5f);
     }
 
-    /** id: CollisionsTest03
+    /** id: CollisionsTest06
      *  description: tests if boat's durability is reduced when colliding with an obstacle
      *  input data: new instance of a PlayerBoat, new instance of branch obstacle
      *  expected outcome: the durability of the boat should be lower after colliding
@@ -126,7 +126,7 @@ public class CollisionsTest extends TestCase {
         assertTrue(test_boat.getDurability() < 1f);
     }
 
-    /** id: CollisionsTest03
+    /** id: CollisionsTest07
      *  description: tests if boat receives a new effect after colliding with a powerup
      *  input data: new instance of a PlayerBoat, new instance of powerup
      *  expected outcome: list of effects of the player should be non-empty
@@ -143,7 +143,7 @@ public class CollisionsTest extends TestCase {
         assertFalse(test_boat.getEffects().isEmpty());
     }
 
-    /** id: CollisionsTest03
+    /** id: CollisionsTest08
      *  description: tests if an obstacle disappears after it collides with a boat
      *  input data: new instance of a PlayerBoat, new instance of branch obstacle
      *  expected outcome: the obstacle's isShown attribute should be false after colliding
@@ -160,7 +160,7 @@ public class CollisionsTest extends TestCase {
         assertFalse(obstacle.isShown());
     }
 
-    /** id: CollisionsTest03
+    /** id: CollisionsTest09
      *  description: tests if an powerup disappears after it collides with a boat
      *  input data: new instance of a PlayerBoat, new instance of powerup
      *  expected outcome: the powerup's isShown attribute should be false after colliding

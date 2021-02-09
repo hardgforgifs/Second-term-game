@@ -25,6 +25,9 @@ public class BoatRaceTest extends TestCase {
         testRace = testSceneMainGame.getRace();
     }
 
+    /**
+     * This method is called after each test to dispose of assets
+     */
     @After
     public void dispose() {
         testSceneMainGame.dispose();
@@ -79,7 +82,7 @@ public class BoatRaceTest extends TestCase {
         assertTrue(testRace.getBoats().get(1).getTimeToAdd() == 0);
     }
 
-    /** id: BoatRaceTest06
+    /** id: BoatRaceTest04
      *  description: tests if boats are marked to have started the leg when they pass the start line
      *  input data: new instance of BoatRace with the position above the start line
      *  expected outcome: boat should have the attribute has_started_leg true
@@ -101,7 +104,7 @@ public class BoatRaceTest extends TestCase {
             assertTrue(b.hasStartedLeg());
     }
 
-    /** id: BoatRaceTest07
+    /** id: BoatRaceTest05
      *  description: tests if boats are marked to have ended the leg when they pass the finish line
      *  input data: new instance of BoatRace with the position above the finish line
      *  expected outcome: boat should have the attribute has_finished_leg true
@@ -125,7 +128,7 @@ public class BoatRaceTest extends TestCase {
         }
     }
 
-    /** id: BoatRaceTest07
+    /** id: BoatRaceTest06
      *  description: tests if the race ends after too much time by disqualifying all boats
      *  input data: new instance of BoatRace with the number of frames raced above the dnf time
      *  expected outcome: boat should have the attribute has_finished_leg true
@@ -149,7 +152,7 @@ public class BoatRaceTest extends TestCase {
         }
     }
 
-    /** id: BoatRaceTest08
+    /** id: BoatRaceTest07
      *  description: tests if the getSprites method returns a valid list
      *  input data: new instance of BoatRace
      *  expected outcome: the getSprite method shouldn't return an empty list

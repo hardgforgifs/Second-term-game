@@ -22,6 +22,9 @@ public class BoatTest extends TestCase {
         test_boat = new PlayerBoat(0, 0);
     }
 
+    /**
+     * This method is called after each test to dispose of assets
+     */
     @After
     public void dispose() { test_boat.finalize(); }
 
@@ -238,29 +241,6 @@ public class BoatTest extends TestCase {
     }
 
     /** id: BoatTest11
-     *  description: tests if the player boat is affected by the difficulty slection
-     *  input data: new instance of a PlayerBoat
-     *  expected outcome: the time to recover of the playerboat should differ based on the difficulty
-     *  requirements: UR_BOAT_SPEC
-     *  category: white box testing
-     *  @author: Dragos Stoican
-     */
-//    @Test
-//    public void testDifficultySelection() {
-//        // Save the time to recover for each difficulty
-//        test_boat.setSpec(1, 0);
-//        float recovery0 = test_boat.getTime_to_recover();
-//
-//        test_boat.setSpec(1, 1);
-//        float recovery1 = test_boat.getTime_to_recover();
-//
-//        test_boat.setSpec(1, 2);
-//        float recovery2 = test_boat.getTime_to_recover();
-//
-//        assertTrue(recovery0 < recovery1 && recovery1 < recovery2);
-//    }
-
-    /** id: BoatTest12
      *  description: tests if the boat's getBestTime method returns the right time
      *  input data: new instance of a PlayerBoat, new values for leg times
      *  expected outcome: the ethod should return the greatest leg time

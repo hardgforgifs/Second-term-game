@@ -16,6 +16,9 @@ public class EffectTest extends TestCase {
     InvulnerabilityEffect test_invulnerability;
     Boat test_boat;
 
+    /**
+     * This method is called before each test to create new instances of effects
+     */
     @Before
     public void init() {
         test_speed = new SpeedEffect();
@@ -26,6 +29,9 @@ public class EffectTest extends TestCase {
         test_boat = new PlayerBoat(0, 0);
     }
 
+    /**
+     * This method is called after each test to dispose of assets
+     */
     @After
     public void dispose() {
         test_speed.dispose();
@@ -253,7 +259,7 @@ public class EffectTest extends TestCase {
         assertTrue(test_boat.getDurability_per_hit() > 0f);
     }
 
-    /** id: EffectTest09
+    /** id: EffectTest10
      *  description: tests if the effects on a boat get removed from the list after they become inactive
      *  input data: new instance of a PlayerBoat, new effects
      *  expected outcome: only the active effects should affect the boat
