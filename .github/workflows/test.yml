@@ -23,6 +23,7 @@ jobs:
       run: ./gradlew clean tests:test
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@4.0.0
+      if: always()
       with:
         branch: main
         folder: tests/build/reports/tests/test
