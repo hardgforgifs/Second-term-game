@@ -325,6 +325,9 @@ public class PixelBoat extends ApplicationAdapter {
             }
 
             else if (new_scene_id == 6){
+                stopMusic();
+                setMusicVol(startmusic);
+                mainmusic.play();
                 all_scenes[1] = loadGame();
                 new_scene_id = 1;
             }

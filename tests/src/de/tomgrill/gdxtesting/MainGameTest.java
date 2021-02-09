@@ -30,7 +30,7 @@ public class MainGameTest extends TestCase {
      *  description: tests if boats stop moving when the game is paused
      *  input data: new instance of a SceneMainGame
      *  expected outcome: the position of each boat should be the same if the game is paused after we run a race step
-     *  requirements: UR_PAUSE_MENU
+     *  requirements: UR_PAUSE_MENU, FR_PAUSE
      *  category: white box testing
      *  @author: Dragos Stoican
      */
@@ -61,7 +61,7 @@ public class MainGameTest extends TestCase {
      *               has to increase for the timer to increase
      *  input data: new instance of a SceneMainGame
      *  expected outcome: the number of frames raced should increase after updating the scene
-     *  requirements:
+     *  requirements: NFR_USABILITY
      *  category: white box testing
      *  @author: Dragos Stoican
      */
@@ -78,7 +78,7 @@ public class MainGameTest extends TestCase {
      *               has to stop increasing for the timer to stop increase
      *  input data: new instance of a SceneMainGame
      *  expected outcome: the number of frames raced shouldn't increase after updating the scene
-     *  requirements:
+     *  requirements: UR_PAUSE_MENU, FR_PAUSE
      *  category: white box testing
      *  @author: Dragos Stoican
      */
@@ -97,7 +97,7 @@ public class MainGameTest extends TestCase {
      *  description: tests if the number of obstacles increases after each leg
      *  input data: new instance of a SceneMainGame
      *  expected outcome: the number of obstacles should increase after a leg
-     *  requirements:
+     *  requirements: UR_LEG_DIFFICULTY, FR_INCREASE_OBSTACLES
      *  category: white box testing
      *  @author: Dragos Stoican
      */
@@ -118,7 +118,7 @@ public class MainGameTest extends TestCase {
      *  description: tests if the speed of obstacles increases after each leg
      *  input data: new instance of a SceneMainGame
      *  expected outcome: the speed of obstacles should increase after a leg
-     *  requirements:
+     *  requirements: UR_LEG_DIFFICULTY, FR_MOVING_OBSTACLES
      *  category: white box testing
      *  @author: Dragos Stoican
      */
