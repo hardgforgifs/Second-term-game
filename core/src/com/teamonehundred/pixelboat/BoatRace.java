@@ -221,9 +221,9 @@ public class BoatRace {
             if (!boats.get(i).hasFinishedLeg()) not_finished = true;
 
             // update boat (handles inputs if player, etc)
-            if (boats.get(i) instanceof AIBoat) {
+            if (boats.get(i) instanceof AIBoat && !boats.get(i).has_finished_leg) {
                 ((AIBoat) boats.get(i)).updatePosition(obstacles);
-            } else if (boats.get(i) instanceof PlayerBoat) {
+            } else if (boats.get(i) instanceof PlayerBoat && !boats.get(i).has_finished_leg) {
                 boats.get(i).updatePosition();
             }
 

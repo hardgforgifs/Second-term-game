@@ -186,9 +186,9 @@ public class SceneMainGame implements Scene {
         }
 
         if (!is_paused) {
-            if (player.hasFinishedLeg()) {
-                while (!race.isFinished()) race.runStep();
-            }
+//            if (player.hasFinishedLeg()) {
+//                while (!race.isFinished()) race.runStep();
+//            }
             if (!race.isFinished()) race.runStep();
                 // only run 3 guaranteed legs
             else if (leg_number < 3) {
