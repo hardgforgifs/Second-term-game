@@ -19,16 +19,8 @@ Then select the new configuration, and you will be able to run it.
 
 ## Testing (IntelliJ IDEA)
 
-After cloning the repo you will want to open it in the IDE.
-
-Then you will want to open `Edit Run/Debug Configurations` available on the top bar.
-Add a new `JUnit` then you will want to configure it with the following options:
-
-Classpath: `-cp second-term-game.tests.test`  
-Working directory: `complete path to cloned repo\second-term-game\core\assets`  
-Select `All in package` `de.tomgrill.gdxtesting`
-
-Then select the new configuration, and you will be able to run it.
+The tests can be run all at once with the gradle task in build.gradle from the tests subproject(tests folder)
+Otherwise run 1 by 1, or class by class via the test classes
 
 ## Releasing
 
